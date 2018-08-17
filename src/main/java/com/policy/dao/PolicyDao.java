@@ -1,11 +1,13 @@
 package com.policy.dao;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 
+import com.policy.data.Nominee;
 import com.policy.data.Policy;
 
 /*
@@ -268,7 +270,22 @@ public class PolicyDao {
 			ResultSet rs = st.executeQuery("Select * from PolicyMap where customer_id = " 
 			+ c + " and policy_id = " + d);
 			if(rs.next()) {
-				request.getSession().setAttribute("certificateMapID", rs.getInt(1));
+				PolicyDao dao = new PolicyDao();
+				Date date = rs.getDate(5);
+				Policy pol = dao.selectAllPolicyByID(d);
+				
+				LocalDate ld = LocalDate.parse(date.toString());
+				System.out.println(ld.toString());
+				ld = ld.plusYears((long)pol.getTenure());
+				
+				date = Date.valueOf(ld);
+				List<Nominee> noms = NomineeDao.getNomineesFromMapID(rs.getInt(1));
+				System.out.println("size: " + noms.size());
+				request.getSession().setAttribute("CertPremium", rs.getDouble(7));
+				request.getSession().setAttribute("CertNominees", noms);				
+				request.getSession().setAttribute("CertEndDate", date);
+				request.getSession().setAttribute("CertPolicy", pol);
+				
 				return true;
 			}
 			else {
@@ -278,6 +295,7 @@ public class PolicyDao {
 		
 		}
 		catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 		finally {
