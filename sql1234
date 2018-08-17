@@ -1,0 +1,215 @@
+
+create table Customers (
+	customer_ID int primary key,
+	firstname varchar(255) not null,
+	middlename varchar(255),
+	lastname varchar(255) not null,
+	DOB varchar(255) not null,
+	gender varchar(255) not null,
+	permanent_address varchar(255) not null,
+	present_address varchar(255),
+	occupation varchar(255),
+	salary double precision not null,
+	marital_status varchar(255),
+	number_children int not null,
+	email varchar(255) not null,
+	phone_number_primary varchar(255) not null,
+	phone_number_secondary varchar(255),
+	SIN varchar(255) not null,
+	password varchar(255) not null 
+);
+
+DROP TABLE customers
+select * from customers
+
+DROP TABLE customers CASCADE CONSTRAINTS;
+
+
+select * from CUSTOMER_1;
+
+create table Cities (
+	city_ID int primary key,
+	city_name varchar(255) not null
+);
+
+create table Provinces (
+	province_ID int primary key,
+	province_name varchar(255) not null
+);
+
+create table Designations (
+	designation_ID int primary key,
+	designation_name varchar(255) not null,
+	maximum_claim_approval_amount double precision -- null = infinite
+);
+
+create table Managers (
+	manager_ID int primary key,
+	fullname varchar(255) not null,
+	DOB date not null,
+	province_ID int not null,
+	city_ID int not null,
+	designation_ID int not null,
+	email varchar(255) not null,   
+	password varchar(255) not null, 
+	foreign key(province_ID) references provinces(province_ID),
+	foreign key(city_ID) references cities(city_ID),
+	foreign key(designation_ID) references Designations(designation_ID)
+);
+
+create table Agents (
+	agent_ID int primary key,
+	firstname varchar(255) not null,
+	middlename varchar(255),
+	lastname varchar(255) not null,
+	DOB date not null,
+	address varchar(255) not null,
+	email varchar(255) not null,
+	phone_number_primary varchar(255) not null,
+	phone_number_secondary varchar(255),
+	years_of_experience double precision not null,
+	city_ID int not null,
+	agent_reference int,
+	manager_reference int,
+	foreign key(city_ID) references Cities(city_ID),
+	foreign key(agent_reference) references Agents(agent_ID),
+	foreign key(manager_reference) references Managers(manager_ID)
+);
+select * from Agents
+insert into Agents values(11, 'Agent Name', null, 'Agent LastName', '05-April-1923', '11 north york',
+	'agent@tcs.com', '1231233212',  '1231233212', 2,1, 11, 1243)
+
+
+create table Admins (
+	admin_id int primary key,
+	password varchar(255) not null
+);
+
+create table Nominees (
+	nominee_ID int primary key,
+	name varchar(255) not null,
+	relationship_to_customer varchar(255) not null,
+	purpose_of_changed varchar(255),               
+	percentage double precision not null
+);
+
+create table PolicyMap (
+	policy_map_id int primary key,
+	customer_ID int not null,
+	policy_ID int not null,
+	agent_ID int not null,
+	start_date date not null, 
+	payments_per_year int not null, 
+	premium_amount double precision not null,
+	medical_details varchar(512) not null, 
+	is_active number(1) not null, 
+	approved number(1), 
+	foreign key(customer_ID) references Customers(customer_ID),
+	foreign key(policy_ID) references Policies(policy_ID),
+	foreign key(agent_ID) references Agents(agent_ID)
+);
+insert into PolicyMap values(123, 123,123,11, '16-August-2018', 4, 1000, 'none', 1, 0);
+
+select * from Policies
+
+create table NomineeMap (
+	nominee_map_id int primary key,
+	policy_map_id int,
+	nominee_id int,
+	foreign key(policy_map_id) references PolicyMap(policy_map_id),
+	foreign key(nominee_ID) references Nominees(nominee_ID)
+);
+
+create table Transactions (
+	transaction_id int primary key,
+	policy_map_id int,
+	amount_paid double precision not null,
+	transaction_date date not null,
+	foreign key(policy_map_id) references PolicyMap(policy_map_id)
+);
+
+create table Designations (
+	designation_ID int primary key,
+	designation_name varchar(255) not null,
+	maximum_claim_approval_amount double precision -- null = infinite
+);
+
+select * from Managers
+
+create table Managers (
+	manager_ID int primary key,
+	fullname varchar(255) not null,
+	DOB date not null,
+	province_ID int not null,
+	city_ID int not null,
+	designation_ID int not null,
+	email varchar(255) not null,    
+	password varchar(255) not null,
+	foreign key(province_ID) references provinces(province_ID),
+	foreign key(city_ID) references cities(city_ID),
+	foreign key(designation_ID) references Designations(designation_ID)
+);
+
+select * from Managers
+insert into Designations values(1, 'name', 1111);
+insert into Managers values(1243, 'Adam Manager', '19-April-1952', 1, 1, 1, 'adams@tcs.com', 'password')
+
+create table Claims (
+	claim_id int primary key,
+	policy_map_id int not null,
+	claim_date date not null,
+	approved number(1), 
+	manager_id int,
+	reason_for_claim varchar(255) not null,
+	reason_for_rejection varchar(255),
+	proof blob,
+	foreign key(policy_map_id) references PolicyMap(policy_map_id),
+	foreign key(manager_id) references Managers(manager_ID)
+);
+
+
+insert into CUSTOMERS values(200, 'Domenic','Tony', 'Garreffa', 'April 5, 1992', 'Male', '11 action street', '11 north york',
+'software developer', 50000.0, 'Single', 0, 'domenic@tcs.com', '519-222-7645', '1233211234', '123123123', 'password' );
+
+
+
+INSERT INTO Admins VALUES(1, 'admin');
+INSERT INTO Designations VALUES(1, 'Area Manager', 1000000);
+INSERT INTO Designations VALUES(2, 'City Manager', 3000000);
+INSERT INTO Designations VALUES(3, 'Zonal Manager', null);
+INSERT INTO Provinces VALUES(1, 'British Columbia');
+INSERT INTO Provinces VALUES(2, 'Alberta');
+INSERT INTO Provinces VALUES(3, 'Saskatchewan');
+INSERT INTO Provinces VALUES(4, 'Manitoba');
+INSERT INTO Provinces VALUES(5, 'Ontario');
+INSERT INTO Provinces VALUES(6, 'Quebec');
+INSERT INTO Provinces VALUES(7, 'New Brunswick');
+INSERT INTO Provinces VALUES(8, 'Nova Scotia');
+INSERT INTO Provinces VALUES(9, 'Prince Edward Island');
+INSERT INTO Provinces VALUES(10, 'Newfoundland and Labrador');
+INSERT INTO Provinces VALUES(11, 'Yukon');
+INSERT INTO Provinces VALUES(12, 'Northwest Territories');
+INSERT INTO Provinces VALUES(13, 'Nunavut');
+INSERT INTO Cities VALUES(1, 'Kitchener');
+INSERT INTO Cities VALUES(2, 'Winnipeg');
+INSERT INTO Cities VALUES(3, 'Hamilton');
+INSERT INTO Cities VALUES(4, 'Quebec City');
+INSERT INTO Cities VALUES(5, 'Ottawa');
+INSERT INTO Cities VALUES(6, 'Edmonton');
+INSERT INTO Cities VALUES(7, 'Calgary');
+INSERT INTO Cities VALUES(8, 'Vancouver');
+INSERT INTO Cities VALUES(9, 'Montreal');
+
+
+
+
+				SELECT * 
+				FROM PolicyMap
+				LEFT JOIN Policies
+				ON PolicyMap.policy_ID = Policies.policy_id
+				where PolicyMap.customer_ID = 123;
+				
+				select * from PolicyMap;
+				
+				
+INSERT INTO Cities VALUES(10, 'Toronto');

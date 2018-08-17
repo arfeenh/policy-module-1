@@ -67,7 +67,7 @@ table, th, td {
 					<td><%=policyNominees.get(i).getPercentage()%></td>
 					<td>
 						<% 	
-							int nomineeId = policyNominees.get(i).getNomineeId(); 
+							int nomineeId = policyNominees.get(i).getNomineeId();
 							String nomineeName = policyNominees.get(i).getNomineeName();
 							String relationship = policyNominees.get(i).getRelationshipToCustomer();
 							String purpose = policyNominees.get(i).getPurposeOfChanged();

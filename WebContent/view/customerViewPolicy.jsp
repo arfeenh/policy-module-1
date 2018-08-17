@@ -5,11 +5,9 @@
 <%@ page import="com.policy.data.Policy"%>
 <%@ page import="java.text.Format"%>
 <%@ page import="java.text.SimpleDateFormat"%>
-<%@ page import="com.policy.dao.PolicyMapDao"%>
+<%@ page import="com.policy.dao.PolicyMapDao" %>
 <%
-	// Dummy policy data	
-
-	
+	/*
 	Policy policy = new Policy();
 	policy.setPolicyId(1);
 	policy.setPolicyName("Tom cat");
@@ -47,7 +45,8 @@
 	
 	// Dummy session object
 	session.setAttribute("policy", policy);
-
+	*/
+	
 	Policy myPolicy = (Policy)session.getAttribute("policy");
 	
 	// Get values from the session object
@@ -144,7 +143,9 @@ button {
 			<tr>
 				<td class="tbl-labels">Nominee</td>
  				<td class="tbl-data"><%= policyNominees.get(i).getNomineeName() %></td>
+ 				<td class="tbl-data"><%= policyNominees.get(i).getNomineeName() %></td>
 			</tr>
+
 			<%
 				}
 			%>

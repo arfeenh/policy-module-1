@@ -115,8 +115,8 @@ public class PolicyDao {
 		String query = "SELECT *\r\n" + 
 				"FROM PolicyMap\r\n" + 
 				"LEFT JOIN Policies\r\n" + 
-				"ON PolicyMap.policy_id=Policy.policy_id\r\n" + 
-				"Where PolicyMap.customer_id =" + id + ";";
+				"ON PolicyMap.policy_ID=Policies.policy_ID\r\n" + 
+				"Where PolicyMap.customer_ID =" + id + ";";
 		ps = con.prepareStatement(query);
 		rs = ps.executeQuery();
 		
