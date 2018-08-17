@@ -31,7 +31,7 @@ public enum OracleConnection {
 
 		Class.forName("oracle.jdbc.driver.OracleDriver");
 		
-		String url = "jdbc:oracle:thin:@localhost:1521:xe";
+		String url = "jdbc:oracle:thin:@10.101.1.132:1521:xe";
 		String uname = "system";
 		String pwd = "tcs12345";
 		
