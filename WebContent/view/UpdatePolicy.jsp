@@ -1,3 +1,5 @@
+<!-- created by Hamza on 16th Aug at 4pm   -->
+
 <%@ page import="com.policy.data.Policy" %>
 <%@ page import="java.io.IOException" %>
 <%@ page import="com.policy.service.PolicyService" %>
@@ -5,16 +7,17 @@
 <%@ page import="java.sql.*,java.util.*, java.lang.*" %>
 
 
-<!DOCTYPE html> <!-- created by Hamza on 16th Aug at 4pm   -->
+<!DOCTYPE html> 
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
 <title>Insert title here</title>
 <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -29,8 +32,18 @@
   	<div class="form-group">
 		<table align="center" >
 			<h1 align="center"> Update Policy </h1>
-			<tr> 
 			
+			<tr>
+				<td> please select policy you would like to update </td>
+				<td>
+				
+				</td>
+				
+			
+			</tr>
+			
+			<tr> 
+		
 				<td> Policy Name </td>
 				<td> <input type="text" name="policy_name" required = "required" pattern="([^\s][A-z0-9\s]+){2,100}"/> </td>
 				<td> </td>
@@ -116,7 +129,7 @@
 		<div class="clearfix" align="center">
 			
 			<input type="submit" value="Update" id="check" />
-			<button type="cancel" class="cancelbtn">Cancel</button>
+			<button onclick="window.location.href='admin.jsp'">Cancel/Back</button>			
 			
     	</div >
 		<div align="center">
