@@ -5,6 +5,7 @@
     pageEncoding="ISO-8859-1"%>
 <%@ page import="com.policy.dao.*"%>
 <%@ page import="java.util.ArrayList"%>
+<%@ page import="com.policy.dao.PolicyMapDao" %>
 <!DOCTYPE html>
 <html>
 <head>

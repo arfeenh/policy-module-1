@@ -7,8 +7,6 @@
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="com.policy.dao.PolicyMapDao" %>
 <%
-	// Dummy policy data	
-
 	/*
 	Policy policy = new Policy();
 	policy.setPolicyId(1);
@@ -47,7 +45,8 @@
 	
 	// Dummy session object
 	session.setAttribute("policy", policy);
-*/
+	*/
+	
 	Policy myPolicy = (Policy)session.getAttribute("policy");
 	
 	// Get values from the session object
@@ -143,8 +142,10 @@ button {
 			%>
 			<tr>
 				<td class="tbl-labels">Nominee</td>
-<%-- 				<td class="tbl-data"><%= policyNominees.get(i).getNomineeName() %></td>
- --%>			</tr>
+ 				<td class="tbl-data"><%= policyNominees.get(i).getNomineeName() %></td>
+ 				<td class="tbl-data"><%= policyNominees.get(i).getNomineeName() %></td>
+			</tr>
+
 			<%
 				}
 			%>
@@ -165,14 +166,13 @@ button {
 		// When clicked, redirect page to "updateNominees.jsp"
 		document.getElementById("update-nominees").addEventListener("click",
 				function() {
-					window.location.href = "view/updateNominee.jsp";
+					window.location.href = "updateNominee.jsp";
 				});
 
 		// Button click event listener for go back button;
 		// When clicked, redirect page to customer home page
 		document.getElementById("go-back-customer-home").addEventListener(
 				"click", function() {
-					// window.location.href = "updateNominee.jsp";
 					alert("Go back to customer homepage");
 				});
 	</script>
