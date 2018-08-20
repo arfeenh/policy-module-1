@@ -58,7 +58,8 @@ public class NomineeDao {
 			temp.setNomineeId(rs.getInt(1));
 			temp.setNomineeName(rs.getString(2));
 			temp.setRelationshipToCustomer(rs.getString(3));
-			temp.setRelationshipToCustomer(rs.getString(4));
+			temp.setPurposeOfChanged(rs.getString(4));
+			temp.setPercentage(rs.getDouble(5));
 			noms.add(temp);
 			rs.close();
 		}
@@ -67,23 +68,6 @@ public class NomineeDao {
 		st.close();
 		OracleConnection.INSTANCE.disconnect();
 		
-		
-		
 		return noms;
-		
 	}
-	
-	/**
-	 * Test method
-	 * @param args
-	 * @throws ClassNotFoundException
-	 * @throws SQLException
-	 */
-	public static void main(String[] args) throws ClassNotFoundException, SQLException {
-		List<Nominee> k = getNomineesFromMapID(1);
-		System.out.println(k.get(0).getNomineeName());
-		System.out.println(k.get(1).getNomineeName());
-
-	}
-
 }

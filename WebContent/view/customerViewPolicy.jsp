@@ -8,26 +8,15 @@
 <%@ page import="com.policy.dao.PolicyMapDao" %>
 <%@ page import="com.policy.dao.NomineeDao" %>
 <%
-	PolicyMapDao info = (PolicyMapDao) session.getAttribute("PolicyInfo");
-	Policy myPolicy = info.getPolicyInfo();
-
-	// Nominee data
-	NomineeDao nom = new NomineeDao();
-	int policy_map_id = info.getPolicyMapIDFromPolicyID();
-	List<Nominee> myNominees = nom.getNomineesFromMapID(policy_map_id);
-	if (myNominees.isEmpty()){
-		myNominees.add(new Nominee());
-		myNominees.get(0).setNomineeName("No Nominees Found");	
-	}
-	
-	myPolicy.setNumberNominees(myNominees.size());
+	Policy myPolicy = (Policy)session.getAttribute("policy");
 	
 	// Get values from the session object
 	int policyId = myPolicy.getPolicyId();
 	String policyName = myPolicy.getPolicyName();
 	double policyTenure = myPolicy.getTenure();
 	String sumAssured = "$" + (int)myPolicy.getMinSum() + " to $" + (int)myPolicy.getMaxSum();
-	//List<Nominee> policyNominees = myPolicy.getNominees();
+	
+	List<Nominee> myNominees = myPolicy.getNominees();
 	int paymentsPerYear = myPolicy.getPaymentsPerYear();
 	String premiumType;
 	if(paymentsPerYear == 1) {
