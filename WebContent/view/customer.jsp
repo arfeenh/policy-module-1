@@ -23,7 +23,7 @@
 	policy.setMinSum(220.50);
 	policy.setMaxSum(21000000.50);
 	policy.setPaymentsPerYear(1);
-	policy.setPremiumAmonut(30000);
+	policy.setPremiumAmount(30000);
 	policy.setStartDate(new Date());
 	
 	// Nominee data
@@ -44,7 +44,7 @@
 	policy2.setMinSum(55520.50);
 	policy2.setMaxSum(5500000.50);
 	policy2.setPaymentsPerYear(2);
-	policy2.setPremiumAmonut(800000);
+	policy2.setPremiumAmount(800000);
 	policy2.setStartDate(new Date());
 	
 	// Nominee data
