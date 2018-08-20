@@ -31,7 +31,24 @@ public class CertServlet extends HttpServlet {
 		
 		if (request.getParameter("op").equals("Generate Certificate")) {
 			boolean resultFound = false;
+			request.getSession().setAttribute("customerID", request.getParameter("customerID"));
+			try {
+				resultFound = PolicyDao.searchByCustandPolicy(request);
+			}
+			catch (Exception e) {}
 			
+			if (resultFound) {
+				//redirect to certificate
+				response.getWriter().println(request.getSession().getAttribute("certificateMapID"));
+				request.getRequestDispatcher("view/Certificate.jsp").forward(request, response);
+			}
+			else {
+				request.getRequestDispatcher("view/CertMapNotFound.jsp").forward(request, response);
+			}
+		}
+		
+		if (request.getParameter("op").equals("Generate Customer Certificate")) {
+			boolean resultFound = false;
 			try {
 				resultFound = PolicyDao.searchByCustandPolicy(request);
 			}
