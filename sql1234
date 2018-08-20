@@ -32,6 +32,10 @@ create table Cities (
 	city_name varchar(255) not null
 );
 
+select * from cities
+select * from PROVINCES
+select * from DESIGNATIONS
+
 create table Provinces (
 	province_ID int primary key,
 	province_name varchar(255) not null
@@ -42,6 +46,8 @@ create table Designations (
 	designation_name varchar(255) not null,
 	maximum_claim_approval_amount double precision -- null = infinite
 );
+
+select * from MANAGERS
 
 create table Managers (
 	manager_ID int primary key,
@@ -56,6 +62,8 @@ create table Managers (
 	foreign key(city_ID) references cities(city_ID),
 	foreign key(designation_ID) references Designations(designation_ID)
 );
+
+select * from agents
 
 create table Agents (
 	agent_ID int primary key,
@@ -80,17 +88,35 @@ insert into Agents values(11, 'Agent Name', null, 'Agent LastName', '05-April-19
 	'agent@tcs.com', '1231233212',  '1231233212', 2,1, 11, 1243)
 
 
+select * from admins
+insert into ADMINS values(1122, 'password');
+
 create table Admins (
 	admin_id int primary key,
 	password varchar(255) not null
 );
 
+select * from nominees
+insert into NOMINEES values(1001,'hamza','son','idontknow',54);
 create table Nominees (
 	nominee_ID int primary key,
 	name varchar(255) not null,
 	relationship_to_customer varchar(255) not null,
 	purpose_of_changed varchar(255),               
 	percentage double precision not null
+);
+
+select * from policies;
+
+create table Policies (
+	policy_id int primary key,
+	policy_type varchar(255) not null, -- Accidential, whole life, term, pension
+	policy_name varchar(255) not null,
+	number_nominees int not null,
+	tenure double precision not null,
+	sum_assured_min double precision not null,
+	sum_assured_max double precision not null,
+	pre_reqs varchar(255) not null
 );
 
 create table PolicyMap (
@@ -108,10 +134,14 @@ create table PolicyMap (
 	foreign key(policy_ID) references Policies(policy_ID),
 	foreign key(agent_ID) references Agents(agent_ID)
 );
-insert into PolicyMap values(123, 123,123,11, '16-August-2018', 4, 1000, 'none', 1, 0);
+insert into PolicyMap values(123, 200,1,11, '16-August-2018', 4, 1000, 'none', 1, 0);
 
-select * from Policies
-
+select * from PolicyMap
+select * from CUSTOMERs
+select * from AGENTS
+select * from POLICIES
+select * from NOMINeemap
+select * from NOMINEES
 create table NomineeMap (
 	nominee_map_id int primary key,
 	policy_map_id int,
@@ -119,6 +149,8 @@ create table NomineeMap (
 	foreign key(policy_map_id) references PolicyMap(policy_map_id),
 	foreign key(nominee_ID) references Nominees(nominee_ID)
 );
+
+insert into NOMINEEMAP values(1,123,1001);
 
 create table Transactions (
 	transaction_id int primary key,
@@ -128,12 +160,16 @@ create table Transactions (
 	foreign key(policy_map_id) references PolicyMap(policy_map_id)
 );
 
+
 create table Designations (
 	designation_ID int primary key,
 	designation_name varchar(255) not null,
 	maximum_claim_approval_amount double precision -- null = infinite
 );
 
+select * from Designations
+
+drop table Designations
 select * from Managers
 
 create table Managers (
@@ -149,7 +185,11 @@ create table Managers (
 	foreign key(city_ID) references cities(city_ID),
 	foreign key(designation_ID) references Designations(designation_ID)
 );
+select * from provinces;
+select * from CITIES;
+select * from designations;
 
+drop table managers
 select * from Managers
 insert into Designations values(1, 'name', 1111);
 insert into Managers values(1243, 'Adam Manager', '19-April-1952', 1, 1, 1, 'adams@tcs.com', 'password')
@@ -171,6 +211,7 @@ create table Claims (
 insert into CUSTOMERS values(200, 'Domenic','Tony', 'Garreffa', 'April 5, 1992', 'Male', '11 action street', '11 north york',
 'software developer', 50000.0, 'Single', 0, 'domenic@tcs.com', '519-222-7645', '1233211234', '123123123', 'password' );
 
+select * from customers
 
 
 INSERT INTO Admins VALUES(1, 'admin');
