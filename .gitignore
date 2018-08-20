@@ -1,2 +1,8 @@
 /target/
+<<<<<<< HEAD
 WebContent/view/Testing.jsp
+=======
+.classpath
+.settings/
+.project
+>>>>>>> upstream/master

@@ -6,55 +6,19 @@
 <%@ page import="java.text.Format"%>
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="com.policy.dao.PolicyMapDao" %>
+<%@ page import="com.policy.dao.NomineeDao" %>
 <%
-	
-	Policy policy = new Policy();
-	policy.setPolicyId(1);
-	policy.setPolicyName("Tom cat");
-	policy.setTenure(1.1);
-	policy.setMinSum(100.50);
-	policy.setMaxSum(1000000.50);
-	policy.setPaymentsPerYear(2);
-	policy.setPremiumAmonut(2500);
-	policy.setStartDate(new Date());
-	
-	// Nominee data
-	List<Nominee> myNominees = new ArrayList<Nominee>();
-	myNominees.add(new Nominee());
-	myNominees.add(new Nominee());
-	myNominees.add(new Nominee());
-	myNominees.add(new Nominee());
-	myNominees.get(0).setNomineeId(0);
-	myNominees.get(0).setNomineeName("Nominee A");
-	myNominees.get(0).setRelationshipToCustomer("Parent");
-	myNominees.get(0).setPercentage(0.25);
-	myNominees.get(1).setNomineeId(1);
-	myNominees.get(1).setNomineeName("Nominee B");
-	myNominees.get(1).setRelationshipToCustomer("Spouse");
-	myNominees.get(1).setPercentage(0.25);
-	myNominees.get(2).setNomineeId(2);
-	myNominees.get(2).setNomineeName("Nominee C");
-	myNominees.get(2).setRelationshipToCustomer("Child");
-	myNominees.get(2).setPercentage(0.25);
-	myNominees.get(3).setNomineeId(3);
-	myNominees.get(3).setNomineeName("Nominee D");
-	myNominees.get(3).setRelationshipToCustomer("Parent");
-	myNominees.get(3).setPercentage(0.25);
-	policy.setNominees(myNominees);
-	policy.setNumberNominees(myNominees.size());
-	
-	// Dummy session object
-	session.setAttribute("policy", policy);
-	
-	
-	Policy myPolicy = (Policy)session.getAttribute("policy");
+	PolicyMapDao info = (PolicyMapDao) session.getAttribute("PolicyInfo");
+	Policy myPolicy = info.getPolicyInfo();
+
+	NomineeDao nom = new Nominee();
 	
 	// Get values from the session object
 	int policyId = myPolicy.getPolicyId();
 	String policyName = myPolicy.getPolicyName();
 	double policyTenure = myPolicy.getTenure();
 	String sumAssured = "$" + (int)myPolicy.getMinSum() + " to $" + (int)myPolicy.getMaxSum();
-	List<Nominee> policyNominees = myPolicy.getNominees();
+	//List<Nominee> policyNominees = myPolicy.getNominees();
 	int paymentsPerYear = myPolicy.getPaymentsPerYear();
 	String premiumType;
 	if(paymentsPerYear == 1) {
@@ -138,14 +102,12 @@ button {
 				<td class="tbl-data">$<%= premiumAmount %></td>
 			</tr>
 			<%
-				for (int i = 0; i < policyNominees.size(); i++) {
+				for (int i = 0; i < myNominees.size(); i++) {
 			%>
 			<tr>
 				<td class="tbl-labels">Nominee</td>
  				<td class="tbl-data"><%= policyNominees.get(i).getNomineeName() %></td>
- 				<td class="tbl-data"><%= policyNominees.get(i).getNomineeName() %></td>
 			</tr>
-
 			<%
 				}
 			%>
@@ -173,7 +135,7 @@ button {
 		// When clicked, redirect page to customer home page
 		document.getElementById("go-back-customer-home").addEventListener(
 				"click", function() {
-					alert("Go back to customer homepage");
+					window.location.href = "ViewPolicyByAgent.jsp";
 				});
 	</script>
 </body>

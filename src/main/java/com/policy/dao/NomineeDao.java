@@ -4,10 +4,25 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A DAO class for Nominee objects. Contains methods to access Nominee information
+ * 
+ * Created by Nicholas Kauldhar on Aug 17 around 3pm
+ */
+
 import com.policy.data.Nominee;
 
 public class NomineeDao {
 	
+	
+	/**
+	 * A method to return a list of Nominee objects given a PolicyMap ID. It returns 
+	 * information about every nominee associated with a particular map.
+	 * @param id
+	 * @return List of Nominees associated with given map ID
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
 	public static List<Nominee> getNomineesFromMapID(int id) throws ClassNotFoundException, SQLException {
 		
 		Connection con = OracleConnection.INSTANCE.getConnection();
@@ -58,6 +73,12 @@ public class NomineeDao {
 		
 	}
 	
+	/**
+	 * Test method
+	 * @param args
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
 		List<Nominee> k = getNomineesFromMapID(1);
 		System.out.println(k.get(0).getNomineeName());
