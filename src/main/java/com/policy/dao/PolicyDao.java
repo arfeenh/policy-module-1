@@ -233,6 +233,8 @@ public class PolicyDao {
 			temp.setPreReqs(rs.getString(8));
 			k.add(temp);
 		}
+		rs.close();
+		st.close();
 		OracleConnection.INSTANCE.disconnect();
 		System.out.println(k.get(0).getPolicyId());
 		
