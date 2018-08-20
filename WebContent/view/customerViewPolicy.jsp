@@ -11,7 +11,16 @@
 	PolicyMapDao info = (PolicyMapDao) session.getAttribute("PolicyInfo");
 	Policy myPolicy = info.getPolicyInfo();
 
-	NomineeDao nom = new Nominee();
+	// Nominee data
+	NomineeDao nom = new NomineeDao();
+	int policy_map_id = info.getPolicyMapIDFromPolicyID();
+	List<Nominee> myNominees = nom.getNomineesFromMapID(policy_map_id);
+	if (myNominees.isEmpty()){
+		myNominees.add(new Nominee());
+		myNominees.get(0).setNomineeName("No Nominees Found");	
+	}
+	
+	myPolicy.setNumberNominees(myNominees.size());
 	
 	// Get values from the session object
 	int policyId = myPolicy.getPolicyId();
@@ -106,8 +115,8 @@ button {
 			%>
 			<tr>
 				<td class="tbl-labels">Nominee</td>
- 				<td class="tbl-data"><%= policyNominees.get(i).getNomineeName() %></td>
-			</tr>
+	 				<td class="tbl-data"><%= myNominees.get(i).getNomineeName() %></td>
+ 				</tr>
 			<%
 				}
 			%>
@@ -120,22 +129,27 @@ button {
 				<td class="tbl-data"><%= expireDate %></td>
 			</tr>
 		</table>
+		<button id="go-back-home">Main Menu</button>
+		<button id="go-back-view-page">View Another Policy</button>
 		<button id="update-nominees">Update Nominees</button>
-		<button id="go-back-customer-home">Go Back</button>
 	</div>
 	<script>
+		// Button click event listener for go back button;
+		// When clicked, redirect page to customer home page
+		document.getElementById("go-back-home").addEventListener(
+				"click", function() {
+					window.location.href = "admin.jsp";
+				});
+		
+		document.getElementById("go-back-view-page").addEventListener(
+				"click", function() {
+					window.location.href = "ViewPolicyByAgent.jsp";
+				});
 		// Button click event listener for update nominees;
 		// When clicked, redirect page to "updateNominees.jsp"
 		document.getElementById("update-nominees").addEventListener("click",
 				function() {
 					window.location.href = "updateNominee.jsp";
-				});
-
-		// Button click event listener for go back button;
-		// When clicked, redirect page to customer home page
-		document.getElementById("go-back-customer-home").addEventListener(
-				"click", function() {
-					window.location.href = "ViewPolicyByAgent.jsp";
 				});
 	</script>
 </body>

@@ -20,7 +20,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>View Policy By Agent</title>
 <script>
-
+	
 	//RESTRICT AGENT TEXTBOX TO ONLY NUMBERS
 	function validate(){ 
 		var text = document.forms["ViewCustomerByAgentID"]["agent"].value;
@@ -160,6 +160,7 @@ if (request.getParameter("SearchPolicy")!=null && request.getParameter("SearchCu
 <br>
 <div align="center">
 	<input type="submit" class="button" name="goBack" value="Go Back" onclick="goBack()"/>
+	
 </div>
 
 </body>
