@@ -41,7 +41,7 @@
 	</select><br>
 	Enter Customer ID: 
 	<input type = "text" name = "customerID"><br>
-	<input type = "submit" value = "Generate Certificate">
+	<input type = "submit" value = "Generate Certificate" name = "op">
 	
 	
 </form>
