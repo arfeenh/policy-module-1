@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import com.policy.data.Policy;
 
@@ -137,6 +138,7 @@ public class PolicyMapDao {
 			double sum_assured_max = rs.getDouble("sum_assured_max");
 			int payments_per_year = rs.getInt("payments_per_year");
 			double premium_amount = rs.getDouble("premium_amount");
+			Date start_date = rs.getDate("start_date");
 			info.setPolicyId(policyid);
 			info.setPolicyName(policy_name);
 			info.setTenure(tenure);
@@ -144,6 +146,7 @@ public class PolicyMapDao {
 			info.setMaxSum(sum_assured_max);
 			info.setPaymentsPerYear(payments_per_year);
 			info.setPremiumAmount(premium_amount);
+			info.setStartDate(start_date);
 		}
 		
 		
@@ -153,6 +156,32 @@ public class PolicyMapDao {
 		
 		return info;
 	}
+	
+	public int getPolicyMapIDFromPolicyID() throws SQLException, ClassNotFoundException{
+		
+		String SELECT_POLICY_MAP_ID_FROM_POLICY_ID = "select policy_map_id from PolicyMap where "
+				+ "policy_ID = "+this.policyid;
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		con = OracleConnection.INSTANCE.getConnection();
+	
+		ps = con.prepareStatement(SELECT_POLICY_MAP_ID_FROM_POLICY_ID);
+		ResultSet rs = ps.executeQuery();
+		int policy_map_id=0;
+		while (rs.next()) {
+			policy_map_id = rs.getInt("policy_map_id");
+		}
+		//clean up
+		ps.close();
+		OracleConnection.INSTANCE.disconnect();
+		return policy_map_id;
+	}
+	
+	
+	
+	//Accesors
 	public String getAgentID(){
 		return this.agentid;
 	}
