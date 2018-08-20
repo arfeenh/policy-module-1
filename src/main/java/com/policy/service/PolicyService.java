@@ -64,7 +64,7 @@ public class PolicyService {
 	}
 	
 	public ArrayList<String> getAllPoliciesNameAndID() {
-		/*try {
+		try {
 			
 			return policyDao.selectAllPolicyNameAndPolicyID();
 		} catch (ClassNotFoundException e) {
@@ -75,12 +75,12 @@ public class PolicyService {
 			e.printStackTrace();
 		}
 		
-		System.out.println("No policies exist");*/
+		System.out.println("No policies exist");
 		return null;
 	}
 	
 	public Policy getPolicyById(int ID) {
-		/*try {
+		try {
 			return policyDao.selectAllPolicyByID(ID);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -88,7 +88,7 @@ public class PolicyService {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
+		}
 		return null;
 	}
 	

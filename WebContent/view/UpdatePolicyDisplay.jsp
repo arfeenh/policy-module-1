@@ -1,11 +1,14 @@
-<%@ page import="com.policy.data.Policy" %>
+<!-- created by Hamza on 20th Aug at 10am   -->
+
 <%@ page import="java.io.IOException" %>
 <%@ page import="com.policy.service.PolicyService" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1,Unicode #8896 / U+22C1 " pageEncoding="ISO-8859-1"%>
 <%@ page import="java.sql.*,java.util.*, java.lang.*" %>
+<%@ page import="com.policy.service.PolicyService"%>
+<%@ page import="com.policy.data.Policy"%>
+<%@ page import="java.util.ArrayList"%>
 
-
-<!DOCTYPE html> <!-- created by Hamza at 3pm   -->
+<!DOCTYPE html> 
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -26,20 +29,15 @@
 <body>
 <div class="container">
   <div  id="form_style" >
-
-  
- <header id="RegisterPolicy">
-
-
-  <form id="CreateFormUI" method= "post" action ="../MainServlet" >
-
+  <form id="updateFormInsert" method= "get" action ="../MainServlet" >
   	<div class="form-group">
 		<table align="center" >
-			<h1 align="center"> Register Policy </h1>
-			<tr> 
+			<h1 align="center"> Update Policy </h1>
 			
+			<tr> 
 				<td> Policy Name </td>
-				<td> <input type="text" name="policy_name" required = "required" pattern="([^\s][A-z0-9\s]+){2,100}"/> </td>
+				
+				<td> <input type="text" name="policy_name" required = "required" value= "<%= session.getAttribute("policyname")%>" pattern="([^\s][A-z0-9\s]+){2,100}" /> </td>
 				<td> </td>
 				<td> </td>
 				<td> </td>
@@ -52,7 +50,7 @@
 			
 			<tr>
 				<td> Type of Insurance </td>
-				<td> <input type="text" name="policyType" required = "required" pattern="([^\s][A-z0-9\s]+){2,100}"/> </td>
+				<td> <input type="text" name="policyType" required = "required" value= "<%= session.getAttribute("policyType")%>" pattern="([^\s][A-z0-9\s]+){2,100}"/> </td>
 				
 			</tr>
 				
@@ -60,7 +58,7 @@
 				<td> Number of Nominee's </td>
 				<td>
 						
-					<input type="text" name="nominee" id="display" value="0" oninput="updateNumber()" required="required" pattern="^[0-9]*$" >
+					<input type="text" name="nominee" id="display" value= "<%= session.getAttribute("nominee")%>" oninput="updateNumber()" required="required" pattern="^[0-9]*$" >
 				    <input type="button" value="+" id="inc" onclick="incNumber()"/>
 				    <input type="button" value="-" id="dec" onclick="decNumber()"/>
 				</td> 
@@ -69,20 +67,23 @@
     			<tr> 
 	    			<td> Tenure </td>
 	    			<td> <br>
-	    				<input type="radio" name="year" value="1" checked onclick="hide();"/> 1 Year<br>
+	    				The previous Tenure value is shown, please select new value: <input type="text" name="year" value="<%= session.getAttribute("year")%>" >  <br> 
+	    				<input type="radio" name="year" value="1" onclick="hide();" required/> 1 Year<br>
 	  					<input type="radio" name="year" value="2" onclick="hide();"/> 2 Year<br>
-	  					<input type="radio" name="year" value="3" onclick="hide();" /> 3 Year <br>
+	  					<input type="radio" name="year" value="3" /> 3 Year <br>
 	    				<input type="radio" name="year" value="custom" id="cust" onclick="show();" /> Custom	 
 	    				<input type="text" 	name="year" value="4" id="area" style= "display: none;" oninput="validate()">
  				
 	    			</td>
 				</tr>
 			
+			
+			
 				<tr> 
 					<td> Sum Assured </td>
 					<td> <br>
-						 Min: <input type="text" id="min" name="min" value="0" oninput="validate()"/> <br>
-					     Max:<input type="text" id="max" name="max" value="1"  oninput="validate()" />
+						 Min: <input type="text" id="min" name="min" value="<%= session.getAttribute("min")%>" oninput="validate()"/> <br>
+					     Max:<input type="text" id="max" name="max" value="<%= session.getAttribute("max")%>"  oninput="validate()" />
 					</td>
 				</tr>
 <!-- 				<tr> 
@@ -111,28 +112,34 @@
 				<tr>
 					<td> Pre-req </td>
 					<td><br><br>
-					<textarea rows="4" cols="50" placeholder="input your pre-req" name="pre-req">
+					<textarea rows="4" cols="50" placeholder="input your pre-req" name="pre-req" ><%= session.getAttribute("pre-req")%>
+					
 					</textarea>
 				 	</td>
 				
+				
 				</tr>
 				
+			
 			
 		</table>
 		
 		<div class="clearfix" align="center">
 			
-			<input type="submit" value="Register" id="check" />
-			<button onclick="window.location.href='admin.jsp'">Cancel/Back</button>			
-    	
+			<button class="btn btn-primary btn-lg" type = "submit" name="action" value="updatePolicyInsert"> View Policy </button>	
+			<button onclick="window.location.href='UpdatePolicy.jsp'">Cancel/Back</button>			
+			
     	</div >
+		<div align="center">
+			<a href="url"></a>
 		</div>
-		
+		</div>
 	</form>
-	</header>
+	 	  
 	</div>
 	</div>
 	
 	<script src = "../javascript/PolicyValidation.js"> </script>
+
 </body>
 </html>
