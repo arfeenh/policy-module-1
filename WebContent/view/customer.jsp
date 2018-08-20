@@ -15,7 +15,6 @@
 <% 
 	Customer u = (Customer) session.getAttribute("user"); 
 	ArrayList<Policy> policies = new PolicyDao().getPoliciesByCustomerID(u.getCustomerId());
-	//ArrayList<Policy> policies = new ArrayList<Policy>();
 	
 	Policy policy = new Policy();
 	policy.setPolicyId(1);
@@ -61,7 +60,7 @@
 	
 	policies.add(policy);
 	policies.add(policy2);
-	
+
 	session.setAttribute("policies", policies);
 	
 %>
