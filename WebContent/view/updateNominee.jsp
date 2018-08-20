@@ -45,6 +45,23 @@ table, th, td {
 	border: none;
 	text-align: left;
 }
+
+li {
+	  display: flex;
+	  justify-content: space-between;
+	  background: yellow;
+	  margin-bottom: 15px;
+	  padding: 0 15px; 
+}
+
+.uploadLbl {
+	background: yellowgreen;
+	padding: 10px;
+}
+
+.uploadSection {
+	margin: 10px 5px;
+}
 </style>
 </head>
 <body>
@@ -92,7 +109,7 @@ table, th, td {
 	<div id="add-new-nominee" style="display: none;">
 		<fieldset>
 			<legend>Add New Nominee</legend>
-			<form action="" method="POST" id="form-add-new-nominee">
+			<form method="POST" id="form-add-new-nominee" enctype="multipart/form-data">
 				<table id="tbl-add-new-nominee">
 					<tr>
 						<td class="tbl-labels"><label for="new-nominee-name">Enter New Nominee Name</label></td>
@@ -121,13 +138,11 @@ table, th, td {
 					</tr>
 					<tr>
 						<td class="tbl-labels" colspan="2" style="text-align: center;">
-							<div>
-								<label for="new-upload-identification">Upload
-									identification (PNG, JPG, JPEG, PDF)</label> <input type="file"
-									id="new-upload-identification"
-									name="new-upload-identification"
-									accept="image/png, image/jpeg, image/pjpeg, application/pdf"
-									required>
+							<div class="uploadSection">
+								<label class="uploadLbl" for="new-upload-identification">Upload identification (PNG, JPG, JPEG, PDF)</label> 
+									<input type="file" id="new-upload-identification" name="new-upload-identification"
+										accept="image/png, image/jpeg, image/pjpeg, application/pdf" 
+										style="display: none;" onchange="updateFilesDisplayNew(this.files)" required>
 							</div>
 							<div id="new-upload-file-preview">
 								<p id="new-no-file-message">No files currently selected for uploading</p>
@@ -146,7 +161,7 @@ table, th, td {
 	<div id="update-nominee" style="display: none;">
 		<fieldset>
 			<legend>Update Nominee</legend>
-			<form action="" method="POST" id="form-update-nominee">
+			<form method="POST" id="form-update-nominee" enctype="multipart/form-data">
 				<table id="tbl-update-nominee">
 					<tr>
 						<td class="tbl-labels"><label for="update-nominee-name">Name</label></td>
@@ -170,20 +185,16 @@ table, th, td {
 					<tr>
 						<td class="tbl-labels"><label for="update-nominee-percentage">Percentage</label></td>
 						<td class="tbl-data"><input type="text"
-							id="update-nominee-percentage" name="update-nominee-percentage"
-							required></td>
+							id="update-nominee-percentage" name="update-nominee-percentage" required></td>
 					</tr>
 					<tr>
 						<td class="tbl-labels" colspan="2" style="text-align: center;">
-							<div>
-								<label for="update-upload-identification">
-									Upload identification (PNG, JPG, JPEG, PDF)
+							<div class="uploadSection">
+								<label class="uploadLbl" for="update-upload-identification">Upload identification (PNG, JPG, JPEG, PDF)
 								</label> 
-								<input type="file"
-									id="update-upload-identification"
-									name="update-upload-identification"
+								<input type="file" id="update-upload-identification" name="update-upload-identification"
 									accept="image/png, image/jpeg, image/pjpeg, application/pdf"
-									required>
+									style="display: none;" onchange="updateFilesDisplayUpdate(this.files)" required>
 							</div>
 							<div id="update-upload-file-preview">
 								<p id="update-no-file-message">No files currently selected for uploading</p>
@@ -199,5 +210,6 @@ table, th, td {
 		</fieldset>
 	</div>
 	<script src="../javascript/updateNomineeDOM.js"></script>
+	
 </body>
 </html>

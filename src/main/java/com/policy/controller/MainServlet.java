@@ -4,7 +4,9 @@ package com.policy.controller;
 
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
@@ -14,7 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.policy.dao.NomineeDao;
 import com.policy.dao.PolicyMapDao;
+import com.policy.data.Nominee;
 import com.policy.data.Policy;
 import com.policy.service.PolicyService;
 
@@ -46,19 +50,10 @@ public class MainServlet extends HttpServlet {
 				break;
 			case "viewDeletePolicySelectPolicy":
 				String nameAndID = request.getParameter("selectPolicy");
-				
-				
-				//System.out.println(ID);
-				//HttpSession ses = request.getSession();
-				
-				//Policy policy = new PolicyService().getPolicyById(ID);
-				//ses.setAttribute("policy", policy );
-				
 			}
 			return;
 		}
 		
-		// TODO Auto-generated method stub
 		HttpSession hses = request.getSession(true);
 		
 		response.setContentType("text/html");
@@ -68,10 +63,23 @@ public class MainServlet extends HttpServlet {
 		String policyid = request.getParameter("policyid");
 		
 		PolicyMapDao obj = new PolicyMapDao(agentid, custid, policyid);
+		Policy myPolicy;
+		int policyMapId;
+		List<Nominee> myNominees;
 		
-		response.sendRedirect("view/customerViewPolicy.jsp");
-		
-		hses.setAttribute("PolicyInfo", obj);
+		try {
+			myPolicy = obj.getPolicyInfo();
+			policyMapId = obj.getPolicyMapIDFromPolicyID();
+			myNominees = NomineeDao.getNomineesFromMapID(policyMapId);
+			myPolicy.setNumberNominees(myNominees.size());
+			myPolicy.setNominees(myNominees);
+			
+			response.sendRedirect("view/customerViewPolicy.jsp");
+			hses.setAttribute("policy", myPolicy);
+			
+		} catch (ClassNotFoundException | SQLException e1) {
+			e1.printStackTrace();
+		}
 	}
   
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
