@@ -21,6 +21,7 @@
 </head>
 <% Manager m = (Manager) session.getAttribute("user"); %>
 <h1 align="center">Admin <%= m.getFullname() %> ID: <%= m.getManagerId() %></h1>
+
 <body>
 <h1 align="center">Policy Management</h1> <br>
 <div class="container">
