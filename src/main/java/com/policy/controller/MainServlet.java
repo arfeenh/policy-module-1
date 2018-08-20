@@ -1,3 +1,5 @@
+
+
 package com.policy.controller;
 
 
@@ -63,11 +65,13 @@ public class MainServlet extends HttpServlet {
 
 		String agentid = (String) hses.getAttribute("agentid");
 		String custid = (String) hses.getAttribute("cust");
-		String policyid = (String) hses.getAttribute("policy");
+		String policyid = request.getParameter("policyid");
 		
 		PolicyMapDao obj = new PolicyMapDao(agentid, custid, policyid);
 		
 		response.sendRedirect("view/customerViewPolicy.jsp");
+		
+		hses.setAttribute("PolicyInfo", obj);
 	}
   
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -113,6 +117,6 @@ public class MainServlet extends HttpServlet {
 		   	
 		   	
 		   	response.sendRedirect("view/ViewPolicy.jsp");
-	 
+		   	
 	}
 }
