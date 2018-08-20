@@ -1,3 +1,4 @@
+
 package com.policy.dao;
 
 import java.sql.Connection;
@@ -5,27 +6,51 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import com.policy.data.Policy;
 
+/*
+ * This Class contains Select Queries for the following:
+ * 		1. All Customer IDs based on Agent ID
+ * 		2. All Policy IDs based on Agent ID and Customer ID
+ * 		3. Information of Particular Policy based on Policy ID
+ *   @author: Jian An Chiang 
+ *   @version: 1.0
+ *   @name: PolicyMapDao
+ *   @Creation Date: August 15 2018 8:00PM 
+ *   @History: Created Query Methods for 1 and 2  
+ *   @Reviewed by:
+ */
 public class PolicyMapDao {
-	private
-	ArrayList<String> custid_list = new ArrayList<String>();
-	ArrayList<String> policyid_list = new ArrayList<String>();
-	Policy info;
-	String agentid;
-	String custid;
-	String policyid;
+	private ArrayList<String> custid_list = new ArrayList<String>();	//Customer ID Array
+	private ArrayList<String> policyid_list = new ArrayList<String>();  //Policy ID Array
+	private String agentid;
+	private String custid;
+	private String policyid;
 	
 	
 	public PolicyMapDao(){}
+	/*This constructor gets called in ViewPolicyByAgent and auto stores the ids whenever the jsp gets refreshed
+	 * @param	
+	 * 		agentid: The Agent ID inputed from ViewPolicyByAgent
+	 * 		custid: The Customer ID inputed from ViewPolicyByAgent
+	 * 		policyid: The Policy ID inputed from ViewPolicyByAgent
+	 */
 	public PolicyMapDao(String agentid, String custid, String policyid){
 		this.agentid = agentid;
 		this.custid = custid;
 		this.policyid = policyid;
 	}
 	
-	//SELECT ALL CUSTOMER ID BASED ON AGENT ID. PolicyMap Table is used.
+	/*The getCustomers method takes in the agent id from ViewPolicyByAgent.jsp and queries all customer ids
+	 * associated with the agent id.
+	 * @param
+	 * 		agentid: The Agent ID inputed from ViewPolicyByAgent
+	 * @return
+	 * 		custid_list: An ArrayList containing the customer ids are returned to ViewPolicyByAgent.jsp for
+	 * 					 dynamic population
+	 */
 	public ArrayList<String> getCustomers(String agentid) throws SQLException, ClassNotFoundException{
 		custid_list.clear();
 		String SELECT_CUSTOMER_FROM_AGENT = "select customer_ID from PolicyMap where "
@@ -49,10 +74,19 @@ public class PolicyMapDao {
 		return custid_list;
 	}
 	
+	/*The getPolicies method takes in the agent id and customer id from ViewPolicyByAgent.jsp and 
+	 * queries all customer ids associated with the agent id and customer id.
+	 * @param
+	 * 		agentid: The Agent ID inputed from ViewPolicyByAgent
+	 * 		custid: The Customer ID inputed from ViewPolicyByAgent
+	 * @return
+	 * 		custid_list: An ArrayList containing the policy ids are returned to ViewPolicyByAgent.jsp for
+	 * 					 dynamic population
+	 */
 	public ArrayList<String> getPolicies(String agentid, String custid) throws SQLException, ClassNotFoundException{
 		policyid_list.clear();
 		
-		String SELECT_POLICIES_FROM_CUSTOMER = "select policy_ID from PolicyMap where "
+		final String SELECT_POLICIES_FROM_CUSTOMER = "select policy_ID from PolicyMap where "
 				+ "customer_ID = "+custid+ " AND agent_ID = "+agentid;
 
 		Connection con = null;
@@ -62,7 +96,7 @@ public class PolicyMapDao {
 	
 		ps = con.prepareStatement(SELECT_POLICIES_FROM_CUSTOMER);
 		ResultSet rs = ps.executeQuery();
-		System.out.println(SELECT_POLICIES_FROM_CUSTOMER);
+		
 		while (rs.next()) {
 			int policyid = rs.getInt("policy_ID");
 			policyid_list.add(Integer.toString(policyid));
@@ -73,19 +107,87 @@ public class PolicyMapDao {
 		return policyid_list;
 	}
 	
-	public Policy getPolicyInfo() { //QUERY POLICY DATA
+	/*The getPolicyInfo method takes in the agent id and customer id from ViewPolicyByAgent.jsp and 
+	 * queries all customer ids associated with the agent id and customer id.
+	 * @param
+	 * 		agentid: The Agent ID inputed from ViewPolicyByAgent
+	 * 		custid: The Customer ID inputed from ViewPolicyByAgent
+	 * @return
+	 * 		custid_list: An ArrayList containing the policy ids are returned to ViewPolicyByAgent.jsp for
+	 * 					 dynamic population
+	 */
+	public Policy getPolicyInfo() throws ClassNotFoundException, SQLException { //QUERY POLICY DATA
 		
+		final String SELECT_INFO_FOR_POLICY = "select Policies.policy_id, policy_name, tenure, sum_assured_min, sum_assured_max, "
+				+ "payments_per_year, premium_amount, start_date from Policies join PolicyMap on PolicyMap.policy_ID "
+				+ "= Policies.policy_id where Policies.policy_id="+this.policyid;
+	
+		Connection con = null;
+		PreparedStatement ps = null;
 		
-		return info;
+		con = OracleConnection.INSTANCE.getConnection();
+		ps = con.prepareStatement(SELECT_INFO_FOR_POLICY);
+		ResultSet rs = ps.executeQuery();
+		Policy policy = new Policy();
+		while (rs.next()) {
+			int policyId = rs.getInt("policy_ID");
+			String policyName = rs.getString("policy_name");
+			double tenure = rs.getDouble("tenure");
+			double sumAssuredMin = rs.getDouble("sum_assured_min");
+			double sumAssuredMax = rs.getDouble("sum_assured_max");
+			int paymentsPerYear = rs.getInt("payments_per_year");
+			double premiumAmount = rs.getDouble("premium_amount");
+			Date startDate = rs.getDate("start_date");
+			policy.setPolicyId(policyId);
+			policy.setPolicyName(policyName);
+			policy.setTenure(tenure);
+			policy.setMinSum(sumAssuredMin);
+			policy.setMaxSum(sumAssuredMax);
+			policy.setPaymentsPerYear(paymentsPerYear);
+			policy.setPremiumAmount(premiumAmount);
+			policy.setStartDate(startDate);
+		}
+		
+		//clean up
+		ps.close();
+		OracleConnection.INSTANCE.disconnect();
+		
+		return policy;
 	}
-	String getAgentID(){
+	
+	public int getPolicyMapIDFromPolicyID() throws SQLException, ClassNotFoundException{
+		
+		String SELECT_POLICY_MAP_ID_FROM_POLICY_ID = "select policy_map_id from PolicyMap where "
+				+ "policy_ID = "+this.policyid;
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		con = OracleConnection.INSTANCE.getConnection();
+	
+		ps = con.prepareStatement(SELECT_POLICY_MAP_ID_FROM_POLICY_ID);
+		ResultSet rs = ps.executeQuery();
+		int policy_map_id=0;
+		while (rs.next()) {
+			policy_map_id = rs.getInt("policy_map_id");
+		}
+		//clean up
+		ps.close();
+		OracleConnection.INSTANCE.disconnect();
+		return policy_map_id;
+	}
+	
+	
+	
+	//Getters
+	public String getAgentID(){
 		return this.agentid;
 	}
-	String getCustID() {
+	public String getCustID() {
 		return this.custid;
 	}
-	String getPolicyID() {
-		return policyid;
+	public String getPolicyID() {
+		return this.policyid;
 	}
 
 }

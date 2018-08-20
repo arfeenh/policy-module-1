@@ -1,5 +1,5 @@
 <!-- CREATED BY NICHOLAS KAULDHAR -->
-<!-- August 16 2018 3:00PM -->
+<!-- August 20 2018 10:00AM -->
 <!-- Certificate Generation Screen (Admin view) -->
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -12,6 +12,7 @@
 <%@ page import= "com.policy.dao.PolicyDao" %>
 <%@ page import= "java.util.List" %>
 <%@ page import= "java.util.ArrayList" %>
+<%@ page import= "com.policy.data.Customer" %>
 </head>
 <body>
 
@@ -19,29 +20,24 @@
 	Select Policy : 
 	<select name = "policyID">
 		<%
+			
+			int id = 1; //CHANGE THIS TO LOGGED IN CUSTOMER ID WHEN INTEGRATING
+			session.setAttribute("customerID", Integer.toString(id));
 			try {
 				List<Policy> k;
-				if (session.getAttribute("allPolicies") == null){
-					k = PolicyDao.getAllPolicies();
-					session.setAttribute("allPolicies", k);
-				}
-				else{
-					k = (List<Policy>)session.getAttribute("allPolicies");
-				}
+				k = PolicyDao.getAllCustomerPolicies(id);
 				
+				System.out.println(k.size());
 				for(int x = 0; x < k.size(); x++){
 					%><option value = "<%= k.get(x).getPolicyId() %>"><%=k.get(x).getPolicyName() %></option> <%
 				}
 			}     
 			catch(Exception e){
-				e.printStackTrace();
 			}
 	
 		%>
 	</select><br>
-	Enter Customer ID: 
-	<input type = "text" name = "customerID"><br>
-	<input type = "submit" value = "Generate Certificate" name = "op">
+	<input type = "submit" value = "Generate Customer Certificate" name = "op">
 	
 	
 </form>

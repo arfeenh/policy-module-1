@@ -1,2 +1,13 @@
+<<<<<<< HEAD
 
 /target/
+=======
+/target/
+<<<<<<< HEAD
+WebContent/view/Testing.jsp
+=======
+.classpath
+.settings/
+.project
+>>>>>>> upstream/master
+>>>>>>> 260f4e7e0fb8a81e93d601ab16dae349f1a0d4ac

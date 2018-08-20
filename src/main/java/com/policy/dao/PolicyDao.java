@@ -1,11 +1,17 @@
+
+
+
+
 package com.policy.dao;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 
+import com.policy.data.Nominee;
 import com.policy.data.Policy;
 
 /*
@@ -100,7 +106,7 @@ public class PolicyDao {
 		p.setMinSum(rs.getDouble("sum_assured_min"));
 		p.setMaxSum(rs.getDouble("sum_assured_max"));
 		p.setPaymentsPerYear(rs.getInt("payments_per_year"));
-		p.setPremiumAmonut(rs.getDouble("premium_amount"));
+		p.setPremiumAmount(rs.getDouble("premium_amount"));
 		return p;
 	}
 	
@@ -230,12 +236,66 @@ public class PolicyDao {
 			temp.setPreReqs(rs.getString(8));
 			k.add(temp);
 		}
+		rs.close();
+		st.close();
 		OracleConnection.INSTANCE.disconnect();
 		System.out.println(k.get(0).getPolicyId());
 		
 		return k;
 		
 	}
+	
+	/**
+	 * Method to return a List of Policies. The list will simply contain every policy
+	 * in the database. 
+	 * 
+	 * Created by Nicholas Kauldhar on August 16 around 2pm
+	 * Updated by Nicholas Kauldhar August 17 around 9am since schema change
+	 * 
+	 * @return
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
+	public static List<Policy> getAllCustomerPolicies (int id) throws SQLException, ClassNotFoundException {
+		Connection con = OracleConnection.INSTANCE.getConnection();
+		Statement st = con.createStatement();
+		ResultSet rs = st.executeQuery("Select * from PolicyMap where CUSTOMER_ID = " + id);
+		List<Integer> policyIDs = new ArrayList<Integer>();
+		System.out.println("hello");
+		while (rs.next()) {
+			System.out.println("next found");
+			policyIDs.add(rs.getInt(3));
+		}
+		rs.close();
+		List<Policy> k = new ArrayList<Policy>();
+		PreparedStatement pst = con.prepareStatement("Select * from Policies where POLICY_ID = ?");
+		Policy temp;
+		for (int x = 0; x < policyIDs.size(); x++) {
+			pst.setInt(1, policyIDs.get(x));
+			rs = pst.executeQuery();
+			if (rs.next()) {
+				temp = new Policy();
+				temp.setPolicyId(rs.getInt(1));
+				temp.setPolicyType(rs.getString(2));
+				temp.setPolicyName(rs.getString(3));
+				temp.setNumberNominees(rs.getInt(4));
+				temp.setTenure(rs.getDouble(5));
+				temp.setMinSum(rs.getDouble(6));
+				temp.setMaxSum(rs.getDouble(7));
+				temp.setPreReqs(rs.getString(8));
+				k.add(temp);
+			}
+			rs.close();
+		}
+		
+		pst.close();
+		st.close();
+		OracleConnection.INSTANCE.disconnect();
+		
+		return k;
+		
+	}
+
 
 	/**
 	 * Method used by Admin to generate certificates. It uses customer and 
@@ -251,7 +311,7 @@ public class PolicyDao {
 	 * @throws ClassNotFoundException
 	 */
 	public static boolean searchByCustandPolicy(HttpServletRequest request) throws SQLException, ClassNotFoundException {
-		String custid = request.getParameter("customerID");
+		String custid = (String)request.getSession().getAttribute("customerID");
 		System.out.println(custid);
 		int c = -1;
 		int d = -1;
@@ -271,7 +331,22 @@ public class PolicyDao {
 			ResultSet rs = st.executeQuery("Select * from PolicyMap where customer_id = " 
 			+ c + " and policy_id = " + d);
 			if(rs.next()) {
-				request.getSession().setAttribute("certificateMapID", rs.getInt(1));
+				PolicyDao dao = new PolicyDao();
+				Date date = rs.getDate(5);
+				Policy pol = dao.selectAllPolicyByID(d);
+				
+				LocalDate ld = LocalDate.parse(date.toString());
+				System.out.println(ld.toString());
+				ld = ld.plusYears((long)pol.getTenure());
+				
+				date = Date.valueOf(ld);
+				List<Nominee> noms = NomineeDao.getNomineesFromMapID(rs.getInt(1));
+				System.out.println("size: " + noms.size());
+				request.getSession().setAttribute("CertPremium", rs.getDouble(7));
+				request.getSession().setAttribute("CertNominees", noms);				
+				request.getSession().setAttribute("CertEndDate", date);
+				request.getSession().setAttribute("CertPolicy", pol);
+				
 				return true;
 			}
 			else {
@@ -281,6 +356,7 @@ public class PolicyDao {
 		
 		}
 		catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 		finally {
@@ -290,8 +366,8 @@ public class PolicyDao {
 	}
 	
 	public static void main (String[] args) throws ClassNotFoundException, SQLException {
-		List<Policy> k = getAllPolicies();
-		System.out.println(k.get(0).getNumberNominees());
+		List<Policy> k = getAllCustomerPolicies(1);
+		System.out.println(k.get(0).getPolicyName());
 	}
 	
 	public ArrayList<String> selectAllPolicyNameAndPolicyID() throws ClassNotFoundException, SQLException{

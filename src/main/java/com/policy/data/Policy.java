@@ -1,3 +1,4 @@
+
 /*
  * Created by Patrick Yu on Aug 14, 2018
  */
@@ -37,7 +38,7 @@ public class Policy {
 	}
 	
 	// Added by Patrick Yu on Aug 16, 2018
-	public void setPremiumAmonut(double amount) {
+	public void setPremiumAmount(double amount) {
 		this.premiumAmount = amount;
 	}
 	

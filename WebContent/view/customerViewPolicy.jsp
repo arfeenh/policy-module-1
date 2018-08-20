@@ -6,48 +6,8 @@
 <%@ page import="java.text.Format"%>
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="com.policy.dao.PolicyMapDao" %>
+<%@ page import="com.policy.dao.NomineeDao" %>
 <%
-	// Dummy policy data	
-
-	/*
-	Policy policy = new Policy();
-	policy.setPolicyId(1);
-	policy.setPolicyName("Tom cat");
-	policy.setTenure(1.1);
-	policy.setMinSum(100.50);
-	policy.setMaxSum(1000000.50);
-	policy.setPaymentsPerYear(2);
-	policy.setPremiumAmonut(2500);
-	policy.setStartDate(new Date());
-	
-	// Nominee data
-	List<Nominee> myNominees = new ArrayList<Nominee>();
-	myNominees.add(new Nominee());
-	myNominees.add(new Nominee());
-	myNominees.add(new Nominee());
-	myNominees.add(new Nominee());
-	myNominees.get(0).setNomineeId(0);
-	myNominees.get(0).setNomineeName("Nominee A");
-	myNominees.get(0).setRelationshipToCustomer("Parent");
-	myNominees.get(0).setPercentage(0.25);
-	myNominees.get(1).setNomineeId(1);
-	myNominees.get(1).setNomineeName("Nominee B");
-	myNominees.get(1).setRelationshipToCustomer("Spouse");
-	myNominees.get(1).setPercentage(0.25);
-	myNominees.get(2).setNomineeId(2);
-	myNominees.get(2).setNomineeName("Nominee C");
-	myNominees.get(2).setRelationshipToCustomer("Child");
-	myNominees.get(2).setPercentage(0.25);
-	myNominees.get(3).setNomineeId(3);
-	myNominees.get(3).setNomineeName("Nominee D");
-	myNominees.get(3).setRelationshipToCustomer("Parent");
-	myNominees.get(3).setPercentage(0.25);
-	policy.setNominees(myNominees);
-	policy.setNumberNominees(myNominees.size());
-	
-	// Dummy session object
-	session.setAttribute("policy", policy);
-*/
 	Policy myPolicy = (Policy)session.getAttribute("policy");
 	
 	// Get values from the session object
@@ -55,7 +15,8 @@
 	String policyName = myPolicy.getPolicyName();
 	double policyTenure = myPolicy.getTenure();
 	String sumAssured = "$" + (int)myPolicy.getMinSum() + " to $" + (int)myPolicy.getMaxSum();
-	List<Nominee> policyNominees = myPolicy.getNominees();
+	
+	List<Nominee> myNominees = myPolicy.getNominees();
 	int paymentsPerYear = myPolicy.getPaymentsPerYear();
 	String premiumType;
 	if(paymentsPerYear == 1) {
@@ -139,12 +100,12 @@ button {
 				<td class="tbl-data">$<%= premiumAmount %></td>
 			</tr>
 			<%
-				for (int i = 0; i < policyNominees.size(); i++) {
+				for (int i = 0; i < myNominees.size(); i++) {
 			%>
 			<tr>
 				<td class="tbl-labels">Nominee</td>
-<%-- 				<td class="tbl-data"><%= policyNominees.get(i).getNomineeName() %></td>
- --%>			</tr>
+	 				<td class="tbl-data"><%= myNominees.get(i).getNomineeName() %></td>
+ 				</tr>
 			<%
 				}
 			%>
@@ -157,23 +118,27 @@ button {
 				<td class="tbl-data"><%= expireDate %></td>
 			</tr>
 		</table>
+		<button id="go-back-home">Main Menu</button>
+		<button id="go-back-view-page">View Another Policy</button>
 		<button id="update-nominees">Update Nominees</button>
-		<button id="go-back-customer-home">Go Back</button>
 	</div>
 	<script>
+		// Button click event listener for go back button;
+		// When clicked, redirect page to customer home page
+		document.getElementById("go-back-home").addEventListener(
+				"click", function() {
+					window.location.href = "admin.jsp";
+				});
+		
+		document.getElementById("go-back-view-page").addEventListener(
+				"click", function() {
+					window.location.href = "ViewPolicyByAgent.jsp";
+				});
 		// Button click event listener for update nominees;
 		// When clicked, redirect page to "updateNominees.jsp"
 		document.getElementById("update-nominees").addEventListener("click",
 				function() {
-					window.location.href = "view/updateNominee.jsp";
-				});
-
-		// Button click event listener for go back button;
-		// When clicked, redirect page to customer home page
-		document.getElementById("go-back-customer-home").addEventListener(
-				"click", function() {
-					// window.location.href = "updateNominee.jsp";
-					alert("Go back to customer homepage");
+					window.location.href = "updateNominee.jsp";
 				});
 	</script>
 </body>
