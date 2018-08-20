@@ -7,7 +7,7 @@
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="com.policy.dao.PolicyMapDao" %>
 <%
-	/*
+	
 	Policy policy = new Policy();
 	policy.setPolicyId(1);
 	policy.setPolicyName("Tom cat");
@@ -45,7 +45,7 @@
 	
 	// Dummy session object
 	session.setAttribute("policy", policy);
-	*/
+	
 	
 	Policy myPolicy = (Policy)session.getAttribute("policy");
 	

@@ -1,7 +1,4 @@
 /**
- * 
- */
-/**
  * Controls the cancel button to go back to view policy details page when clicked.
  */
 document.getElementById("btn-cancel-change-nominee").addEventListener("click",
@@ -45,63 +42,67 @@ document.getElementById("btn-confirm-add-nominee").addEventListener("click",
 			}
 		});
 
-const newSelectFileBtn = document.querySelector("#new-upload-identification");
-const updateSelectFileBtn = document
-		.querySelector("#update-upload-identification");
 var newPreview = document.querySelector("#new-upload-file-preview");
 var updatePreview = document.querySelector("#update-upload-file-preview");
+let newList = document.createElement('ol');
+newList.id = 'newUploadFileList';
+let updateList = document.createElement('ol');
+updateList.id = 'updateUploadFileList';
 
-/** 
- * Make the select file button to be invisible 
- * and make the label to act as a button.
- */
-newSelectFileBtn.style.opacity = 0;
-updateSelectFileBtn.style.opacity = 0;
-
-newSelectFileBtn.addEventListener("change", updateFilesDisplayNew);
-updateSelectFileBtn.addEventListener("change", updateFilesDisplayUpdate);
+let newFileIndex = 0;
+let updateFileIndex = 0;
 
 /** 
  * Create and update the UI of the file uploading section for adding new nominee.
  * @see validFileType(file), returnFileSize(size)
  */
-function updateFilesDisplayNew() {
-	const curFiles = newSelectFileBtn.files;
-
+function updateFilesDisplayNew(curFiles) {
 	if (curFiles.length === 0) {
 		var para = document.createElement('p');
 		para.textContent = 'No files currently selected for upload';
 		para.id = "new-no-file-message";
 		newPreview.appendChild(para);
 	} else {
-		document.getElementById("new-no-file-message").outerHTML = "";
-		var list = document.createElement('ol');
-		list.id = "newUploadFileList";
-		list.style = "list-style-type:none";
-		newPreview.appendChild(list);
+		while(newList.firstChild) {
+			newList.removeChild(newList.firstChild);
+		}
+		if (newPreview.contains(document.getElementById('new-no-file-message'))) {
+			newPreview.removeChild(document.getElementById('new-no-file-message'));
+	    }
+	    if (!newPreview.contains(newList)) {
+	    	newPreview.appendChild(newList);
+	    }
 
-		for (var i = 0; i < curFiles.length; i++) {
+		for (let i = 0, len = curFiles.length; i < len; i++) {
 			var listItem = document.createElement('li');
-			var fileInfo = document.createElement('span');
+			var fileInfo = document.createElement('p');
 			var removeBtn = document.createElement('button');
 			if (validFileType(curFiles[i])) {
-				listItem.id = "newListItem" + i;
+				listItem.id = "newListItem" + newFileIndex;
 				fileInfo.textContent = curFiles[i].name + ' ('
 						+ returnFileSize(curFiles[i].size) + ')';
 				removeBtn.innerHTML = "X";
 				removeBtn.type = "button";
-				removeBtn.style = "margin: 20px;";
-				removeBtn.id = "newRemoveBtn-" + i;
+				removeBtn.class = "removeBtn";
+				removeBtn.id = "newRemoveBtn-" + newFileIndex;
+				newFileIndex++;
 				removeBtn.onclick = function() {
 					const uploadItemId = (this.id).split("-")[1];
-					document.getElementById("newListItem" + uploadItemId).outerHTML = "";
+					const newItemToRemove = document.getElementById("newListItem" + uploadItemId);
+					if(newItemToRemove) {
+						newItemToRemove.outerHTML = "";
+					}
 
-					const fileList = document
-							.querySelector("#newUploadFileList");
-					const numOfListItems = fileList.childElementCount;
+					const numOfListItems = newList.childElementCount;
 					if (numOfListItems === 0) {
-						// Destroy filelist
-						fileList.outerHTML = "";
+						if(newPreview.contains(newList)){
+							while(newList.firstChild) {
+								newList.removeChild(newList.firstChild);
+							}
+							// Destroy newList
+							newList.outerHTML = "";
+						}
+						
 
 						// Display no file message
 						var para = document.createElement('p');
@@ -113,13 +114,13 @@ function updateFilesDisplayNew() {
 
 				listItem.appendChild(fileInfo);
 				listItem.appendChild(removeBtn);
+				
+				newList.appendChild(listItem);
 			} else {
 				fileInfo.textContent = curFiles[i].name
 						+ ': Not a valid file type. Update your selection.';
 				listItem.appendChild(fileInfo);
 			}
-
-			list.appendChild(listItem);
 		}
 	}
 }
@@ -128,43 +129,53 @@ function updateFilesDisplayNew() {
  * Create and update the UI of the file uploading section for updating nominee.
  * @see validFileType(file), returnFileSize(size)
  */
-function updateFilesDisplayUpdate() {
-	const curFiles = updateSelectFileBtn.files;
-
+function updateFilesDisplayUpdate(curFiles) {
 	if (curFiles.length === 0) {
 		var para = document.createElement('p');
 		para.textContent = 'No files currently selected for upload';
 		para.id = "update-no-file-message";
 		updatePreview.appendChild(para);
 	} else {
-		document.getElementById("update-no-file-message").outerHTML = "";
-		var list = document.createElement('ol');
-		list.id = "updateUploadFileList";
-		list.style = "list-style-type:none";
-		updatePreview.appendChild(list);
+		while(updateList.firstChild) {
+			updateList.removeChild(updateList.firstChild);
+		}
+		if (updatePreview.contains(document.getElementById('update-no-file-message'))) {
+			updatePreview.removeChild(document.getElementById('update-no-file-message'));
+	    }
+	    if (!updatePreview.contains(updateList)) {
+	    	updatePreview.appendChild(updateList);
+	    }
 
-		for (var i = 0; i < curFiles.length; i++) {
+		for (let i = 0, len = curFiles.length; i < len; i++) {
 			var listItem = document.createElement('li');
-			var fileInfo = document.createElement('span');
+			var fileInfo = document.createElement('p');
 			var removeBtn = document.createElement('button');
 			if (validFileType(curFiles[i])) {
-				listItem.id = "updateListItem" + i;
+				listItem.id = "updateListItem" + updateFileIndex;
 				fileInfo.textContent = curFiles[i].name + ' ('
 						+ returnFileSize(curFiles[i].size) + ')';
 				removeBtn.innerHTML = "X";
 				removeBtn.type = "button";
-				removeBtn.style = "margin: 20px;";
-				removeBtn.id = "updateRemoveBtn-" + i;
+				removeBtn.class = "removeBtn";
+				removeBtn.id = "updateRemoveBtn-" + updateFileIndex;
+				updateFileIndex++;
 				removeBtn.onclick = function() {
 					const uploadItemId = (this.id).split("-")[1];
-					document.getElementById("updateListItem" + uploadItemId).outerHTML = "";
+					const updateItemToRemove = document.getElementById("updateListItem" + uploadItemId);
+					if(updateItemToRemove) {
+						updateItemToRemove.outerHTML = "";
+					}
 
-					const fileList = document
-							.querySelector("#updateUploadFileList");
-					const numOfListItems = fileList.childElementCount;
+					const numOfListItems = updateList.childElementCount;
 					if (numOfListItems === 0) {
-						// Destroy filelist
-						fileList.outerHTML = "";
+						if(updatePreview.contains(updateList)){
+							while(updateList.firstChild) {
+								updateList.removeChild(updateList.firstChild);
+							}
+							// Destroy updateList
+							updateList.outerHTML = "";
+						}
+						
 
 						// Display no file message
 						var para = document.createElement('p');
@@ -176,13 +187,13 @@ function updateFilesDisplayUpdate() {
 
 				listItem.appendChild(fileInfo);
 				listItem.appendChild(removeBtn);
+				
+				updateList.appendChild(listItem);
 			} else {
-				fileInfo.textContent = 'File name ' + curFiles[i].name
+				fileInfo.textContent = curFiles[i].name
 						+ ': Not a valid file type. Update your selection.';
 				listItem.appendChild(fileInfo);
 			}
-
-			list.appendChild(listItem);
 		}
 	}
 }
@@ -212,11 +223,11 @@ function validFileType(file) {
  */
 function returnFileSize(number) {
 	if (number < 1024) {
-		return number + 'bytes';
+		return number + ' bytes';
 	} else if (number >= 1024 && number < 1048576) {
-		return (number / 1024).toFixed(1) + 'KB';
+		return (number / 1024).toFixed(1) + ' KB';
 	} else if (number >= 1048576) {
-		return (number / 1048576).toFixed(1) + 'MB';
+		return (number / 1048576).toFixed(1) + ' MB';
 	}
 }
 
