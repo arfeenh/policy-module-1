@@ -33,48 +33,33 @@
   	<div class="form-group">
 		<table align="center" >
 			<h1 align="center"> Update Policy </h1>
-			
 			<tr>
 				<td> please select policy you would like to update </td>
 				<td>
 					<%! ArrayList<String> nameAndIdList = new PolicyService().getAllPoliciesNameAndID();  
 					%>
-				
-					<form method="get" action="../MainServlet">
 					 <div class="form-group">
 				    <select class="form-control" id="deletePolicy" name="selectPolicy" >
 				       <% for(int i = 0; i < nameAndIdList.size(); i++){ %>
 				            <option value = "<%= nameAndIdList.get(i) %>"> <%= nameAndIdList.get(i) %> </option>
-				      	 <% } %> 
-				      	 
-				      	 
-				    </select>
-				    
+				      	 <% } %>   	 
+				    </select>				    
 				  </div>
-				  </form>
-				  
-				</td>
-				
-				
-			</tr>			
-			
-		</table>
-		
+				</td>				
+			</tr>						
+		</table>		
 		<div class="clearfix" align="center">
-			<button class="btn btn-primary btn-lg" type = "submit" name="action" value="updatePolicy"> View Policy </button>	
-			
-			<button class="btn btn-primary btn-lg" onclick="window.location.href='admin.jsp'">Cancel/Back</button>			
-			
+			<button class="btn btn-primary btn-lg" type = "submit" name="action" value="updatePolicy"> View Policy </button>				
+			<a href="admin.jsp" class="btn btn-primary btn-lg">Cancel/Back</a>			
     	</div >
 		<div align="center">
 			<a href="url"></a>
 		</div>
 		</div>
-	</form>
-	 	  
+	</form> 	  
 	</div>
 	</div>
-	
+		<script src = "../javascript/PolicyValidation.js"> </script>
 	
 </body>
 </html>

@@ -55,9 +55,12 @@ public class PolicyDao {
 											"WHERE policy_id = ? ";
 	
 	private final String SELECT_POLICIES_BY_CUSTOMER_ID = "SELECT * FROM PolicyMap LEFT JOIN Policies ON " + 
-										"PolicyMap.policy_ID = Policies.policy_ID " + 
-										"Where PolicyMap.customer_ID = ?";
-	
+										"PolicyMap.policy_ID = Policies.policy_ID " + "Where PolicyMap.customer_ID = ?";
+
+	private final String DELETE_POLICIES_BY_CUSTOMER_ID = "DELETE from policies where policy_id = ?";
+  
+	private final String CHECK_IF_POLICYID_IS_MAPPED = "select * from POLICYMAP where policy_id = ?";
+  
 	/**
 	 *  Will insert a policy object into the database.
 	 * @param policy - an instantiated Policy object.
@@ -468,5 +471,54 @@ public class PolicyDao {
  			return null;
  		}
  	}
-
+ 	
+ 	/*
+ 	 *Created by Hamza. This function is used to access the database and check whether a customer is 
+ 	 *mapped to a policy.
+ 	 *returns a boolean
+ 	 */
+ 	
+ 	
+ 	public boolean checkPolicyMapWithPolicyId(int ID) throws ClassNotFoundException, SQLException {
+ 		boolean check = false;
+ 		
+		Connection con = null;
+ 		PreparedStatement ps = null;
+ 		ResultSet rs = null;
+ 		
+ 		con = OracleConnection.INSTANCE.getConnection();
+ 		ps = con.prepareStatement(CHECK_IF_POLICYID_IS_MAPPED);		
+ 		ps.setInt(1, ID);
+ 		rs = ps.executeQuery();
+ 		
+ 		if(rs.next()) {
+ 			check=true;
+ 		}
+ 		
+ 		//clean up
+ 		rs.close();
+ 		ps.close();
+ 		con.close();
+ 			
+ 		return check;
+ 		}
+ 	
+ 	public boolean deletePolicyUsingId(int ID) throws ClassNotFoundException, SQLException {
+ 		
+ 		Connection con = null;
+ 		PreparedStatement ps = null;
+ 		ResultSet rs = null;
+ 		
+ 		con = OracleConnection.INSTANCE.getConnection();
+ 		ps = con.prepareStatement(DELETE_POLICIES_BY_CUSTOMER_ID);
+ 		ps.setInt(1, ID);
+ 		rs = ps.executeQuery();
+ 		
+ 		rs.close();
+ 		ps.close();
+ 		con.close();
+ 
+ 		return true;
+ 	}
+ 	
 }
