@@ -80,6 +80,7 @@
     </tr>
   </tbody>
 </table>
+    <a class="btn btn-primary" href="view/GenerateCertificate.jsp" role="button">Back</a>
 	
 	
 	
