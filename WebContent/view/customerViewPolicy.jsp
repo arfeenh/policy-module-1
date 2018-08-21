@@ -7,6 +7,8 @@
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="com.policy.dao.PolicyMapDao" %>
 <%@ page import="com.policy.dao.NomineeDao" %>
+<%@ page import="java.time.LocalDate" %>
+<%@ page import="java.sql.Date" %>
 
 <%
 	Policy myPolicy = (Policy)session.getAttribute("policy");
@@ -34,12 +36,9 @@
 	
 	// convert startDate to expireDate
 	Date startDate = myPolicy.getStartDate();
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-	Calendar cal = Calendar.getInstance();
-	cal.setTime(startDate);
-	cal.add(Calendar.YEAR, (int)policyTenure);
-	cal.add(Calendar.MONTH, (int)((policyTenure-(int)policyTenure)*10));
-	String expireDate = sdf.format(cal.getTime());
+	LocalDate ld = LocalDate.parse(startDate.toString());
+	ld = ld.plusYears((long)myPolicy.getTenure());
+	Date expireDate = Date.valueOf(ld);
 	
 %>
 
@@ -117,7 +116,7 @@ button {
 			</tr>
 			<tr>
 				<td class="tbl-labels">Policy Expire Date</td>
-				<td class="tbl-data"><%= expireDate %></td>
+				<td class="tbl-data"><%= expireDate.toString() %></td>
 			</tr>
 		</table>
 		<button id="go-back-home">Main Menu</button>
