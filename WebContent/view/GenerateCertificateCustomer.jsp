@@ -22,6 +22,8 @@
 		<%
 			
 			int id = 1; //CHANGE THIS TO LOGGED IN CUSTOMER ID WHEN INTEGRATING
+			Customer c = (Customer)session.getAttribute("user");
+			id = c.getCustomerId();
 			session.setAttribute("customerID", Integer.toString(id));
 			try {
 				List<Policy> k;
@@ -38,6 +40,7 @@
 		%>
 	</select><br>
 	<input type = "submit" value = "Generate Customer Certificate" name = "op">
+	<button type = "submit" value = "custGoBack" name = "op">Go Back</button>
 	
 	
 </form>

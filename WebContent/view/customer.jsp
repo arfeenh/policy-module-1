@@ -29,6 +29,10 @@
 		<td><button type="button" onclick="window.location.href = 'BuyPolicy.jsp';" value="buyPolicy">Buy Policy</button></td>
 	</tr>
 	<tr>
+		<td><button type="button" onclick="window.location.href = 'GenerateCertificateCustomer.jsp';" value="generateCert">Generate Certificate</button></td>
+		
+	</tr>
+	<tr>
 		<td>
   			<form  method = "get" action="../MainServlet">
 				<select name="policy" >

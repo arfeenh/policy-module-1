@@ -10,6 +10,7 @@
 <%@page import="java.util.ArrayList" %>
 <%@page import = "com.policy.data.Nominee" %>
 <%@page import = "java.sql.Date" %>
+<%@page import = "com.policy.data.Manager" %>
 <%! Policy pol; %>
 <%! List<Nominee> noms;%>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -80,7 +81,16 @@
     </tr>
   </tbody>
 </table>
-    <a class="btn btn-primary" href="view/GenerateCertificate.jsp" role="button">Back</a>
+<%
+	if (session.getAttribute("user") instanceof Manager){
+		%> <a class="btn btn-primary" href="view/GenerateCertificate.jsp" role="button">Back</a><%
+	}
+	
+	else{
+		%> <a class="btn btn-primary" href="view/GenerateCertificateCustomer.jsp" role="button">Back</a><%
+	}
+
+%>
 	
 	
 	
