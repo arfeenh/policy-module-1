@@ -120,7 +120,6 @@ button {
 			</tr>
 		</table>
 		<button id="go-back-home">Main Menu</button>
-		<button id="go-back-view-page">View Another Policy</button>
 		<button id="update-nominees">Update Nominees</button>
 	</div>
 	<script>
@@ -131,10 +130,6 @@ button {
 					window.location.href = "customer.jsp";
 				});
 		
-		document.getElementById("go-back-view-page").addEventListener(
-				"click", function() {
-					window.location.href = "ViewPolicyByAgent.jsp";
-				});
 		// Button click event listener for update nominees;
 		// When clicked, redirect page to "updateNominees.jsp"
 		document.getElementById("update-nominees").addEventListener("click",
