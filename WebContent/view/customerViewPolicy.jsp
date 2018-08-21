@@ -9,7 +9,7 @@
 <%@ page import="com.policy.dao.NomineeDao" %>
 <%@ page import="java.time.LocalDate" %>
 <%@ page import="java.sql.Date" %>
-
+<%@ page import = "com.policy.data.Manager" %>
 <%
 	Policy myPolicy = (Policy)session.getAttribute("policy");
 	
@@ -125,10 +125,21 @@ button {
 	<script>
 		// Button click event listener for go back button;
 		// When clicked, redirect page to customer home page
-		document.getElementById("go-back-home").addEventListener(
+		<% if (session.getAttribute("user") instanceof Manager){
+			%>
+				document.getElementById("go-back-home").addEventListener(
+					"click", function() {
+						window.location.href = "admin.jsp";
+					});
+			<%
+		} 
+		else{ 
+			%> document.getElementById("go-back-home").addEventListener(
 				"click", function() {
 					window.location.href = "customer.jsp";
-				});
+				});<%
+		}%>
+		
 		
 		// Button click event listener for update nominees;
 		// When clicked, redirect page to "updateNominees.jsp"
