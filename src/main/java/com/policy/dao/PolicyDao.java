@@ -56,7 +56,7 @@ public class PolicyDao {
 	
 	private final String SELECT_POLICIES_BY_CUSTOMER_ID = "SELECT * FROM PolicyMap LEFT JOIN Policies ON " + 
 										"PolicyMap.policy_ID = Policies.policy_ID " + 
-										"Where PolicyMap.customer_ID = ?;";
+										"Where PolicyMap.customer_ID = ?";
 	
 	/**
 	 *  Will insert a policy object into the database.
@@ -122,7 +122,7 @@ public class PolicyDao {
 	 * @throws SQLException 
 	 * @throws ClassNotFoundException 
 	 */
-	public ArrayList<Policy> getPoliciesByCustomerID(int id) throws ClassNotFoundException, SQLException{
+	public List<Policy> getPoliciesByCustomerID(int id) throws ClassNotFoundException, SQLException{
 		ArrayList<Policy> policies = new ArrayList<Policy>();
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -266,14 +266,27 @@ public class PolicyDao {
 		Statement st = con.createStatement();
 		ResultSet rs = st.executeQuery("Select * from PolicyMap where CUSTOMER_ID = " + id);
 		List<Integer> policyIDs = new ArrayList<Integer>();
+		List<List<Nominee>> nomineeLists = new ArrayList<List<Nominee>>();
+		List<Date> dates = new ArrayList<Date>();
+		List<Integer> payments = new ArrayList<Integer>();
+		List<Double> premiums = new ArrayList<Double>();
 
 		while (rs.next()) {
 			policyIDs.add(rs.getInt(3));
+			nomineeLists.add(NomineeDao.getNomineesFromMapID(rs.getInt(1)));
+			dates.add(rs.getDate(5));
+			payments.add(rs.getInt(6));
+			premiums.add(rs.getDouble(7));
+			
+			
 		}
 		
 		List<Policy> k = new ArrayList<Policy>();
 		PreparedStatement pst = con.prepareStatement("Select * from Policies where POLICY_ID = ?");
 		Policy temp;
+		rs.close();
+		
+		int index = 0;
 		
 		for (int x = 0; x < policyIDs.size(); x++) {
 			pst.setInt(1, policyIDs.get(x));
@@ -288,7 +301,12 @@ public class PolicyDao {
 				temp.setMinSum(rs.getDouble(6));
 				temp.setMaxSum(rs.getDouble(7));
 				temp.setPreReqs(rs.getString(8));
+				temp.setNominees(nomineeLists.get(index));
+				temp.setPaymentsPerYear(payments.get(index));
+				temp.setPremiumAmount(premiums.get(index));
+				temp.setStartDate(dates.get(index));
 				k.add(temp);
+				index++;
 			}
 		}
 		

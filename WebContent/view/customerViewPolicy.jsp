@@ -7,6 +7,7 @@
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="com.policy.dao.PolicyMapDao" %>
 <%@ page import="com.policy.dao.NomineeDao" %>
+
 <%
 	Policy myPolicy = (Policy)session.getAttribute("policy");
 	
@@ -39,6 +40,7 @@
 	cal.add(Calendar.YEAR, (int)policyTenure);
 	cal.add(Calendar.MONTH, (int)((policyTenure-(int)policyTenure)*10));
 	String expireDate = sdf.format(cal.getTime());
+	
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -127,7 +129,7 @@ button {
 		// When clicked, redirect page to customer home page
 		document.getElementById("go-back-home").addEventListener(
 				"click", function() {
-					window.location.href = "admin.jsp";
+					window.location.href = "customer.jsp";
 				});
 		
 		document.getElementById("go-back-view-page").addEventListener(
