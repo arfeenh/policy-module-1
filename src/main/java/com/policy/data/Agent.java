@@ -1,5 +1,12 @@
 /*
- * Created by Patrick Yu on Aug 14, 2018
+ * This class is used to create agent objects.
+ * Agents help customers buy policies.
+ * @author					Patrick
+ * @version      			1
+ * @Class name				Agent
+ * @Creation Date			August 14, 2018
+ * @History
+ * @Reviewed by & Status	Patrick
  */
 
 package com.policy.data;
@@ -7,25 +14,25 @@ package com.policy.data;
 import java.util.Date;
 
 public class Agent {
-	private int agent_id;
+	private int agentId;
 	private String firstname;
 	private String middlename;
 	private String lastname;
-	private Date date_of_birth;
+	private Date dateOfBirth;
 	private String address;
 	private String email;
-	private String phone_primary;
-	private String phone_secondary;
-	private double years_of_experience;
-	private int city_id;
-	private int reference_id;
+	private String phonePrimary;
+	private String phoneSecondary;
+	private double yrsExperience;
+	private int cityId;
+	private int referenceId;
 
 	public int getAgentId() {
-		return agent_id;
+		return agentId;
 	}
 
 	public void setAgentId(int id) {
-		this.agent_id = id;
+		this.agentId = id;
 	}
 
 	public String getFirstname() {
@@ -53,11 +60,11 @@ public class Agent {
 	}
 
 	public Date getDateOfBirth() {
-		return date_of_birth;
+		return dateOfBirth;
 	}
 
-	public void setDateOfBirth(Date date_of_birth) {
-		this.date_of_birth = date_of_birth;
+	public void setDateOfBirth(Date dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
 	}
 
 	public String getAddress() {
@@ -77,42 +84,42 @@ public class Agent {
 	}
 
 	public String getPhonePrimary() {
-		return phone_primary;
+		return phonePrimary;
 	}
 
 	public void setPhonePrimary(String phone) {
-		this.phone_primary = phone;
+		this.phonePrimary = phone;
 	}
 
 	public String getPhoneSecondary() {
-		return phone_secondary;
+		return phoneSecondary;
 	}
 
 	public void setPhoneSecondary(String phone) {
-		this.phone_secondary = phone;
+		this.phoneSecondary = phone;
 	}
 
 	public double getYearsOfExperience() {
-		return years_of_experience;
+		return yrsExperience;
 	}
 
 	public void setYearsOfExperience(double years) {
-		this.years_of_experience = years;
+		this.yrsExperience = years;
 	}
 
 	public int getCityId() {
-		return city_id;
+		return cityId;
 	}
 
 	public void setCityId(int id) {
-		this.city_id = id;
+		this.cityId = id;
 	}
 
 	public int getReferenceId() {
-		return reference_id;
+		return referenceId;
 	}
 
 	public void setReferenceId(int id) {
-		this.reference_id = id;
+		this.referenceId = id;
 	}
 }

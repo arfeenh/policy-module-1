@@ -1,3 +1,5 @@
+<!-- created by Hamza at 3pm   -->
+
 <%@ page import="com.policy.data.Policy" %>
 <%@ page import="java.io.IOException" %>
 <%@ page import="com.policy.service.PolicyService" %>
@@ -5,7 +7,7 @@
 <%@ page import="java.sql.*,java.util.*, java.lang.*" %>
 
 
-<!DOCTYPE html> <!-- created by Hamza at 3pm   -->
+<!DOCTYPE html> 
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -37,7 +39,6 @@
 		<table align="center" >
 			<h1 align="center"> Register Policy </h1>
 			<tr> 
-			
 				<td> Policy Name </td>
 				<td> <input type="text" name="policy_name" required = "required" pattern="([^\s][A-z0-9\s]+){2,100}"/> </td>
 				<td> </td>
@@ -45,27 +46,19 @@
 				<td> </td>
 				<td> </td>
 				<td>   <button type="reset" value="Reset">Reset form</button> </td>
-				
-			</tr>
-				
-				
-			
+			</tr>			
 			<tr>
 				<td> Type of Insurance </td>
 				<td> <input type="text" name="policyType" required = "required" pattern="([^\s][A-z0-9\s]+){2,100}"/> </td>
-				
 			</tr>
-				
 			<tr>	
 				<td> Number of Nominee's </td>
-				<td>
-						
+				<td>	
 					<input type="text" name="nominee" id="display" value="0" oninput="updateNumber()" required="required" pattern="^[0-9]*$" >
 				    <input type="button" value="+" id="inc" onclick="incNumber()"/>
 				    <input type="button" value="-" id="dec" onclick="decNumber()"/>
 				</td> 
 			</tr>
-
     			<tr> 
 	    			<td> Tenure </td>
 	    			<td> <br>
@@ -77,7 +70,6 @@
  				
 	    			</td>
 				</tr>
-			
 				<tr> 
 					<td> Sum Assured </td>
 					<td> <br>
@@ -88,7 +80,6 @@
 <!-- 				<tr> 
 					<td> List Pre-Requisites</td>
 					<td>
-				   		
 				   		<div id="certificationtog">
 						   <p class="setting">
 						   	<br>
@@ -96,43 +87,29 @@
 						      <input type="button" id="removerows" class="removerows" value="Delete Rows" onclick="remove();" />  
 						      <br>
 						    <span id="myspan" ></span>
-						   	<span style="width: 0px; margin-left: 20px; font-weight: bold; float: none; ">  <br>
-						        
-						      </span>
-
-						     
+						   	<span style="width: 0px; margin-left: 20px; font-weight: bold; float: none; ">  <br>     
 						      <br><br>
-
 						   </p>
 						</div>
 					</td>
 				</tr> -->
-				
 				<tr>
 					<td> Pre-req </td>
 					<td><br><br>
 					<textarea rows="4" cols="50" placeholder="input your pre-req" name="pre-req">
 					</textarea>
 				 	</td>
-				
 				</tr>
-				
-			
 		</table>
-		
 		<div class="clearfix" align="center">
-			
-			<input type="submit" value="Register" id="check" />
-			<button onclick="window.location.href='admin.jsp'">Cancel/Back</button>			
-    	
+			<input type="submit"  name="action" value="registerPolicy" id="check" class="btn btn-primary btn-lg" />		
+			<a href="admin.jsp" class="btn btn-primary btn-lg">Cancel/Back</a>	
     	</div >
 		</div>
-		
 	</form>
 	</header>
 	</div>
 	</div>
-	
 	<script src = "../javascript/PolicyValidation.js"> </script>
 </body>
 </html>

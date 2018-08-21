@@ -47,122 +47,7 @@ public class MainServlet extends HttpServlet {
 				request.getSession().setAttribute("policy", policies.get(Integer.parseInt(request.getParameter("policy"))));
 				response.sendRedirect("view/customerViewPolicy.jsp");
 				break;
-			case "viewDeletePolicySelectPolicy":
-				String nameAndID = request.getParameter("selectPolicy");
-				System.out.println(nameAndID);
-				
-			case "updatePolicy":
-				Policy policy = new Policy();
-				PolicyDao polDao = new PolicyDao();
-				
-				String str =request.getParameter("selectPolicy");
-				final Pattern pattern = Pattern.compile("^.*\\((.*)\\).*$");
-		        final Matcher matcher = pattern.matcher(str);
-		        String answer1 = "";
-				System.out.println(str);
-				
-				if (matcher.matches())
-		            answer1 = matcher.group(1);
-				
-				
-		        System.out.println(answer1);	
-		        int extracted_policy_id = Integer.parseInt(answer1);
-		        
-		        try {
-		        	policy = polDao.selectPolicyByID(extracted_policy_id);
-				} catch (ClassNotFoundException | SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-		        
-		        response.sendRedirect("view/UpdatePolicyDisplay.jsp");
-		        
-		        HttpSession ses = request.getSession();
-				
-				int policy_Id = extracted_policy_id;
-				ses.setAttribute("pol_Id", policy_Id);
-				
-			   	String polName = policy.getPolicyName();
-			   	ses.setAttribute("policyname", polName);
-			   	
-			   	String PolicyType = policy.getPolicyType();
-			   	ses.setAttribute("policyType", PolicyType);
-		   		 
-				int numNominees = policy.getNumberNominees();
-			   	ses.setAttribute("nominee", numNominees);
-			   	   	
-				double numTenure = policy.getTenure();
-			   	ses.setAttribute("year", numTenure);
-			   	
-			   	
-			   	double minSumD = policy.getMinSum();
-			   	String minSum = new StringBuilder().append(minSumD).toString();
-			   	ses.setAttribute("min", minSum);
-			   	
-			   	double maxSumD = policy.getMaxSum();
-			   	String maxSum = new StringBuilder().append(maxSumD).toString();
-			   	ses.setAttribute("max", maxSum);
-			   	
-
-			   	String preReq = policy.getPreReqs();
-			   	ses.setAttribute("pre-req", preReq);
-			   	System.out.println(preReq);
-			   	
-			   	break;
-			   	
-			case "updatePolicyInsert": //use to insert updated data
-	
-		        HttpSession ses1 = request.getSession();
-		        
-			   	polName = request.getParameter("policy_name");
-			   	ses1.setAttribute("policy_name", polName);
-
-				numNominees = Integer.parseInt(request.getParameter("nominee"));
-			   	ses1.setAttribute("nominee", numNominees);
-			   	
-				numTenure = Double.parseDouble(request.getParameter("year"));
-			   	ses1.setAttribute("year", numTenure);
-		   		 
-			   	double minSum1 = Double.parseDouble(request.getParameter("min"));
-			   	ses1.setAttribute("min", minSum1);
-			   	
-			   	double maxSum1 = Double.parseDouble(request.getParameter("max"));
-			   	ses1.setAttribute("max", maxSum1);
-			   	
-			   	preReq = request.getParameter("pre-req");
-			   	ses1.setAttribute("pre-req", preReq);
-			   	
-			   	PolicyType = request.getParameter("policyType");
-			   	ses1.setAttribute("policyType", PolicyType);
-
-			   	System.out.println(polName);
-			   	
-			   	Policy obj = new Policy();
-		   	
-			   	obj.setPolicyName(polName);
-			   	obj.setNumberNominees(numNominees);
-			   	obj.setTenure(numTenure);
-			   	obj.setMinSum(minSum1);
-			   	obj.setMaxSum(maxSum1);
-			   	obj.setPreReqs(preReq);
-			   	obj.setPolicyType(PolicyType);
-			   	
-			   	ses1.setAttribute("policy", obj);
-			   	
-			   	System.out.println(ses1.getAttribute("pol_Id"));
-			   	int policyID = (int) ses1.getAttribute("pol_Id");
-			   	PolicyDao obj1 = new PolicyDao();
-			   	try {
-					obj1.update(obj, policyID);
-				} catch (ClassNotFoundException | SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			   	
-			   	
-			   	response.sendRedirect("view/ViewPolicy.jsp");
-			   	break;
-			
+      	
 			case "AddNominee":
 				String nominee_name = request.getParameter("new-nominee-name");
 				String relationship = request.getParameter("new-nominee-relationship");
@@ -211,6 +96,8 @@ public class MainServlet extends HttpServlet {
 				response.sendRedirect("view/updateNominee.jsp");
 			
 			break;
+
+			   	
 			}
 			return;
 		}
@@ -246,47 +133,266 @@ public class MainServlet extends HttpServlet {
   
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		   	HttpSession ses = request.getSession();
-		   	
-		   	String polName = request.getParameter("policy_name");
-		   	ses.setAttribute("policy_name", polName);
-	   		 
-			int numNominees = Integer.parseInt(request.getParameter("nominee"));
-		   	ses.setAttribute("nominee", numNominees);
-		   	
-			double numTenure = Double.parseDouble(request.getParameter("year"));
-		   	ses.setAttribute("year", numTenure);
-		   	
-		   	double minSum = Double.parseDouble(request.getParameter("min"));
-		   	ses.setAttribute("min", minSum);
-		   	
-		   	double maxSum = Double.parseDouble(request.getParameter("max"));
-		   	ses.setAttribute("max", maxSum);
-		   	
-		   	String preReq = request.getParameter("pre-req");
-		   	ses.setAttribute("pre-req", preReq);
-		   	
-		   	String PolicyType = request.getParameter("policyType");
-		   	ses.setAttribute("policyType", PolicyType);
-		   	
-		   	Policy obj = new Policy();
-		   	
-		   	obj.setPolicyName(polName);
-		   	obj.setNumberNominees(numNominees);
-		   	obj.setTenure(numTenure);
-		   	obj.setMinSum(minSum);
-		   	obj.setMaxSum(maxSum);
-		   	obj.setPreReqs(preReq);
-		   	obj.setPolicyType(PolicyType);
-		   	
-		   	ses.setAttribute("policy", obj);
+		
+		String action = request.getParameter("action");
+		System.out.println(action);
+		if(action != null) {
+			switch(action) {
+			case "registerPolicy":
+				System.out.println("hello");
+				HttpSession ses = request.getSession();
+			   	
+			   	String polName = request.getParameter("policy_name");
+			   	ses.setAttribute("policy_name", polName);
+		   		 
+				int numNominees = Integer.parseInt(request.getParameter("nominee"));
+			   	ses.setAttribute("nominee", numNominees);
+			   	
+				double numTenure = Double.parseDouble(request.getParameter("year"));
+			   	ses.setAttribute("year", numTenure);
+			   	
+			   	double minSum = Double.parseDouble(request.getParameter("min"));
+			   	ses.setAttribute("min", minSum);
+			   	
+			   	double maxSum = Double.parseDouble(request.getParameter("max"));
+			   	ses.setAttribute("max", maxSum);
+			   	
+			   	String preReq = request.getParameter("pre-req");
+			   	ses.setAttribute("pre-req", preReq);
+			   	
+			   	String PolicyType = request.getParameter("policyType");
+			   	ses.setAttribute("policyType", PolicyType);
+			   	
+			   	Policy obj = new Policy();
+			   	
+			   	obj.setPolicyName(polName);
+			   	obj.setNumberNominees(numNominees);
+			   	obj.setTenure(numTenure);
+			   	obj.setMinSum(minSum);
+			   	obj.setMaxSum(maxSum);
+			   	obj.setPreReqs(preReq);
+			   	obj.setPolicyType(PolicyType);
+			   	
+			   	ses.setAttribute("policy", obj);
+			   	
+			   	PolicyService obj1 = new PolicyService();
+			   	obj1.addPolicy(obj);
+			   	
+			   	response.sendRedirect("view/ViewPolicy.jsp");
+			   	break;
+				
+			case "viewDeletePolicySelectPolicy":
+				String str = request.getParameter("selectPolicy");
+				Policy policy = new Policy();
+				PolicyDao polDao = new PolicyDao();
+				
+				final Pattern pattern = Pattern.compile("^.*\\((.*)\\).*$");
+		        final Matcher matcher = pattern.matcher(str);
+		        String answer1 = "";
+				System.out.println(str);
+				
+				if (matcher.matches())
+		            answer1 = matcher.group(1);
+				
+				
+		        System.out.println(answer1);	
+		        int extracted_policy_id = Integer.parseInt(answer1);
+		        
+		        try {
+		        	policy = polDao.selectPolicyByID(extracted_policy_id);
+				} catch (ClassNotFoundException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		        
+		        response.sendRedirect("view/DeletePolicyDisplay.jsp");
+		        
+		        HttpSession ses1 = request.getSession();
+				
+				int policy_Id = extracted_policy_id;
+				ses1.setAttribute("pol_Id", policy_Id);
+				
+				
+			   	String polName1 = policy.getPolicyName();
+			   	ses1.setAttribute("policyname", polName1);
+			   	
+			   	String PolicyType1 = policy.getPolicyType();
+			   	ses1.setAttribute("policyType", PolicyType1);
+		   		 
+				int numNominees1 = policy.getNumberNominees();
+			   	ses1.setAttribute("nominee", numNominees1);
+			   	   	
+				double numTenure1 = policy.getTenure();
+			   	ses1.setAttribute("year", numTenure1);
+			   	
+			   	
+			   	double minSumD = policy.getMinSum();
+			   	String minSum1 = new StringBuilder().append(minSumD).toString();
+			   	ses1.setAttribute("min", minSum1);
+			   	
+			   	double maxSumD = policy.getMaxSum();
+			   	String maxSum1 = new StringBuilder().append(maxSumD).toString();
+			   	ses1.setAttribute("max", maxSum1);
+			   	
 
+			   	String preReq1 = policy.getPreReqs();
+			   	ses1.setAttribute("pre-req", preReq1);
+			   	System.out.println(preReq1);
+		        
+
+		        break;
+				
+			case "deletePolicy":
+				boolean check = false;
+				boolean delete= false;
+				PolicyDao polDao1 = new PolicyDao();
+				
+		        HttpSession sesDelete = request.getSession();
+		        System.out.println("hello");
+			   	System.out.println(sesDelete.getAttribute("pol_Id"));
+			   	int policyID = (int) sesDelete.getAttribute("pol_Id");
+				
+			   	try {
+					check = polDao1.checkPolicyMapWithPolicyId(policyID);
+				} catch (ClassNotFoundException | SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			   	System.out.println(check);
+			   	
+			   	if(check==false) {
+			   		try {
+						delete = polDao1.deletePolicyUsingId(policyID);
+						System.out.println("Successfully Deleted Policy");
+					} catch (ClassNotFoundException | SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			   	}
+			   	else {
+			   		System.out.println("Unable to delete policy because there is a dependancy with the following policy Id:" + policyID);
+			   	}
+				break;
+			
+				
+			case "updatePolicy":
+				Policy policy1 = new Policy();
+				PolicyDao polDao2 = new PolicyDao();
+				
+				String str1 =request.getParameter("selectPolicy");
+				final Pattern pattern1 = Pattern.compile("^.*\\((.*)\\).*$");
+		        final Matcher matcher1 = pattern1.matcher(str1);
+		        String answer11 = "";
+				System.out.println(str1);
+				
+				if (matcher1.matches())
+		            answer11 = matcher1.group(1);
+				
+				System.out.println("helllooooo");
+		        System.out.println(answer11);	
+		        int extracted_policy_id1 = Integer.parseInt(answer11);
+		        
+		        try {
+		        	policy1 = polDao2.selectPolicyByID(extracted_policy_id1);
+				} catch (ClassNotFoundException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		        
+		        response.sendRedirect("view/UpdatePolicyDisplay.jsp");
+		        
+		        HttpSession ses2 = request.getSession();
+				
+				int policy_Id1 = extracted_policy_id1;
+				ses2.setAttribute("pol_Id", policy_Id1);
+				
+			   	String polName11 = policy1.getPolicyName();
+			   	ses2.setAttribute("policyname", polName11);
+			   	
+			   	String PolicyType11 = policy1.getPolicyType();
+			   	ses2.setAttribute("policyType", PolicyType11);
+		   		 
+				int numNominees11 = policy1.getNumberNominees();
+			   	ses2.setAttribute("nominee", numNominees11);
+			   	   	
+				double numTenure11 = policy1.getTenure();
+			   	ses2.setAttribute("year", numTenure11);
+			   	
+			   	
+			   	double minSumD1 = policy1.getMinSum();
+			   	String minSum11 = new StringBuilder().append(minSumD1).toString();
+			   	ses2.setAttribute("min", minSum11);
+			   	
+			   	double maxSumD1 = policy1.getMaxSum();
+			   	String maxSum11 = new StringBuilder().append(maxSumD1).toString();
+			   	ses2.setAttribute("max", maxSum11);
+			   	
+
+			   	String preReq11 = policy1.getPreReqs();
+			   	ses2.setAttribute("pre-req", preReq11);
+			   	System.out.println(preReq11);
+			   	System.out.println("hello"+ numTenure11);
+			   	break;
+			   	
+			case "updatePolicyInsert": //use to insert updated data
+	
+		        HttpSession ses11 = request.getSession();
+		        
+			   	polName11 = request.getParameter("policy_name");
+			   	ses11.setAttribute("policy_name", polName11);
+
+				numNominees11 = Integer.parseInt(request.getParameter("nominee"));
+			   	ses11.setAttribute("nominee", numNominees11);
+			   	
+				numTenure11 = Double.parseDouble(request.getParameter("year"));
+			   	ses11.setAttribute("year", numTenure11);
+		   		 
+			   	System.out.println("hello"+ numTenure11);
+
+			   	
+			   	double minSum111 = Double.parseDouble(request.getParameter("min"));
+			   	ses11.setAttribute("min", minSum111);
+			   	
+			   	double maxSum111 = Double.parseDouble(request.getParameter("max"));
+			   	ses11.setAttribute("max", maxSum111);
+			   	
+			   	preReq11 = request.getParameter("pre-req");
+			   	ses11.setAttribute("pre-req", preReq11);
+			   	
+			   	PolicyType11 = request.getParameter("policyType");
+			   	ses11.setAttribute("policyType", PolicyType11);
+
+			   	System.out.println(polName11);
+			   	
+			   	Policy obj11 = new Policy();
 		   	
-		   	PolicyService obj1 = new PolicyService();
-		   	obj1.addPolicy(obj);
-		   	
-		   	
-		   	response.sendRedirect("view/ViewPolicy.jsp");
+			   	obj11.setPolicyName(polName11);
+			   	obj11.setNumberNominees(numNominees11);
+			   	obj11.setTenure(numTenure11);
+			   	obj11.setMinSum(minSum111);
+			   	obj11.setMaxSum(maxSum111);
+			   	obj11.setPreReqs(preReq11);
+			   	obj11.setPolicyType(PolicyType11);
+			   	
+			   	ses11.setAttribute("policy", obj11);
+			   	
+			   	System.out.println(ses11.getAttribute("pol_Id"));
+			   	int policyID1 = (int) ses11.getAttribute("pol_Id");
+			   	PolicyDao obj3 = new PolicyDao();
+			   	try {
+					obj3.update(obj11, policyID1);
+				} catch (ClassNotFoundException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			   	
+			   	
+			   	response.sendRedirect("view/ViewPolicy.jsp");
+			   	break;
+		
+			}
+			return;
+		}
 		   	
 	}
 }

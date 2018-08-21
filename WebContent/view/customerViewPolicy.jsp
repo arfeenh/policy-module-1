@@ -7,6 +7,9 @@
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="com.policy.dao.PolicyMapDao" %>
 <%@ page import="com.policy.dao.NomineeDao" %>
+<%@ page import="java.time.LocalDate" %>
+<%@ page import="java.sql.Date" %>
+<%@ page import = "com.policy.data.Manager" %>
 <%
 	Policy myPolicy = (Policy)session.getAttribute("policyobj");
 	
@@ -33,12 +36,10 @@
 	
 	// convert startDate to expireDate
 	Date startDate = myPolicy.getStartDate();
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-	Calendar cal = Calendar.getInstance();
-	cal.setTime(startDate);
-	cal.add(Calendar.YEAR, (int)policyTenure);
-	cal.add(Calendar.MONTH, (int)((policyTenure-(int)policyTenure)*10));
-	String expireDate = sdf.format(cal.getTime());
+	LocalDate ld = LocalDate.parse(startDate.toString());
+	ld = ld.plusYears((long)myPolicy.getTenure());
+	Date expireDate = Date.valueOf(ld);
+	
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -115,25 +116,31 @@ button {
 			</tr>
 			<tr>
 				<td class="tbl-labels">Policy Expire Date</td>
-				<td class="tbl-data"><%= expireDate %></td>
+				<td class="tbl-data"><%= expireDate.toString() %></td>
 			</tr>
 		</table>
 		<button id="go-back-home">Main Menu</button>
-		<button id="go-back-view-page">View Another Policy</button>
 		<button id="update-nominees">Update Nominees</button>
 	</div>
 	<script>
 		// Button click event listener for go back button;
 		// When clicked, redirect page to customer home page
-		document.getElementById("go-back-home").addEventListener(
+		<% if (session.getAttribute("user") instanceof Manager){
+			%>
+				document.getElementById("go-back-home").addEventListener(
+					"click", function() {
+						window.location.href = "admin.jsp";
+					});
+			<%
+		} 
+		else{ 
+			%> document.getElementById("go-back-home").addEventListener(
 				"click", function() {
-					window.location.href = "admin.jsp";
-				});
+					window.location.href = "customer.jsp";
+				});<%
+		}%>
 		
-		document.getElementById("go-back-view-page").addEventListener(
-				"click", function() {
-					window.location.href = "ViewPolicyByAgent.jsp";
-				});
+		
 		// Button click event listener for update nominees;
 		// When clicked, redirect page to "updateNominees.jsp"
 		document.getElementById("update-nominees").addEventListener("click",

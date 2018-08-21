@@ -4,14 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>No Policy Found</title>
+<title>Yelp API</title>
 </head>
 <body>
-<h1>Error</h1>
-There exists no mapping between that policy and a customer with that ID.<br>
-    <a class="btn btn-primary" href="view/GenerateCertificate.jsp" role="button">Back</a>
-
-
-
+	
 </body>
 </html>

@@ -1,5 +1,12 @@
 /*
- * Created by Patrick Yu on Aug 14, 2018
+ * This class is used to create claim objects.
+ * Cliams are send to managers for approval.
+ * @author					Patrick
+ * @version      			1
+ * @Class name				Claim
+ * @Creation Date			August 14, 2018
+ * @History
+ * @Reviewed by & Status	Patrick
  */
 
 package com.policy.data;
@@ -7,60 +14,60 @@ package com.policy.data;
 import java.util.Date;
 
 public class Claim {
-	private int claim_id;
-	private Date claim_date;
-	private boolean is_approved;
-	private int manager_id;
-	private String reason_for_claim;
-	private String reason_for_rejection;
+	private int claimId;
+	private Date claimDate;
+	private boolean isApproved;
+	private int managerId;
+	private String reasonForClaim;
+	private String reasonForReject;
 	private String proof;
 
 	public int getClaimId() {
-		return claim_id;
+		return claimId;
 	}
 
 	public void setClaimId(int id) {
-		this.claim_id = id;
+		this.claimId = id;
 	}
 
 	public Date getClaimDate() {
-		return claim_date;
+		return claimDate;
 	}
 
 	public void setClaimDate(Date date) {
-		this.claim_date = date;
+		this.claimDate = date;
 	}
 
 	public boolean getStatus() {
-		return is_approved;
+		return isApproved;
 	}
 
 	public void setStatus(boolean status) {
-		this.is_approved = status;
+		this.isApproved = status;
 	}
 
 	public int getManagerId() {
-		return manager_id;
+		return managerId;
 	}
 
 	public void setManagerId(int id) {
-		this.manager_id = id;
+		this.managerId = id;
 	}
 
 	public String getReasonForClaim() {
-		return reason_for_claim;
+		return reasonForClaim;
 	}
 
 	public void setReasonForClaim(String reason) {
-		this.reason_for_claim = reason;
+		this.reasonForClaim = reason;
 	}
 
 	public String getReasonForRejection() {
-		return reason_for_rejection;
+		return reasonForReject;
 	}
 
 	public void setReasonForRejection(String reason) {
-		this.reason_for_rejection = reason;
+		this.reasonForReject = reason;
 	}
 
 	public String getProof() {
