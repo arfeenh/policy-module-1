@@ -1,14 +1,14 @@
 /**
+ * created by hamza on 18 aug
  * 
  */
 
 	
 	    var i = 0;
 	    function updateNumber(){
-			var i=document.forms["CreateFormUI"]["display"].value;
-			console.log(i[0]);
-			console.log(i[0]);
-			if(!i.match(/^\d+$/)){
+			var i=document.getElementById("display").value;
+			var regex = /^\d+$/;
+			if(!i.match(regex)){
 				   document.getElementById("display").value = i.substring(0,i.length-1);
 			}
 	    	if(i>10){
@@ -67,19 +67,19 @@
 		     spanvar.removeChild(myspan.childNodes[0]);
 		   }
 	   function validate(){ //function to validate numeric values
-		   var checkMin=document.forms["CreateFormUI"]["min"].value;
-		   var checkMax=document.forms["CreateFormUI"]["max"].value;
-		   var checkTenure=document.forms["CreateFormUI"]["area"].value;
-		   
-		   document.getElementById("cust").value = checkTenure; //set the custom value field to num entered by user
+		   var checkMin=document.getElementById("min").value;
+		   var checkMax=document.getElementById("max").value;
+		   var checkTenure=document.getElementById("area").value;
+		   var regex = /^\d+$/;
 
-		   if(!checkMin.match(/^\d+$/)){
-			   document.forms["CreateFormUI"]["min"].value= checkMin.substring(0,checkMin.length-1);
+		   document.getElementById("cust").value = checkTenure; //set the custom value field to num entered by user
+		   if(!checkMin.match(regex)){
+			   document.getElementById("min").value= checkMin.substring(0,checkMin.length-1);
 		   }
-		   else if(!checkMax.match(/^\d+$/)){
-			   document.forms["CreateFormUI"]["max"].value= checkMax.substring(0,checkMax.length-1);
+		   else if(!checkMax.match(regex)){
+			   document.getElementById("max").value= checkMax.substring(0,checkMax.length-1);
 		   }
-		   else if(!checkTenure.match(/^\d+$/)){
+		   else if(!checkTenure.match(regex)){
 			   document.getElementById("area").value = checkTenure.substring(0,checkTenure.length-1);
 			   return;
 		   }

@@ -1,4 +1,4 @@
-<!-- created by Hamza on 20th Aug at 10am   -->
+<!-- created by Hamza on 21th Aug at 10am   -->
 
 <%@ page import="java.io.IOException" %>
 <%@ page import="com.policy.service.PolicyService" %>
@@ -31,10 +31,10 @@
   <form id="updateFormInsert" method= "get" action ="../MainServlet" >
   	<div class="form-group">
 		<table align="center" >
-			<h1 align="center"> Update Policy </h1>			
+			<h1 align="center"> Delete Policy </h1>			
 			<tr> 
 				<td> Policy Name </td>				
-				<td> <input type="text" name="policy_name" required = "required" value= "<%= session.getAttribute("policyname")%>" pattern="([^\s][A-z0-9\s]+){2,100}" /> </td>
+				<td> <input type="text" readonly name="policy_name" required = "required" value= "<%= session.getAttribute("policyname")%>" pattern="([^\s][A-z0-9\s]+){2,100}" /> </td>
 				<td> </td>
 				<td> </td>
 				<td> </td>
@@ -43,12 +43,12 @@
 			</tr>		
 			<tr>
 				<td> Type of Insurance </td>
-				<td> <input type="text" name="policyType" required = "required" value= "<%= session.getAttribute("policyType")%>" pattern="([^\s][A-z0-9\s]+){2,100}"/> </td>	
+				<td> <input type="text" readonly name="policyType" required = "required" value= "<%= session.getAttribute("policyType")%>" pattern="([^\s][A-z0-9\s]+){2,100}"/> </td>	
 			</tr>	
 			<tr>	
 				<td> Number of Nominee's </td>
 				<td>			
-					<input type="text" name="nominee" id="display" value= "<%= session.getAttribute("nominee")%>" oninput="updateNumber()" required="required" pattern="^[0-9]*$" >
+					<input type="text" readonly name="nominee" id="display" value= "<%= session.getAttribute("nominee")%>" oninput="updateNumber()" required="required" pattern="^[0-9]*$" >
 				    <input type="button" value="+" id="inc" onclick="incNumber()"/>
 				    <input type="button" value="-" id="dec" onclick="decNumber()"/>
 				</td> 
@@ -56,19 +56,19 @@
     			<tr> 
 	    			<td> Tenure </td>
 	    			<td> <br>
-	    				The previous Tenure value is shown, please select new value: <input type="text" name="yearOld" value="<%= session.getAttribute("year")%>" readonly >  <br> 
-	    				<input type="radio" name="year" value="1" onclick="hide();" required/> 1 Year<br>
-	  					<input type="radio" name="year" value="2" onclick="hide();"/> 2 Year<br>
-	  					<input type="radio" name="year" value="3" /> 3 Year <br>
-	    				<input type="radio" name="year" value="custom" id="cust" onclick="show();" /> Custom	 
-	    				<input type="text" 	name="year" value="4" id="area" style= "display: none;" oninput="validate()">	
+	    				The previous Tenure value is shown, please select new value: <input type="text" name="year" value="<%= session.getAttribute("year")%>" readonly>  <br> 
+	    				<input type="radio" readonly name="year" value="1" onclick="hide();" required/> 1 Year<br>
+	  					<input type="radio" readonly name="year" value="2" onclick="hide();"/> 2 Year<br>
+	  					<input type="radio" readonly name="year" value="3" /> 3 Year <br>
+	    				<input type="radio" readonly name="year" value="custom" id="cust" onclick="show();" /> Custom	 
+	    				<input type="text"  readonly name="year" value="4" id="area" style= "display: none;" oninput="validate()">	
 	    			</td>
 				</tr>
 				<tr> 
 					<td> Sum Assured </td>
 					<td> <br>
-						 Min: <input type="text" id="min" name="min" value="<%= session.getAttribute("min")%>" oninput="validate()"/> <br>
-					     Max:<input type="text" id="max" name="max" value="<%= session.getAttribute("max")%>"  oninput="validate()" />
+						 Min: <input type="text" readonly id="min" name="min" value="<%= session.getAttribute("min")%>" oninput="validate()"/> <br>
+					     Max:<input type="text" readonly id="max" name="max" value="<%= session.getAttribute("max")%>"  oninput="validate()" />
 					</td>
 				</tr>
 <!-- 				<tr> 
@@ -93,14 +93,14 @@
 				<tr>
 					<td> Pre-req </td>
 					<td><br><br>
-					<textarea rows="4" cols="50" placeholder="input your pre-req" name="pre-req" ><%= session.getAttribute("pre-req")%>					
+					<textarea rows="4" cols="50" readonly placeholder="input your pre-req" name="pre-req" ><%= session.getAttribute("pre-req")%>					
 					</textarea>
 				 	</td>			
 				</tr>	
 		</table>		
 		<div class="clearfix" align="center">			
-			<button class="btn btn-primary btn-lg" type = "submit" name="action" value="updatePolicyInsert"> Update Policy </button>	
-			<a href="UpdatePolicy.jsp" class="btn btn-primary btn-lg">Cancel/Back</a>				
+			<button class="btn btn-primary btn-lg" type = "submit" name="action" value="deletePolicy"> Delete Policy </button>	
+			<a href="DeletePolicy.jsp" class="btn btn-primary btn-lg">Cancel/Back</a>				
     	</div >
 		<div align="center">
 			<a href="url"></a>
@@ -109,6 +109,6 @@
 	</form>	 	  
 	</div>
 	</div>	
-		<script src = "../javascript/PolicyValidation.js"> </script>
+	<script src = "../javascript/PolicyValidation.js"> </script>
 </body>
 </html>
