@@ -1,5 +1,12 @@
 /*
- * Created by Patrick Yu on Aug 14, 2018
+ * This class is used to create Nominee objects.
+ * Nominees are bounded to policies and customers.
+ * @author					Patrick
+ * @version      			1
+ * @Class name				Nominee
+ * @Creation Date			August 14, 2018
+ * @History
+ * @Reviewed by & Status	Patrick
  */
 
 package com.policy.data;

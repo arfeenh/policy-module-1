@@ -1,19 +1,26 @@
 /*
- * Created by Patrick Yu on Aug 14, 2018
+ * This class is used to create admin objects.
+ * Admins only have id and password for loggin in as admin
+ * @author					Patrick
+ * @version      			1
+ * @Class name				Admin
+ * @Creation Date			August 14, 2018
+ * @History
+ * @Reviewed by & Status	Patrick
  */
 
 package com.policy.data;
 
 public class Admin {
-	private int admin_id;
+	private int adminId;
 	private String password;
 
 	public int getAdminId() {
-		return admin_id;
+		return adminId;
 	}
 
 	public void setAdminId(int id) {
-		this.admin_id = id;
+		this.adminId = id;
 	}
 
 	public String getPassword() {

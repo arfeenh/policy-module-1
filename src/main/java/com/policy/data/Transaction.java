@@ -1,5 +1,12 @@
 /*
- * Created by Patrick Yu on Aug 14, 2018
+ * This class is used to create transaction objects.
+ * Every time customers pay premiums, a transaction occures.
+ * @author					Patrick
+ * @version      			1
+ * @Class name				Transaction
+ * @Creation Date			August 14, 2018
+ * @History
+ * @Reviewed by & Status	Patrick
  */
 
 package com.policy.data;
@@ -7,31 +14,31 @@ package com.policy.data;
 import java.util.Date;
 
 public class Transaction {
-	private int transaction_id;
-	private double amount_paid;
-	private Date transaction_date;
+	private int transactionId;
+	private double amountPaid;
+	private Date transactionDate;
 
 	public int getTransactionId() {
-		return transaction_id;
+		return transactionId;
 	}
 
 	public void setTransactionId(int id) {
-		this.transaction_id = id;
+		this.transactionId = id;
 	}
 
 	public double getAmountPaid() {
-		return amount_paid;
+		return amountPaid;
 	}
 
 	public void setAmountPaid(double amount) {
-		this.amount_paid = amount;
+		this.amountPaid = amount;
 	}
 
 	public Date getTransactionDate() {
-		return transaction_date;
+		return transactionDate;
 	}
 
 	public void setTransactionDate(Date date) {
-		this.transaction_date = date;
+		this.transactionDate = date;
 	}
 }

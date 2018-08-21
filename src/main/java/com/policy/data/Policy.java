@@ -1,6 +1,12 @@
-
 /*
- * Created by Patrick Yu on Aug 14, 2018
+ * This class is used to create policy objects.
+ * Policies are bounded to nominees and customers.
+ * @author					Patrick
+ * @version      			1
+ * @Class name				Policy
+ * @Creation Date			August 14, 2018
+ * @History
+ * @Reviewed by & Status	Patrick
  */
 
 package com.policy.data;
@@ -12,16 +18,16 @@ import java.util.List;
 public class Policy {
 	private int policy_id;
 	private String policyType; //Updated by Domenic Garreffa on Aug 15, 2018
-	private String policy_name;
-	private int number_nominees;
+	private String policyName;
+	private int numberNominees;
 	private double tenure;
-	private double min_sum;
-	private double max_sum;
-	private String pre_reqs;
-	private int payments_per_year; // Added by Patrick Yu on Aug 16, 2018
+	private double minSum;
+	private double maxSum;
+	private String preReqs;
+	private int paymentsPerYear; // Added by Patrick Yu on Aug 16, 2018
 	private double premiumAmount; // Added by Patrick Yu on Aug 16, 2018
-	private Date start_date; // Added by Patrick Yu on Aug 16, 2018
-	private int agent_id; // Added by Patrick Yu on Aug 16, 2018
+	private Date startDate; // Added by Patrick Yu on Aug 16, 2018
+	private int agentId; // Added by Patrick Yu on Aug 16, 2018
 	private List<Nominee> nominees = new ArrayList<Nominee>(); // Added by Patrick Yu on Aug 16, 2018
 
 	public int getPolicyId() {
@@ -44,22 +50,22 @@ public class Policy {
 	
 	// Added by Patrick Yu on Aug 16, 2018
 	public int getAgentId() {
-		return agent_id;
+		return agentId;
 	}
 	
 	// Added by Patrick Yu on Aug 16, 2018
 	public void setAgentId(int id) {
-		this.agent_id = id;
+		this.agentId = id;
 	}
 	
 	// Added by Patrick Yu on Aug 16, 2018
 	public int getPaymentsPerYear() {
-		return payments_per_year;
+		return paymentsPerYear;
 	}
 	
 	// Added by Patrick Yu on Aug 16, 2018
 	public void setPaymentsPerYear(int numOfPayments) {
-		this.payments_per_year = numOfPayments;
+		this.paymentsPerYear = numOfPayments;
 	}
 
 	//Added by Domenic Garreffa on Aug 15, 2018
@@ -73,19 +79,19 @@ public class Policy {
 	}
 
 	public String getPolicyName() {
-		return policy_name;
+		return policyName;
 	}
 
 	public void setPolicyName(String name) {
-		this.policy_name = name;
+		this.policyName = name;
 	}
 
 	public int getNumberNominees() {
-		return number_nominees;
+		return numberNominees;
 	}
 
 	public void setNumberNominees(int numberOfNominees) {
-		this.number_nominees = numberOfNominees;
+		this.numberNominees = numberOfNominees;
 	}
 
 	public double getTenure() {
@@ -97,21 +103,21 @@ public class Policy {
 	}
 
 	public String getPreReqs() {
-		return pre_reqs;
+		return preReqs;
 	}
 
 	public void setPreReqs(String preReqs) {
-		this.pre_reqs = preReqs;
+		this.preReqs = preReqs;
 	}
 
 	// Added by Patrick Yu on Aug 16, 2018
 	public Date getStartDate() {
-		return start_date;
+		return startDate;
 	}
 
 	// Added by Patrick Yu on Aug 16, 2018
-	public void setStartDate(Date start_date) {
-		this.start_date = start_date;
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
 	}
 
 	// Added by Patrick Yu on Aug 16, 2018
@@ -127,18 +133,18 @@ public class Policy {
 	}
 
 	public double getMinSum() {
-		return min_sum;
+		return minSum;
 	}
 
-	public void setMinSum(double min_sum) {
-		this.min_sum = min_sum;
+	public void setMinSum(double minSum) {
+		this.minSum = minSum;
 	}
 
 	public double getMaxSum() {
-		return max_sum;
+		return maxSum;
 	}
 
-	public void setMaxSum(double max_sum) {
-		this.max_sum = max_sum;
+	public void setMaxSum(double maxSum) {
+		this.maxSum = maxSum;
 	}
 }

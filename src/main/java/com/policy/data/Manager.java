@@ -1,5 +1,12 @@
 /*
- * Created by Patrick Yu on Aug 14, 2018
+ * This class is used to create Manager objects.
+ * Managers can view policies.
+ * @author					Patrick
+ * @version      			1
+ * @Class name				Manager
+ * @Creation Date			August 14, 2018
+ * @History
+ * @Reviewed by & Status	Patrick
  */
 
 package com.policy.data;
@@ -7,21 +14,21 @@ package com.policy.data;
 import java.util.Date;
 
 public class Manager {
-	private int manager_id;
+	private int managerId;
 	private String fullname;
-	private Date date_of_birth;
-	private int province_id;
-	private int city_id;
-	private int designation_id;
+	private Date dateOfBirth;
+	private int provinceId;
+	private int cityId;
+	private int designationId;
 	private String email;
 	private String password;
 
 	public int getManagerId() {
-		return manager_id;
+		return managerId;
 	}
 
-	public void setManagerId(int manager_id) {
-		this.manager_id = manager_id;
+	public void setManagerId(int managerId) {
+		this.managerId = managerId;
 	}
 
 	public String getFullname() {
@@ -33,35 +40,35 @@ public class Manager {
 	}
 
 	public Date getDateOfBirth() {
-		return date_of_birth;
+		return dateOfBirth;
 	}
 
-	public void setDateOfBirth(Date date_of_birth) {
-		this.date_of_birth = date_of_birth;
+	public void setDateOfBirth(Date dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
 	}
 
 	public int getProvinceId() {
-		return province_id;
+		return provinceId;
 	}
 
-	public void setProvinceId(int province_id) {
-		this.province_id = province_id;
+	public void setProvinceId(int provinceId) {
+		this.provinceId = provinceId;
 	}
 
 	public int getCityId() {
-		return city_id;
+		return cityId;
 	}
 
-	public void setCityId(int city_id) {
-		this.city_id = city_id;
+	public void setCityId(int cityId) {
+		this.cityId = cityId;
 	}
 
 	public int getDesignationId() {
-		return designation_id;
+		return designationId;
 	}
 
-	public void setDesignationId(int designation_id) {
-		this.designation_id = designation_id;
+	public void setDesignationId(int designationId) {
+		this.designationId = designationId;
 	}
 
 	public String getEmail() {

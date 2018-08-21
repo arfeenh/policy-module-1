@@ -1,4 +1,6 @@
 /target/
+WebContent/view/Testing.jsp
 .classpath
 .settings/
 .project
+src/test/
