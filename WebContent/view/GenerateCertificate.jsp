@@ -42,6 +42,7 @@
 	Enter Customer ID: 
 	<input type = "text" name = "customerID"><br>
 	<input type = "submit" value = "Generate Certificate" name = "op">
+	<input type = "submit" value = "Go Back" name = "op">
 	
 	
 </form>

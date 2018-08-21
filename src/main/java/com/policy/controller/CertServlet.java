@@ -61,6 +61,10 @@ public class CertServlet extends HttpServlet {
 			}
 		}
 		
+		if (request.getParameter("op").equals("Go Back")) {
+			response.sendRedirect("view/admin.jsp");
+		}
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
