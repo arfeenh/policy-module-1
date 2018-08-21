@@ -76,7 +76,7 @@
     </tr>
     <tr>
       <td>Policy Expiry Date: </td>
-      <td><%= session.getAttribute("CertEndDate").toString()  %></td>
+      <td><%= session.getAttribute("CertEndDate").toString() %></td>
     </tr>
   </tbody>
 </table>

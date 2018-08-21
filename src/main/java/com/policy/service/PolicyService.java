@@ -81,7 +81,7 @@ public class PolicyService {
 	
 	public Policy getPolicyById(int ID) {
 		try {
-			return policyDao.selectAllPolicyByID(ID);
+			return policyDao.selectPolicyByID(ID);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

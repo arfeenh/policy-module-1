@@ -69,7 +69,7 @@ public class MainServlet extends HttpServlet {
 		        int extracted_policy_id = Integer.parseInt(answer1);
 		        
 		        try {
-		        	policy = polDao.selectAllPolicyByID(extracted_policy_id);
+		        	policy = polDao.selectPolicyByID(extracted_policy_id);
 				} catch (ClassNotFoundException | SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

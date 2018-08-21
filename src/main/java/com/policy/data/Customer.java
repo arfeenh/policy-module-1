@@ -1,5 +1,12 @@
 /*
- * Created by Patrick Yu on Aug 14, 2018
+ * This class is used to create Customer objects.
+ * Customers can log in and view own policies.
+ * @author					Patrick
+ * @version      			1
+ * @Class name				Customer
+ * @Creation Date			August 14, 2018
+ * @History
+ * @Reviewed by & Status	Patrick
  */
 
 package com.policy.data;
@@ -7,31 +14,30 @@ package com.policy.data;
 import java.util.Date;
 
 public class Customer {
-	private int customer_id;
+	private int customerId;
 	private String firstname;
 	private String middlename;
 	private String lastname;
-	private Date date_of_birth;
+	private Date dateOfBirth;
 	private String gender;
-	private String permanent_address;
-	private String present_address;
+	private String permanentAddress;
+	private String presentAddress;
 	private String occupation;
 	private double salary;
-	private String marital_status;
-	private int number_of_children;
+	private String maritalStatus;
+	private int numOfChildren;
 	private String email;
-	private String phone_primary;
-	private String phone_secondary;
+	private String phonePrimary;
+	private String phoneSecondary;
 	private String SIN;
-//	private String photo;
 	private String password;
 
 	public int getCustomerId() {
-		return customer_id;
+		return customerId;
 	}
 
-	public void setCustomerId(int customer_id) {
-		this.customer_id = customer_id;
+	public void setCustomerId(int customerId) {
+		this.customerId = customerId;
 	}
 
 	public String getFirstname() {
@@ -59,11 +65,11 @@ public class Customer {
 	}
 
 	public Date getDateOfBirth() {
-		return date_of_birth;
+		return dateOfBirth;
 	}
 
-	public void setDateOfBirth(Date date_of_birth) {
-		this.date_of_birth = date_of_birth;
+	public void setDateOfBirth(Date dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
 	}
 
 	public String getGender() {
@@ -75,19 +81,19 @@ public class Customer {
 	}
 
 	public String getPermanentAddress() {
-		return permanent_address;
+		return permanentAddress;
 	}
 
-	public void setPermanentAddress(String permanent_address) {
-		this.permanent_address = permanent_address;
+	public void setPermanentAddress(String permanentAddress) {
+		this.permanentAddress = permanentAddress;
 	}
 
 	public String getPresentAddress() {
-		return present_address;
+		return presentAddress;
 	}
 
-	public void setPresentAddress(String present_address) {
-		this.present_address = present_address;
+	public void setPresentAddress(String presentAddress) {
+		this.presentAddress = presentAddress;
 	}
 
 	public String getOccupation() {
@@ -106,20 +112,20 @@ public class Customer {
 		this.salary = salary;
 	}
 
-	public String getMarital_status() {
-		return marital_status;
+	public String getMaritalStatus() {
+		return maritalStatus;
 	}
 
-	public void setMarital_status(String marital_status) {
-		this.marital_status = marital_status;
+	public void setMaritalStatus(String maritalStatus) {
+		this.maritalStatus = maritalStatus;
 	}
 
 	public int getNumberOfChildren() {
-		return number_of_children;
+		return numOfChildren;
 	}
 
-	public void setNumberOfChildren(int number_of_children) {
-		this.number_of_children = number_of_children;
+	public void setNumberOfChildren(int num) {
+		this.numOfChildren = num;
 	}
 
 	public String getEmail() {
@@ -131,27 +137,27 @@ public class Customer {
 	}
 
 	public String getPhonePrimary() {
-		return phone_primary;
+		return phonePrimary;
 	}
 
-	public void setPhonePrimary(String phone_primary) {
-		this.phone_primary = phone_primary;
+	public void setPhonePrimary(String phone) {
+		this.phonePrimary = phone;
 	}
 
 	public String getPhoneSecondary() {
-		return phone_secondary;
+		return phoneSecondary;
 	}
 
-	public void setPhoneSecondary(String phone_secondary) {
-		this.phone_secondary = phone_secondary;
+	public void setPhoneSecondary(String phone) {
+		this.phoneSecondary = phone;
 	}
 
 	public String getSIN() {
 		return SIN;
 	}
 
-	public void setSIN(String sIN) {
-		SIN = sIN;
+	public void setSIN(String sin) {
+		SIN = sin;
 	}
 
 	public String getPassword() {
