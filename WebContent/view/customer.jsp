@@ -14,7 +14,8 @@
 <body>
 <% 
 	Customer u = (Customer) session.getAttribute("user"); 
-	List<Policy> policies = PolicyDao.getAllCustomerPolicies(u.getCustomerId());
+	//List<Policy> policies = PolicyDao.getAllCustomerPolicies(u.getCustomerId());
+	List<Policy> policies = PolicyDao.getAllCustomerPolicies(1);
 	session.setAttribute("policies", policies);
 	
 %>
