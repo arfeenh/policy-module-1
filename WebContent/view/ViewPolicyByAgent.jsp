@@ -6,7 +6,7 @@
 	 @version: 1.0
 	 @name: ViewPolicyByAgent
 	 @Creation Date: August 14 2018 4:00PM 
-	 @History: Page UI Created, Validation, Dynamic Population of Dropdown from Database 
+	 @History: Page UI Created, Validation, Dynamic Population of Dropdown from Database, Connection to View Policy Page 
 	 @Reviewed by:             -->
 	 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"

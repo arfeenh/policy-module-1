@@ -273,7 +273,6 @@ public class PolicyDao {
 		List<Date> dates = new ArrayList<Date>();
 		List<Integer> payments = new ArrayList<Integer>();
 		List<Double> premiums = new ArrayList<Double>();
-
 		while (rs.next()) {
 			policyIDs.add(rs.getInt(3));
 			nomineeLists.add(NomineeDao.getNomineesFromMapID(rs.getInt(1)));

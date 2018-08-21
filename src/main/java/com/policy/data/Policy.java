@@ -147,4 +147,8 @@ public class Policy {
 	public void setMaxSum(double maxSum) {
 		this.maxSum = maxSum;
 	}
+	
+	public void addNomineeToList(Nominee obj) {
+		nominees.add(obj);
+	}
 }

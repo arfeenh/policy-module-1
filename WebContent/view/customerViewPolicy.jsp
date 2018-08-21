@@ -11,7 +11,7 @@
 <%@ page import="java.sql.Date" %>
 <%@ page import = "com.policy.data.Manager" %>
 <%
-	Policy myPolicy = (Policy)session.getAttribute("policy");
+	Policy myPolicy = (Policy)session.getAttribute("policyobj");
 	
 	// Get values from the session object
 	int policyId = myPolicy.getPolicyId();
