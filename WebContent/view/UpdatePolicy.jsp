@@ -29,7 +29,7 @@
 <body>
 <div class="container">
   <div  id="form_style" >
-  <form id="CreateFormUI" method= "get" action ="../MainServlet" >
+  <form id="updatePolicy" method= "post" action ="../MainServlet" >
   	<div class="form-group">
 		<table align="center" >
 			<h1 align="center"> Update Policy </h1>
