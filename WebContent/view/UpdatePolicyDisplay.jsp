@@ -28,7 +28,7 @@
 <body>
 <div class="container">
   <div  id="form_style" >
-  <form id="updateFormInsert" method= "get" action ="../MainServlet" >
+  <form id="updateFormInsert" method= "post" action ="../MainServlet" >
   	<div class="form-group">
 		<table align="center" >
 			<h1 align="center"> Update Policy </h1>			

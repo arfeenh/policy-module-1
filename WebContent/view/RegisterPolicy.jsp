@@ -102,7 +102,7 @@
 				</tr>
 		</table>
 		<div class="clearfix" align="center">
-			<input type="submit"  value="Register" id="check" class="btn btn-primary btn-lg" />		
+			<input type="submit"  name="action" value="registerPolicy" id="check" class="btn btn-primary btn-lg" />		
 			<a href="admin.jsp" class="btn btn-primary btn-lg">Cancel/Back</a>	
     	</div >
 		</div>
