@@ -8,7 +8,7 @@
 <%@ page import="com.policy.dao.PolicyMapDao" %>
 <%@ page import="com.policy.dao.NomineeDao" %>
 <%
-	Policy myPolicy = (Policy)session.getAttribute("policy");
+	Policy myPolicy = (Policy)session.getAttribute("policyobj");
 	
 	// Get values from the session object
 	int policyId = myPolicy.getPolicyId();

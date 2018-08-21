@@ -1,25 +1,24 @@
-
-
-
+/*
+ * This is a Data Access Object. It will communicate 
+ * with the Database and return data. More specifically, 
+ * this class will associate itself with the Policy Table.
+ * @author					Domenic Gareffa
+ * @version      			
+ * @Class name				PolicyDao
+ * @Creation Date			3:02pm on August 15, 2018
+ * @History
+ * @Reviewed by & Status	Patrick
+ */
 
 package com.policy.dao;
 
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
-
+import javax.servlet.http.HttpServletRequest;
 import com.policy.data.Nominee;
 import com.policy.data.Policy;
-
-/*
- * Created by Domenic Gareffa @ 3:02pm on August 15, 2018
- * 
- * This is a Data Access Object. It will communicate with the Database and return
- * data. More specifically this class will associate itself with the Policy Table.
- */
 
 /**
  * NOTE: We have added a column to the existing Policy Table, 
@@ -36,28 +35,28 @@ import com.policy.data.Policy;
 	sum_assured_max double precision not null,
 	pre_reqs varchar(255) not null
 );
- * 
- * 
- * @author 1559831
- *
  */
 
 public class PolicyDao {
 
-	private final String tableName = "Policies";
+	private final String TABLE_NAME = "Policies";
 	private final String SELECT_POLICY_BY_ID = "select * from Policies where policy_id = ?";
-	private final String INSERT_INTO_POLICY = "insert into " + tableName + " values(?,?,?,?,?,?,?,?)";
+	private final String INSERT_INTO_POLICY = "insert into " + TABLE_NAME + " values(?,?,?,?,?,?,?,?)";
 	private final String SELECT_ALL_POLICY_NAME_AND_POLICY_ID = "select policy_name, policy_id from POLICIES";
-	private final String SELECT_MAX_ID = "select MAX(policy_id) from " + tableName;
+	private final String SELECT_MAX_ID = "select MAX(policy_id) from " + TABLE_NAME;
 	private final String UPDATE_POLICY = "UPDATE Policies " +
-			"SET policy_type = ?, "+
-			"policy_name = ?, " + 
-			"number_nominees = ?, " +
-			"tenure = ?, " +
-			"sum_assured_min = ?, " +
-			"sum_assured_max = ?, " +
-			"pre_reqs = ? " +
-			"WHERE policy_id = ? ";
+											"SET policy_type = ?, " +
+											"policy_name = ?, " + 
+											"number_nominees = ?, " +
+											"tenure = ?, " +
+											"sum_assured_min = ?, " +
+											"sum_assured_max = ?, " +
+											"pre_reqs = ? " +
+											"WHERE policy_id = ? ";
+	
+	private final String SELECT_POLICIES_BY_CUSTOMER_ID = "SELECT * FROM PolicyMap LEFT JOIN Policies ON " + 
+										"PolicyMap.policy_ID = Policies.policy_ID " + 
+										"Where PolicyMap.customer_ID = ?;";
 	
 	/**
 	 *  Will insert a policy object into the database.
@@ -98,6 +97,12 @@ public class PolicyDao {
 			}
 	}
 	
+	/**
+	 *  Will retrieve a policy object.
+	 * @param rs - a ResultSet object.
+	 * @return a policy object containing (id, name, tenure, sumMin, sumMax, paymentsPerYear, premium)
+	 * @throws SQLException
+	 */
 	public Policy getPolicyInformation(ResultSet rs) throws SQLException {
 		Policy p = new Policy();
 		p.setPolicyId(rs.getInt("policy_id"));
@@ -110,7 +115,13 @@ public class PolicyDao {
 		return p;
 	}
 	
-	
+	/**
+	 *  Will retrieve an arraylist of policy object based on customerID
+	 * @param id - an integer of customer id.
+	 * @return ArrayList of Policy objects.
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
+	 */
 	public ArrayList<Policy> getPoliciesByCustomerID(int id) throws ClassNotFoundException, SQLException{
 		ArrayList<Policy> policies = new ArrayList<Policy>();
 		Connection con = null;
@@ -118,12 +129,10 @@ public class PolicyDao {
 		ResultSet rs = null;
 		
 		con = OracleConnection.INSTANCE.getConnection();
-		String query = "SELECT *\r\n" + 
-				"FROM PolicyMap\r\n" + 
-				"LEFT JOIN Policies\r\n" + 
-				"ON PolicyMap.policy_ID=Policies.policy_ID\r\n" + 
-				"Where PolicyMap.customer_ID =" + id + ";";
-		ps = con.prepareStatement(query);
+		
+		ps = con.prepareStatement(SELECT_POLICIES_BY_CUSTOMER_ID);
+		ps.setInt(1, id);
+		
 		rs = ps.executeQuery();
 		
 		while(rs.next()){
@@ -136,12 +145,12 @@ public class PolicyDao {
 	}
 	
 	/**
-	 * 
+	 * Will retrieve the current/max id from Policies table
 	 * @return An integer holding the largest ID currently in the table.
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	public Integer getLargestID() throws SQLException, ClassNotFoundException {
+	public int getLargestID() throws SQLException, ClassNotFoundException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -159,7 +168,8 @@ public class PolicyDao {
 		OracleConnection.INSTANCE.disconnect();
 		
 		return maxID;
-}
+	}
+	
 	/**
 	 * Added by Domenic Garreffa on Aug 16, 2018
 	 * 
@@ -175,10 +185,8 @@ public class PolicyDao {
 		
 		con = OracleConnection.INSTANCE.getConnection();
 		
-		System.out.println(UPDATE_POLICY);
 		ps = con.prepareStatement(UPDATE_POLICY);
 		
-		System.out.println(UPDATE_POLICY);
 		ps.setString(1, policy.getPolicyType());
 		ps.setString(2, policy.getPolicyName());
 		ps.setInt(3, policy.getNumberNominees());
@@ -187,7 +195,6 @@ public class PolicyDao {
 		ps.setDouble(6, policy.getMaxSum());
 		ps.setString(7, policy.getPreReqs());
 		ps.setInt(8, policyID);
-
 
 		int rowsAffected = ps.executeUpdate();
 		
@@ -220,7 +227,6 @@ public class PolicyDao {
 		Statement st = con.createStatement();
 		ResultSet rs = st.executeQuery("Select * from Policies");
 		
-		
 		List<Policy> k = new ArrayList<Policy>();
 		
 		Policy temp;
@@ -236,13 +242,12 @@ public class PolicyDao {
 			temp.setPreReqs(rs.getString(8));
 			k.add(temp);
 		}
+		
 		rs.close();
 		st.close();
 		OracleConnection.INSTANCE.disconnect();
-		System.out.println(k.get(0).getPolicyId());
 		
 		return k;
-		
 	}
 	
 	/**
@@ -261,15 +266,15 @@ public class PolicyDao {
 		Statement st = con.createStatement();
 		ResultSet rs = st.executeQuery("Select * from PolicyMap where CUSTOMER_ID = " + id);
 		List<Integer> policyIDs = new ArrayList<Integer>();
-		System.out.println("hello");
+
 		while (rs.next()) {
-			System.out.println("next found");
 			policyIDs.add(rs.getInt(3));
 		}
-		rs.close();
+		
 		List<Policy> k = new ArrayList<Policy>();
 		PreparedStatement pst = con.prepareStatement("Select * from Policies where POLICY_ID = ?");
 		Policy temp;
+		
 		for (int x = 0; x < policyIDs.size(); x++) {
 			pst.setInt(1, policyIDs.get(x));
 			rs = pst.executeQuery();
@@ -285,15 +290,14 @@ public class PolicyDao {
 				temp.setPreReqs(rs.getString(8));
 				k.add(temp);
 			}
-			rs.close();
 		}
 		
+		rs.close();
 		pst.close();
 		st.close();
 		OracleConnection.INSTANCE.disconnect();
 		
 		return k;
-		
 	}
 
 
@@ -306,17 +310,16 @@ public class PolicyDao {
 	 * Created by Nicholas Kauldhar on August 16 around 3pm
 	 * 
 	 * @param request
-	 * @return
+	 * @return boolean
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
 	public static boolean searchByCustandPolicy(HttpServletRequest request) throws SQLException, ClassNotFoundException {
 		String custid = (String)request.getSession().getAttribute("customerID");
-		System.out.println(custid);
+		String polid = request.getParameter("policyID");
+		
 		int c = -1;
 		int d = -1;
-		String polid = request.getParameter("policyID");
-		System.out.println(polid);
 		try {
 			c = Integer.parseInt(custid);
 			d = Integer.parseInt(polid);
@@ -330,30 +333,30 @@ public class PolicyDao {
 			Statement st = con.createStatement();
 			ResultSet rs = st.executeQuery("Select * from PolicyMap where customer_id = " 
 			+ c + " and policy_id = " + d);
+			
 			if(rs.next()) {
 				PolicyDao dao = new PolicyDao();
 				Date date = rs.getDate(5);
-				Policy pol = dao.selectAllPolicyByID(d);
+				Policy pol = dao.selectPolicyByID(d);
 				
 				LocalDate ld = LocalDate.parse(date.toString());
-				System.out.println(ld.toString());
 				ld = ld.plusYears((long)pol.getTenure());
 				
 				date = Date.valueOf(ld);
 				List<Nominee> noms = NomineeDao.getNomineesFromMapID(rs.getInt(1));
-				System.out.println("size: " + noms.size());
+				
 				request.getSession().setAttribute("CertPremium", rs.getDouble(7));
 				request.getSession().setAttribute("CertNominees", noms);				
 				request.getSession().setAttribute("CertEndDate", date);
 				request.getSession().setAttribute("CertPolicy", pol);
 				
+				rs.close();
+				st.close();
 				return true;
 			}
 			else {
 				return false;
 			}
-			
-		
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -362,16 +365,19 @@ public class PolicyDao {
 		finally {
 			OracleConnection.INSTANCE.disconnect();
 		}
-		
 	}
 	
-	public static void main (String[] args) throws ClassNotFoundException, SQLException {
-		List<Policy> k = getAllCustomerPolicies(1);
-		System.out.println(k.get(0).getPolicyName());
-	}
-	
+	/**
+	 * Method retrieves the id and name information of all policies in the policues table
+	 * and format the information into a string.
+	 * 
+	 * Created by Nicholas Kauldhar on August 16 around 3pm
+	 * 
+	 * @return an arraylist of strings, which represents policy names and ids
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	public ArrayList<String> selectAllPolicyNameAndPolicyID() throws ClassNotFoundException, SQLException{
- 		System.out.println("CHECK");
  		Connection con = null;
  		PreparedStatement ps = null;
  		ResultSet rs = null;
@@ -381,6 +387,7 @@ public class PolicyDao {
  		rs = ps.executeQuery();
  		
  		ArrayList<String> policyNameAndIDConcatList = new ArrayList<>();
+ 		
  		while(rs.next()) {
  			policyNameAndIDConcatList.add(rs.getString(1) + '(' + rs.getString((2)) + ')');
  		}
@@ -406,7 +413,7 @@ public class PolicyDao {
  	 * @throws ClassNotFoundException
  	 * @throws SQLException
  	 */
- 	public Policy selectAllPolicyByID(int ID) throws ClassNotFoundException, SQLException{
+ 	public Policy selectPolicyByID(int ID) throws ClassNotFoundException, SQLException{
  		Connection con = null;
  		PreparedStatement ps = null;
  		ResultSet rs = null;
@@ -419,21 +426,21 @@ public class PolicyDao {
  		Policy policy = null;
  		
  		if(rs.next()) {
- 		policy = new Policy();
- 		policy.setPolicyId(rs.getInt(1));
- 		policy.setPolicyType(rs.getString(2));
- 		policy.setPolicyName(rs.getString(3));
- 		policy.setNumberNominees(rs.getInt(4));
- 		policy.setTenure(rs.getDouble(5));
- 		policy.setMinSum(rs.getDouble(6));
- 		policy.setMaxSum(rs.getDouble(7));
- 		policy.setPreReqs(rs.getString(8));	
+	 		policy = new Policy();
+	 		policy.setPolicyId(rs.getInt(1));
+	 		policy.setPolicyType(rs.getString(2));
+	 		policy.setPolicyName(rs.getString(3));
+	 		policy.setNumberNominees(rs.getInt(4));
+	 		policy.setTenure(rs.getDouble(5));
+	 		policy.setMinSum(rs.getDouble(6));
+	 		policy.setMaxSum(rs.getDouble(7));
+	 		policy.setPreReqs(rs.getString(8));	
  		}
 
  		//clean up
+ 		rs.close();
  		ps.close();
  		con.close();
- 		rs.close();
  			
  		if(policy != null) {
  			System.out.println("Policy found.");
