@@ -31,7 +31,7 @@ public class Dummy extends HttpServlet {
 		HttpSession session = req.getSession(true);
 		if(uname.equals(password) && uname.equals("admin")) {
 			Manager a = new Manager();
-			a.setFullname("Amr El-Naggar");
+			a.setFullname("Brampton Batman");
 			a.setManagerId(101);
 			session.setAttribute("user", a);
 			res.sendRedirect("view/admin.jsp");

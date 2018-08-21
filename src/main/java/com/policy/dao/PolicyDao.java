@@ -49,7 +49,7 @@ public class PolicyDao {
 	private final String INSERT_INTO_POLICY = "insert into " + tableName + " values(?,?,?,?,?,?,?,?)";
 	private final String SELECT_ALL_POLICY_NAME_AND_POLICY_ID = "select policy_name, policy_id from POLICIES";
 	private final String SELECT_MAX_ID = "select MAX(policy_id) from " + tableName;
-	private final String UPDATE_POLICY = "UPDATE Policies" +
+	private final String UPDATE_POLICY = "UPDATE Policies " +
 			"SET policy_type = ?, "+
 			"policy_name = ?, " + 
 			"number_nominees = ?, " +
@@ -98,7 +98,7 @@ public class PolicyDao {
 			}
 	}
 	
-	private Policy getPolicyInformation(ResultSet rs) throws SQLException {
+	public Policy getPolicyInformation(ResultSet rs) throws SQLException {
 		Policy p = new Policy();
 		p.setPolicyId(rs.getInt("policy_id"));
 		p.setPolicyName(rs.getString("policy_name"));
@@ -174,9 +174,11 @@ public class PolicyDao {
 		PreparedStatement ps = null;
 		
 		con = OracleConnection.INSTANCE.getConnection();
-	
+		
+		System.out.println(UPDATE_POLICY);
 		ps = con.prepareStatement(UPDATE_POLICY);
 		
+		System.out.println(UPDATE_POLICY);
 		ps.setString(1, policy.getPolicyType());
 		ps.setString(2, policy.getPolicyName());
 		ps.setInt(3, policy.getNumberNominees());
@@ -185,6 +187,7 @@ public class PolicyDao {
 		ps.setDouble(6, policy.getMaxSum());
 		ps.setString(7, policy.getPreReqs());
 		ps.setInt(8, policyID);
+
 
 		int rowsAffected = ps.executeUpdate();
 		
@@ -233,6 +236,8 @@ public class PolicyDao {
 			temp.setPreReqs(rs.getString(8));
 			k.add(temp);
 		}
+		rs.close();
+		st.close();
 		OracleConnection.INSTANCE.disconnect();
 		System.out.println(k.get(0).getPolicyId());
 		

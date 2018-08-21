@@ -21,7 +21,7 @@
 	<select name = "policyID">
 		<%
 			
-			int id = 1;
+			int id = 1; //CHANGE THIS TO LOGGED IN CUSTOMER ID WHEN INTEGRATING
 			session.setAttribute("customerID", Integer.toString(id));
 			try {
 				List<Policy> k;
