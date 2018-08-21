@@ -14,53 +14,8 @@
 <body>
 <% 
 	Customer u = (Customer) session.getAttribute("user"); 
-	ArrayList<Policy> policies = new PolicyDao().getPoliciesByCustomerID(u.getCustomerId());
-	
-	Policy policy = new Policy();
-	policy.setPolicyId(1);
-	policy.setPolicyName("Dummy Policy");
-	policy.setTenure(2.0);
-	policy.setMinSum(220.50);
-	policy.setMaxSum(21000000.50);
-	policy.setPaymentsPerYear(1);
-	policy.setPremiumAmount(30000);
-	policy.setStartDate(new Date());
-	
-	// Nominee data
-	List<Nominee> myNominees = new ArrayList<Nominee>();
-	myNominees.add(new Nominee());
-	myNominees.add(new Nominee());
-	myNominees.add(new Nominee());
-	myNominees.get(0).setNomineeName("Nominee 1");
-	myNominees.get(1).setNomineeName("Nominee 2");
-	myNominees.get(2).setNomineeName("Nominee 3");
-	policy.setNominees(myNominees);
-	policy.setNumberNominees(myNominees.size());
-	
-	Policy policy2 = new Policy();
-	policy2.setPolicyId(1);
-	policy2.setPolicyName("Dummy Policy Two");
-	policy2.setTenure(5.0);
-	policy2.setMinSum(55520.50);
-	policy2.setMaxSum(5500000.50);
-	policy2.setPaymentsPerYear(2);
-	policy2.setPremiumAmount(800000);
-	policy2.setStartDate(new Date());
-	
-	// Nominee data
-	List<Nominee> myNominees2 = new ArrayList<Nominee>();
-	myNominees2.add(new Nominee());
-	myNominees2.add(new Nominee());
-	myNominees2.add(new Nominee());
-	myNominees2.get(0).setNomineeName("Nominee 11");
-	myNominees2.get(1).setNomineeName("Nominee 22");
-	myNominees2.get(2).setNomineeName("Nominee 33");
-	policy2.setNominees(myNominees2);
-	policy2.setNumberNominees(myNominees2.size());
-	
-	policies.add(policy);
-	policies.add(policy2);
-
+	//List<Policy> policies = PolicyDao.getAllCustomerPolicies(u.getCustomerId());
+	List<Policy> policies = PolicyDao.getAllCustomerPolicies(1);
 	session.setAttribute("policies", policies);
 	
 %>
