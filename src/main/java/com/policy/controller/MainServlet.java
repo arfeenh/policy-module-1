@@ -82,8 +82,6 @@ public class MainServlet extends HttpServlet {
 	}
   
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
 		String action = request.getParameter("action");
 		System.out.println(action);
 		if(action != null) {
@@ -238,8 +236,6 @@ public class MainServlet extends HttpServlet {
 				if (matcher1.matches())
 		            answer11 = matcher1.group(1);
 				
-				System.out.println("helllooooo");
-		        System.out.println(answer11);	
 		        int extracted_policy_id1 = Integer.parseInt(answer11);
 		        
 		        try {
