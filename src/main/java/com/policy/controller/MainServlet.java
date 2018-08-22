@@ -94,7 +94,8 @@ public class MainServlet extends HttpServlet {
 				
 				HttpSession hses = request.getSession();
 				String custid = String.valueOf(hses.getAttribute("cust"));
-				String policyid = String.valueOf(hses.getAttribute("policy"));
+				Policy pol = (Policy) hses.getAttribute("policy");
+				String policyid = ""+pol.getPolicyId();
 				
 				PolicyMapDao info = new PolicyMapDao();
 				
@@ -119,7 +120,7 @@ public class MainServlet extends HttpServlet {
 					nom.setRelationshipToCustomer(relationship);
 					nom.setPurposeOfChanged(purpose);
 					
-					Policy temp = (Policy) hses.getAttribute("policyobj");
+					Policy temp = (Policy) hses.getAttribute("policy");
 					temp.addNomineeToList(nom);
 					hses.setAttribute("policyobj", temp);
 					
