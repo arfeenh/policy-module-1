@@ -64,6 +64,7 @@ public class PolicyService {
 	}
 	
 	public ArrayList<String> getAllPoliciesNameAndID() {
+		System.out.println("GETTING POLICY NAMES AND ID");
 		try {
 			
 			return policyDao.selectAllPolicyNameAndPolicyID();
