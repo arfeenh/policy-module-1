@@ -26,17 +26,19 @@
   crossorigin="anonymous"></script>
   
 </head>
+
+	<%! ArrayList<String> nameAndIdList;  %>
 <body>
 <div class="container">
   <div  id="form_style" >
-  <form id="CreateFormUI" method= "get" action ="../MainServlet" >
+  <form id="CreateFormUI" method= "post" action ="../MainServlet" >
   	<div class="form-group">
 		<table align="center" >
 			<h1 align="center"> Delete Policy </h1>
 			<tr>
 				<td> please select policy you would like to delete </td>
 				<td>
-					<%! ArrayList<String> nameAndIdList = new PolicyService().getAllPoliciesNameAndID();  
+					<% nameAndIdList = new PolicyService().getAllPoliciesNameAndID();  
 					%>
 					 <div class="form-group">
 				    <select class="form-control" id="deletePolicy" name="selectPolicy" >

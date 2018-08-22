@@ -17,18 +17,35 @@
 
 
 
-<title>Admin page</title>
+<title>Delete page</title>
 </head>
-<% Manager m = (Manager) session.getAttribute("user"); %>
-<h1 align="center">Admin <%= m.getFullname() %> ID: <%= m.getManagerId() %></h1>
 
+	
+	<% if ((boolean)session.getAttribute("delete")) { %>
+		<div class="alert alert-success" role="alert">
+	  		Policy was successfully deleted!
+		</div>
+	<% } else { %>
+			<div class="alert alert-success" role="alert">
+			Unable to delete policy because there is a dependancy	
+			</div>
+	<% } %>
+
+
+	
+	
+	<% Manager m = (Manager) session.getAttribute("user"); %>
+	<h1 align="center">Admin <%= m.getFullname() %> ID: <%= m.getManagerId() %></h1>
 <body>
-<h1 align="center">Policy Management</h1> <br>
 <div class="container">
 	<table align="center">
 	<!-- 
 	Changed href from RegisterPolicy to CreatePolicy.
 	Updated by Domenic Garreffa on Aug 16, 2018. -->
+	
+	<h1 align="center">Policy Management</h1> <br>
+	
+	
 	<tr>
 		<td><button type="button" onclick="window.location.href = 'RegisterPolicy.jsp';" value="newPolicy" class="btn btn-primary m-1"  >Create Policy</button></td>
 	</tr>
@@ -47,11 +64,6 @@
 	</tr>
 	<tr>
 		<td><button type="button" onclick="window.location.href = 'ViewPolicyByAgent.jsp';" value="ViewPolicyByAgent" class="btn btn-primary m-1">View Policy By Agent</button></td>
-	</tr>
-	
-	<!-- Updated by Patrick on August 22, 2018. Added a button for API page -->
-	<tr>
-		<td><button type="button" onclick="window.location.href = 'myapi.jsp';" class="btn btn-primary m-1">Searching on Map</button></td>
 	</tr>
 	</table>
 	</div>

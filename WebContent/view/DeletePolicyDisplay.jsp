@@ -28,7 +28,7 @@
 <body>
 <div class="container">
   <div  id="form_style" >
-  <form id="updateFormInsert" method= "get" action ="../MainServlet" >
+  <form id="deleteDisplay" method= "post" action ="../MainServlet" >
   	<div class="form-group">
 		<table align="center" >
 			<h1 align="center"> Delete Policy </h1>			
@@ -39,7 +39,7 @@
 				<td> </td>
 				<td> </td>
 				<td> </td>
-				<td>   <button type="reset" value="Reset">Reset form</button> </td>				
+				<td>   <button type="reset" disabled value="Reset">Reset form</button> </td>				
 			</tr>		
 			<tr>
 				<td> Type of Insurance </td>
@@ -49,18 +49,18 @@
 				<td> Number of Nominee's </td>
 				<td>			
 					<input type="text" readonly name="nominee" id="display" value= "<%= session.getAttribute("nominee")%>" oninput="updateNumber()" required="required" pattern="^[0-9]*$" >
-				    <input type="button" value="+" id="inc" onclick="incNumber()"/>
-				    <input type="button" value="-" id="dec" onclick="decNumber()"/>
+				    <input type="button" value="+" id="inc" disabled onclick="incNumber()"/>
+				    <input type="button" value="-" id="dec" disabled onclick="decNumber()"/>
 				</td> 
 			</tr>
     			<tr> 
 	    			<td> Tenure </td>
 	    			<td> <br>
 	    				The previous Tenure value is shown, please select new value: <input type="text" name="year" value="<%= session.getAttribute("year")%>" readonly>  <br> 
-	    				<input type="radio" readonly name="year" value="1" onclick="hide();" required/> 1 Year<br>
-	  					<input type="radio" readonly name="year" value="2" onclick="hide();"/> 2 Year<br>
-	  					<input type="radio" readonly name="year" value="3" /> 3 Year <br>
-	    				<input type="radio" readonly name="year" value="custom" id="cust" onclick="show();" /> Custom	 
+	    				<input type="radio" disabled name="year" value="1" onclick="hide();" required/> 1 Year<br>
+	  					<input type="radio" disabled name="year" value="2" onclick="hide();"/> 2 Year<br>
+	  					<input type="radio" disabled name="year" value="3" /> 3 Year <br>
+	    				<input type="radio" disabled name="year" value="custom" id="cust" onclick="show();" /> Custom	 
 	    				<input type="text"  readonly name="year" value="4" id="area" style= "display: none;" oninput="validate()">	
 	    			</td>
 				</tr>
