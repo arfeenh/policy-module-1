@@ -256,4 +256,54 @@ public class NomineeDao {
 	
 	}
 	
+	public static void deleteNominee(String nominee_id) throws ClassNotFoundException, SQLException {
+		
+		String DELETE_NOMINEE = "delete from Nominees " +
+				"where nominee_id = "+nominee_id;
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		con = OracleConnection.INSTANCE.getConnection();
+		
+		ps = con.prepareStatement(DELETE_NOMINEE);
+
+		int rowsAffected = ps.executeUpdate();
+		
+		//clean up
+		ps.close();
+		con.close();
+			
+		if(rowsAffected >= 1) {
+			System.out.println("Nominee successfully deleted");
+		}else {
+			System.out.println("Nominee was not deleted");
+		}
+	}
+
+	public static void deleteNomineeMap(String nominee_id, String policy_map_id) throws ClassNotFoundException, SQLException {
+		String DELETE_NOMINEE = "delete from NomineeMap " +
+				"where nominee_id = "+nominee_id+" AND policy_map_id = "+policy_map_id;
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		con = OracleConnection.INSTANCE.getConnection();
+		
+		ps = con.prepareStatement(DELETE_NOMINEE);
+
+		int rowsAffected = ps.executeUpdate();
+		
+		//clean up
+		ps.close();
+		con.close();
+			
+		if(rowsAffected >= 1) {
+			System.out.println("Nominee successfully deleted");
+		}else {
+			System.out.println("Nominee was not deleted");
+		}
+	}
+
+
 }

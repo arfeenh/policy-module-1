@@ -20,6 +20,7 @@ import javax.servlet.http.HttpSession;
 import com.policy.dao.NomineeDao;
 import com.policy.dao.PolicyDao;
 import com.policy.dao.PolicyMapDao;
+import com.policy.data.Customer;
 import com.policy.data.Nominee;
 import com.policy.data.Policy;
 import com.policy.service.PolicyService;
@@ -35,6 +36,7 @@ public class MainServlet extends HttpServlet {
 		 * 
 		 * Updated by Domenic Garreffa on Aug 16, 2018
 		 */
+		HttpSession general = request.getSession();
 		String action = request.getParameter("action");
 		System.out.println(action);
 		if(action != null) {
@@ -49,6 +51,44 @@ public class MainServlet extends HttpServlet {
 				request.getSession().setAttribute("policy", policies.get(Integer.parseInt(request.getParameter("policy"))));
 				response.sendRedirect("view/customerViewPolicy.jsp");
 				break;
+				
+			case "DeleteNominee":
+				
+				HttpSession hses_delete = request.getSession();
+				String delete_nominee_id = request.getParameter("delete_id") + "";
+				PolicyMapDao info_delete = new PolicyMapDao();
+				Customer cust_delete = (Customer) hses_delete.getAttribute("user");
+				Policy policy_delete = (Policy) hses_delete.getAttribute("policy");
+				int delete_policy_map_id;
+				try {
+					delete_policy_map_id = info_delete.getPolicyMapIDFromIDs(Integer.toString(cust_delete.getCustomerId()), Integer.toString(policy_delete.getPolicyId()));
+					
+					NomineeDao.deleteNomineeMap(delete_nominee_id, Integer.toString(delete_policy_map_id));
+					NomineeDao.deleteNominee(delete_nominee_id);	
+				} catch (ClassNotFoundException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				//POLICYOBJ CHANGED
+				Policy temp_delete = (Policy) hses_delete.getAttribute("policy");
+				List<Nominee> temp_list = new ArrayList<Nominee>();
+						
+				for(Nominee n : temp_delete.getNominees()) {
+					temp_list.add(n);
+				}
+				
+				
+				for (Nominee i:temp_list) {
+					if (i.getNomineeId()==Integer.parseInt(delete_nominee_id)) {
+					
+						temp_delete.getNominees().remove(i);
+					}
+				}
+				
+				hses_delete.setAttribute("policy", temp_delete);
+				response.sendRedirect("view/updateNominee.jsp");
+				
+			break;   	
 			case "AddNominee":
 				String nominee_name = request.getParameter("new-nominee-name");
 				String relationship = request.getParameter("new-nominee-relationship");
@@ -57,10 +97,10 @@ public class MainServlet extends HttpServlet {
 				}
 				String purpose = request.getParameter("new-nominee-purpose");
 				
-				
 				HttpSession hses = request.getSession();
-				String custid = String.valueOf(hses.getAttribute("cust"));
-				String policyid = String.valueOf(hses.getAttribute("policy"));
+				Customer cust = (Customer) hses.getAttribute("user");
+				Policy policy = (Policy) hses.getAttribute("policy");
+				
 				
 				PolicyMapDao info = new PolicyMapDao();
 				
@@ -68,8 +108,9 @@ public class MainServlet extends HttpServlet {
 				int max_nominee_id;
 				int max_nominee_map_id;
 				
+				
 				try {
-					policy_map_id = info.getPolicyMapIDFromIDs(custid, policyid);
+					policy_map_id = info.getPolicyMapIDFromIDs(Integer.toString(cust.getCustomerId()), Integer.toString(policy.getPolicyId()));
 					
 					max_nominee_id = NomineeDao.maxNomineeID();
 					max_nominee_map_id = NomineeDao.maxNomineeMapID();
@@ -84,21 +125,19 @@ public class MainServlet extends HttpServlet {
 					nom.setNomineeName(nominee_name);
 					nom.setRelationshipToCustomer(relationship);
 					nom.setPurposeOfChanged(purpose);
-					
-					Policy temp = (Policy) hses.getAttribute("policyobj");
+		
+					Policy temp = (Policy) hses.getAttribute("policy");
 					temp.addNomineeToList(nom);
-					hses.setAttribute("policyobj", temp);
+					hses.setAttribute("policy", temp);
 					
 				} catch (ClassNotFoundException | SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
 				response.sendRedirect("view/updateNominee.jsp");
 			
 			break;
 			case "UpdateNominee":
-				System.out.println("wefwef");
 				String update_nominee_name = request.getParameter("update-nominee-name");
 				String update_relationship = request.getParameter("update-nominee-relationship");
 				if (update_relationship.equals("other-update")) {
@@ -123,13 +162,11 @@ public class MainServlet extends HttpServlet {
 						i.setPurposeOfChanged(update_purpose);
 					}
 				}
-				hses_update.setAttribute("policyobj", temp);
+				hses_update.setAttribute("policy", temp);
 		
 				response.sendRedirect("view/updateNominee.jsp");
 			
 			break;
-
-			   	
 			}
 			return;
 		}
