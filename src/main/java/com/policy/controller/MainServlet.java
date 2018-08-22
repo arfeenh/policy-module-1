@@ -3,10 +3,12 @@
 package com.policy.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.regex.*;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,8 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.policy.dao.PolicyDao;
 import com.policy.dao.NomineeDao;
+import com.policy.dao.PolicyDao;
 import com.policy.dao.PolicyMapDao;
 import com.policy.data.Nominee;
 import com.policy.data.Policy;
@@ -162,14 +164,12 @@ public class MainServlet extends HttpServlet {
 	}
   
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
+		PrintWriter out = response.getWriter();
 		String action = request.getParameter("action");
 		System.out.println(action);
 		if(action != null) {
 			switch(action) {
 			case "registerPolicy":
-				System.out.println("hello");
 				HttpSession ses = request.getSession();
 			   	
 			   	String polName = request.getParameter("policy_name");
@@ -207,6 +207,9 @@ public class MainServlet extends HttpServlet {
 			   	
 			   	PolicyService obj1 = new PolicyService();
 			   	obj1.addPolicy(obj);
+				boolean updated =false;
+			   	ses.setAttribute("updated", updated);
+
 			   	
 			   	response.sendRedirect("view/ViewPolicy.jsp");
 			   	break;
@@ -293,6 +296,11 @@ public class MainServlet extends HttpServlet {
 			   	if(check==false) {
 			   		try {
 						delete = polDao1.deletePolicyUsingId(policyID);
+						
+						sesDelete.setAttribute("delete", delete);
+						
+				        response.sendRedirect("view/DeletedPolicyView.jsp");
+				        
 						System.out.println("Successfully Deleted Policy");
 					} catch (ClassNotFoundException | SQLException e) {
 						// TODO Auto-generated catch block
@@ -300,6 +308,9 @@ public class MainServlet extends HttpServlet {
 					}
 			   	}
 			   	else {
+					sesDelete.setAttribute("delete", delete);
+			        response.sendRedirect("view/DeletedPolicyView.jsp");
+
 			   		System.out.println("Unable to delete policy because there is a dependancy with the following policy Id:" + policyID);
 			   	}
 				break;
@@ -318,8 +329,6 @@ public class MainServlet extends HttpServlet {
 				if (matcher1.matches())
 		            answer11 = matcher1.group(1);
 				
-				System.out.println("helllooooo");
-		        System.out.println(answer11);	
 		        int extracted_policy_id1 = Integer.parseInt(answer11);
 		        
 		        try {
@@ -367,7 +376,8 @@ public class MainServlet extends HttpServlet {
 			case "updatePolicyInsert": //use to insert updated data
 	
 		        HttpSession ses11 = request.getSession();
-		        
+			   	updated = false;
+
 			   	polName11 = request.getParameter("policy_name");
 			   	ses11.setAttribute("policy_name", polName11);
 
@@ -405,12 +415,14 @@ public class MainServlet extends HttpServlet {
 			   	obj11.setPolicyType(PolicyType11);
 			   	
 			   	ses11.setAttribute("policy", obj11);
-			   	
 			   	System.out.println(ses11.getAttribute("pol_Id"));
 			   	int policyID1 = (int) ses11.getAttribute("pol_Id");
 			   	PolicyDao obj3 = new PolicyDao();
 			   	try {
 					obj3.update(obj11, policyID1);
+					updated=true;
+					ses11.setAttribute("updated", updated);
+
 				} catch (ClassNotFoundException | SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
