@@ -2,7 +2,7 @@
 <%@ page import="com.policy.data.Nominee, java.util.*, com.policy.data.Policy"%>
 <%
 	// Retrieve Policy object from the session object
-	Policy myPolicy = (Policy) session.getAttribute("policyobj");
+	Policy myPolicy = (Policy) session.getAttribute("policy");
 	List<Nominee> policyNominees = myPolicy.getNominees();
 	HttpSession hses = request.getSession();
 	hses.setAttribute("NomineeList", policyNominees);

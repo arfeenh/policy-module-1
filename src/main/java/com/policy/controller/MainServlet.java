@@ -113,7 +113,7 @@ public class MainServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 				HttpSession hses_update = request.getSession();
-				Policy temp = (Policy) hses_update.getAttribute("policyobj");
+				Policy temp = (Policy) hses_update.getAttribute("policy");
 				for (Nominee i:temp.getNominees()) {
 					if (i.getNomineeId()==Integer.parseInt(nominee_id)) {
 						i.setNomineeName(update_nominee_name);
