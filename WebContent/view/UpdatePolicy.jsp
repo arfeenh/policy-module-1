@@ -11,6 +11,7 @@
 <!DOCTYPE html> 
 <html>
 <head>
+<link rel="stylesheet" href="../javascript/main.css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -27,12 +28,19 @@
   <%! ArrayList<String> nameAndIdList; %>
 </head>
 <body>
+<h1 align="center"> Update Policy </h1>
 <div class="container">
+	<div class="container-fluid" align="right"> 
+		<p>
+		Time: <span id="time"></span>
+		Date: <span id="date"></span>
+		</p>
+			<script> var dt = new Date(); document.getElementById("date").innerHTML = dt.toLocaleDateString(); </script>
+	</div>
   <div  id="form_style" >
   <form id="updatePolicy" method= "post" action ="../MainServlet" >
   	<div class="form-group">
 		<table align="center" >
-			<h1 align="center"> Update Policy </h1>
 			<tr>
 				<td> please select policy you would like to update </td>
 				<td>

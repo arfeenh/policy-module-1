@@ -2,7 +2,25 @@
  * created by hamza on 18 aug
  * 
  */
-
+		function startTime() {
+			var today = new Date();
+			var h = today.getHours();
+			var m = today.getMinutes();
+			var s = today.getSeconds();
+			m = checkTime(m);
+			s = checkTime(s);
+			document.getElementById('time').innerHTML =
+			h + ":" + m + ":" + s;
+			var t = setTimeout(startTime, 500);
+		}
+		function checkTime(i) {
+			if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+			return i;
+		}
+		
+		document.onload = startTime();
+		document.onload = checkTime();
+		
 	
 	    var i = 0;
 	    function updateNumber(){
@@ -71,6 +89,8 @@
 		   var checkMax=document.getElementById("max").value;
 		   var checkTenure=document.getElementById("area").value;
 		   var regex = /^\d+$/;
+		   console.log(checkMin);
+		   console.log(checkMax);
 
 		   document.getElementById("cust").value = checkTenure; //set the custom value field to num entered by user
 		   if(!checkMin.match(regex)){
@@ -85,4 +105,5 @@
 		   }
 		   else if(checkTenure[0].substring(0,0)&&checkTenure[1].substring(0,0))//exist
 	    		document.getElementById("area").value = i.substring(0,i.length-2)
-		   }
+
+	   		}

@@ -186,7 +186,12 @@ public class MainServlet extends HttpServlet {
 			   	
 			   	double maxSum = Double.parseDouble(request.getParameter("max"));
 			   	ses.setAttribute("max", maxSum);
-			   	
+		
+			   	if(minSum>maxSum) {  //swap min with max if min is larger then max
+			   	 double temp = minSum;
+			        minSum = maxSum;
+			        maxSum = temp;
+			   	}
 			   	String preReq = request.getParameter("pre-req");
 			   	ses.setAttribute("pre-req", preReq);
 			   	
@@ -395,6 +400,12 @@ public class MainServlet extends HttpServlet {
 			   	
 			   	double maxSum111 = Double.parseDouble(request.getParameter("max"));
 			   	ses11.setAttribute("max", maxSum111);
+			   	
+			   	if(minSum111>maxSum111) {
+				   	 double temp = minSum111;
+				   	minSum111 = maxSum111;
+				   	maxSum111 = temp;
+				   	}
 			   	
 			   	preReq11 = request.getParameter("pre-req");
 			   	ses11.setAttribute("pre-req", preReq11);
