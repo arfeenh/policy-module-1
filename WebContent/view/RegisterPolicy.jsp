@@ -10,6 +10,11 @@
 <!DOCTYPE html> 
 <html>
 <head>
+
+<link rel="stylesheet" href="../javascript/main.css">
+
+<script src = "../javascript/PolicyValidation.js"> </script>
+
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,19 +30,29 @@
   crossorigin="anonymous"></script>
   
 </head>
-<body>
+<body onload="startTime()">
+	<h1 align="center"> Register Policy </h1>
+
+	
 <div class="container">
   <div  id="form_style" >
-
+		
   
  <header id="RegisterPolicy">
 
+            <div class="container-fluid" align="right"> 
+				<p>
+				Time: <span id="time"></span>
+				Date: <span id="date"></span>
+				</p>
+					<script> var dt = new Date(); document.getElementById("date").innerHTML = dt.toLocaleDateString(); </script>
+			</div>
 
   <form id="CreateFormUI" method= "post" action ="../MainServlet" >
 
+
   	<div class="form-group">
 		<table align="center" >
-			<h1 align="center"> Register Policy </h1>
 			<tr> 
 				<td> Policy Name </td>
 				<td> <input type="text" name="policy_name" required = "required" pattern="([^\s][A-z0-9\s]+){2,100}"/> </td>
@@ -110,6 +125,5 @@
 	</header>
 	</div>
 	</div>
-	<script src = "../javascript/PolicyValidation.js"> </script>
 </body>
 </html>

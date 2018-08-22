@@ -17,6 +17,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="../javascript/main.css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>View Policy By Agent</title>
 <script>
@@ -77,14 +78,20 @@ if (policyid!=null){
 	hses.setAttribute("policy", policyid);
 }
 %>
-
+<div class="container">
 <div align="center">
-<h2>Search Policy</h2>
+<h1 align="center">Search Policy</h1>
 <hr>
 
 <!-- FINDING CUSTOMER IDs FORM -->
 <form name="ViewCustomerByAgentID"> 
-
+    <div class="container-fluid" align="right"> 
+		<p>
+		Time: <span id="time"></span>
+		Date: <span id="date"></span>
+		</p>
+			<script> var dt = new Date(); document.getElementById("date").innerHTML = dt.toLocaleDateString(); </script>
+	</div>
 <table>
 	<tr>
 		<td>Enter Agent ID</td>													  
@@ -122,9 +129,11 @@ if (request.getParameter("SearchCust")!=null || request.getParameter("SearchPoli
 		
 		<td><input type="hidden" name="agent" value="<%=session.getAttribute("agentid")%>"> <!-- RETRIEVE AGENT ID VALUE TO BE SUBMITTED AGAIN -->
 	</tr>
+
 </table>
 </form>
 </div>
+
 
 <!-- DISPLAY POLICY ID DROPDOWN WHEN CUSTOMER ID SEARCH IS CLICKED -->
 <div align="center" <% 
@@ -162,6 +171,6 @@ if (request.getParameter("SearchPolicy")!=null && request.getParameter("SearchCu
 	<input type="submit" class="button" name="goBack" value="Go Back" onclick="goBack()"/>
 	
 </div>
-
+</div>
 </body>
 </html>

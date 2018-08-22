@@ -2,12 +2,15 @@
 package com.policy.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.sql.Date;
+import java.util.Arrays;
 
+import com.policy.data.Customer;
 import com.policy.data.Policy;
 
 /*
@@ -31,6 +34,60 @@ public class PolicyMapDao {
 	
 	
 	public PolicyMapDao(){}
+	
+	
+	public static boolean tagCustomer(Customer c, Policy p, String prem, String sumAssured,
+			String[] medical, String agentID, String date, String[] nomineeNames, String[] nomineeRelations,
+			String[] nomineePurpose) throws ClassNotFoundException, SQLException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		con = OracleConnection.INSTANCE.getConnection();
+		String query = "select MAX(policy_map_id) from policymap";
+		ps = con.prepareStatement(query);
+		ResultSet rs = ps.executeQuery();
+		rs.next();
+		int id = rs.getInt(1);
+		query = "insert into policymap values(?,?,?,?,?,?,?,?,?,?)";
+		ps = con.prepareStatement(query);
+		ps.setInt(1, id+1);
+		ps.setInt(2, c.getCustomerId());
+		ps.setInt(3, p.getPolicyId());
+		ps.setInt(4, Integer.parseInt(agentID));
+		ps.setDate(5, java.sql.Date.valueOf(date));
+		ps.setInt(6, Integer.parseInt(prem));
+		ps.setDouble(7, Double.parseDouble(sumAssured));
+		ps.setString(8, Arrays.toString(medical));
+		ps.setInt(9, 0);
+		ps.setInt(10,-1);
+		int rowsAffected = ps.executeUpdate();
+		
+		//clean up
+		ps.close();
+		rs.close();
+		OracleConnection.INSTANCE.disconnect();
+			
+		if(rowsAffected >= 1) {
+			
+			System.out.println("Policy successfully added");
+			//NomineeDao nomDao = new NomineeDao();
+			int maxNomineeID = NomineeDao.maxNomineeID();
+			int maxNomMapID = NomineeDao.maxNomineeMapID();
+			for(int i = 0; i<nomineeNames.length; i++) {
+				NomineeDao.insertNominee(nomineeNames[i], 
+						nomineeRelations[i], nomineePurpose[i], maxNomineeID);
+				NomineeDao.insertNomineeMap(maxNomMapID++,id+1, maxNomineeID++);
+			}
+			
+			return true;
+		}else {
+			System.out.println("Policy was not added");
+			return false;
+		}
+		
+		
+		
+	}
 	/*This constructor gets called in ViewPolicyByAgent and auto stores the ids whenever the jsp gets refreshed
 	 * @param	
 	 * 		agentid: The Agent ID inputed from ViewPolicyByAgent
