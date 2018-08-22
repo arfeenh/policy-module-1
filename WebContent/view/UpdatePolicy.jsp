@@ -24,7 +24,7 @@
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
-  
+  <%! ArrayList<String> nameAndIdList; %>
 </head>
 <body>
 <div class="container">
@@ -36,8 +36,9 @@
 			<tr>
 				<td> please select policy you would like to update </td>
 				<td>
-					<%! ArrayList<String> nameAndIdList = new PolicyService().getAllPoliciesNameAndID();  
+					<% nameAndIdList = new PolicyService().getAllPoliciesNameAndID();  
 					%>
+					<% System.out.println("List size: " + nameAndIdList.size()); %>
 					 <div class="form-group">
 				    <select class="form-control" id="deletePolicy" name="selectPolicy" >
 				       <% for(int i = 0; i < nameAndIdList.size(); i++){ %>

@@ -359,9 +359,10 @@ public class PolicyDao {
 				PolicyDao dao = new PolicyDao();
 				Date date = rs.getDate(5);
 				Policy pol = dao.selectPolicyByID(d);
-				
+				//calculate expiry date based on tenure
 				LocalDate ld = LocalDate.parse(date.toString());
-				ld = ld.plusYears((long)pol.getTenure());
+				long days = (long)(pol.getTenure()*365.0);
+				ld = ld.plusDays(days);
 				
 				date = Date.valueOf(ld);
 				List<Nominee> noms = NomineeDao.getNomineesFromMapID(rs.getInt(1));

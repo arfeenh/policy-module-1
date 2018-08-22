@@ -155,17 +155,17 @@ public class PolicyMapDao {
 		return policy;
 	}
 	
-	public int getPolicyMapIDFromPolicyID() throws SQLException, ClassNotFoundException{
-		
-		String SELECT_POLICY_MAP_ID_FROM_POLICY_ID = "select policy_map_id from PolicyMap where "
-				+ "policy_ID = "+this.policyid;
+	public int getPolicyMapIDFromIDs(String custid, String policyid) throws SQLException, ClassNotFoundException{
+
+		String SELECT_POLICY_MAP_ID_FROM_ID = "select policy_map_id from PolicyMap where "
+				+ "policy_ID = "+policyid+" AND customer_ID = "+custid;
 
 		Connection con = null;
 		PreparedStatement ps = null;
 		
 		con = OracleConnection.INSTANCE.getConnection();
 	
-		ps = con.prepareStatement(SELECT_POLICY_MAP_ID_FROM_POLICY_ID);
+		ps = con.prepareStatement(SELECT_POLICY_MAP_ID_FROM_ID);
 		ResultSet rs = ps.executeQuery();
 		int policy_map_id=0;
 		while (rs.next()) {

@@ -10,6 +10,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Customer View</title>
+<script>
+	function validate(){
+		var x = document.forms["polSelect"]["policy"].value;
+		if (x == null || x == ""){
+			alert("You don't have any policies");
+			return false;
+		}
+		return true;
+	}
+
+</script>
 </head>
 <body>
 <% 
@@ -34,7 +45,7 @@
 	</tr>
 	<tr>
 		<td>
-  			<form  method = "get" action="../MainServlet">
+  			<form  method = "get" action="../MainServlet" name = "polSelect" onsubmit = "return validate()">
 				<select name="policy" >
 				<%for(int i = 0; i<policies.size(); i++){
 					Policy p = policies.get(i);%>  

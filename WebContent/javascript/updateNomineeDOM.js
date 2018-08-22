@@ -28,19 +28,6 @@ document.getElementById("btn-cancel-add-nominee").addEventListener("click",
 			addNomineeSection.style.display = "none";
 		});
 
-/**
- * Ask for confirmation before adding new nominee
- * if the button btn-confirm-add-nominee is clicked.
- */
-document.getElementById("btn-confirm-add-nominee").addEventListener("click",
-		function() {
-			var choice;
-			if (confirm("Do you confirm to delete the selected nominee?")) {
-				choice = true;
-			} else {
-				choice = false;
-			}
-		});
 
 var newPreview = document.querySelector("#new-upload-file-preview");
 var updatePreview = document.querySelector("#update-upload-file-preview");
@@ -247,6 +234,7 @@ function updateNomineeById(id, name, relationship, purpose, percentage) {
 	updateNomineeSection.style.display = "block";
 
 	// Populate the info of the selected nominee
+	document.querySelector("#update-nominee-id").value = id;
 	document.querySelector("#update-nominee-name").value = name;
 	document.querySelector("#update-nominee-relationship").value = relationship
 			.toLowerCase();
