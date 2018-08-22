@@ -11,7 +11,7 @@
 <%@ page import="java.sql.Date" %>
 <%@ page import = "com.policy.data.Manager" %>
 <%
-	Policy myPolicy = (Policy)session.getAttribute("policyobj");
+	Policy myPolicy = (Policy)session.getAttribute("policy");
 	
 	// Get values from the session object
 	int policyId = myPolicy.getPolicyId();
@@ -37,7 +37,8 @@
 	// convert startDate to expireDate
 	Date startDate = myPolicy.getStartDate();
 	LocalDate ld = LocalDate.parse(startDate.toString());
-	ld = ld.plusYears((long)myPolicy.getTenure());
+	long days = (long)(myPolicy.getTenure()* 365.0);
+	ld = ld.plusDays(days);
 	Date expireDate = Date.valueOf(ld);
 	
 %>
