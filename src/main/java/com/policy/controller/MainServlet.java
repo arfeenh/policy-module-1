@@ -156,7 +156,7 @@ public class MainServlet extends HttpServlet {
 			myPolicy.setNominees(myNominees);
 			
 			response.sendRedirect("view/customerViewPolicy.jsp");
-			hses.setAttribute("policyobj", myPolicy);
+			hses.setAttribute("policy", myPolicy);
 			
 		} catch (ClassNotFoundException | SQLException e1) {
 			e1.printStackTrace();
@@ -413,6 +413,7 @@ public class MainServlet extends HttpServlet {
 			   	obj11.setMaxSum(maxSum111);
 			   	obj11.setPreReqs(preReq11);
 			   	obj11.setPolicyType(PolicyType11);
+			   	obj11.setPolicyId((int)ses11.getAttribute("pol_Id"));
 			   	
 			   	ses11.setAttribute("policy", obj11);
 			   	System.out.println(ses11.getAttribute("pol_Id"));
