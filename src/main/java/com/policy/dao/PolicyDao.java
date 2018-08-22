@@ -12,11 +12,20 @@
 
 package com.policy.dao;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
+
 import com.policy.data.Nominee;
 import com.policy.data.Policy;
 
@@ -116,6 +125,32 @@ public class PolicyDao {
 		p.setPaymentsPerYear(rs.getInt("payments_per_year"));
 		p.setPremiumAmount(rs.getDouble("premium_amount"));
 		return p;
+	}
+	
+	public static ArrayList<Policy> getPoliciesWithType(String type) throws SQLException, ClassNotFoundException{
+		ArrayList<Policy> policies = new ArrayList<Policy>();
+		
+		Connection con = OracleConnection.INSTANCE.getConnection();
+		Statement st = con.createStatement();
+		ResultSet rs = st.executeQuery("Select * from Policies where Policies.policy_type='"+type+"'");
+		Policy temp;
+		while (rs.next()) {
+			temp = new Policy();
+			temp.setPolicyId(rs.getInt(1));
+			temp.setPolicyType(rs.getString(2));
+			temp.setPolicyName(rs.getString(3));
+			temp.setNumberNominees(rs.getInt(4));
+			temp.setTenure(rs.getDouble(5));
+			temp.setMinSum(rs.getDouble(6));
+			temp.setMaxSum(rs.getDouble(7));
+			temp.setPreReqs(rs.getString(8));
+			policies.add(temp);
+		}
+		
+		rs.close();
+		st.close();
+		OracleConnection.INSTANCE.disconnect();
+		return policies;
 	}
 	
 	/**

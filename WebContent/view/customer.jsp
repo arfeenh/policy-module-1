@@ -40,7 +40,7 @@
 <% 
 	Customer u = (Customer) session.getAttribute("user"); 
 	//List<Policy> policies = PolicyDao.getAllCustomerPolicies(u.getCustomerId());
-	List<Policy> policies = PolicyDao.getAllCustomerPolicies(1);
+	List<Policy> policies = PolicyDao.getAllCustomerPolicies(u.getCustomerId());
 	session.setAttribute("policies", policies);
 	
 %>
@@ -51,7 +51,14 @@
 	</tr>
 	
 	<tr>
-		<td><button type="button" onclick="window.location.href = 'BuyPolicy.jsp';" value="buyPolicy">Buy Policy</button></td>
+		<td><form method="get" action="../MainServlet">
+			<select name="policyType">
+					<option value="Accidental">Accidental</option>
+					<option value="Term">Term</option>
+					<option value="Pension Scheme">Pension Scheme</option>
+			</select>
+			<button class="btn btn-primary btn-lg" type = "submit" name="action" value="buyPolicy"> Buy policy </button>
+		</form></td>
 	</tr>
 	<tr>
 		<td><button type="button" onclick="window.location.href = 'GenerateCertificateCustomer.jsp';" value="generateCert">Generate Certificate</button></td>
