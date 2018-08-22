@@ -162,7 +162,7 @@ public class NomineeDao {
 		String UPDATE_NOMINEE = "update Nominees " +
 				"set name = ?, " + 
 				"relationship_to_customer = ?, " +
-				"purpose_of_changed = ?, " +
+				"purpose_of_changed = ? " +
 				"where nominee_id = ? ";
 		Connection con = null;
 		PreparedStatement ps = null;
