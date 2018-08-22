@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpSession;
 import com.policy.dao.NomineeDao;
 import com.policy.dao.PolicyDao;
 import com.policy.dao.PolicyMapDao;
+import com.policy.data.Customer;
 import com.policy.data.Nominee;
 import com.policy.data.Policy;
 import com.policy.service.PolicyService;
@@ -39,13 +41,45 @@ public class MainServlet extends HttpServlet {
 		System.out.println(action);
 		if(action != null) {
 			switch(action) {
+			case "addPolicyToCustomer":
+				try {
+					boolean result = PolicyMapDao.tagCustomer((Customer)request.getSession().getAttribute("user"),
+												(Policy) request.getSession().getAttribute("policy"),
+												request.getParameter("premium"),
+												request.getParameter("sumAssured"),
+												request.getParameterValues("medicalDetails"),
+												request.getParameter("agentID"),
+												request.getParameter("initDate"),
+												request.getParameterValues("nomineeName"),
+												request.getParameterValues("relationship"),
+												request.getParameterValues("purpose"));
+					if(result)
+						response.getWriter().println("Successfull");
+					else
+						response.getWriter().println("Something went wrong");
+				} catch (Exception e3) {
+					// TODO Auto-generated catch block
+					e3.printStackTrace();
+				}
+				
+				break;
+			case "buyPolicy":
+				try {
+					ArrayList<Policy> policiesByType = PolicyDao.getPoliciesWithType(request.getParameter("policyType"));
+					request.getSession().setAttribute("policiesByType", policiesByType);
+					request.getSession().setAttribute("policyType", request.getParameter("policyType"));
+					response.sendRedirect("view/BuyPolicy.jsp");
+				} catch (Exception e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
+				break;
 			case "viewPolicyBackButton": 
 				request.getSession().removeAttribute("policy");
 				response.sendRedirect("view/admin.jsp");
 				break;
 			case "viewPolicy":
 				ArrayList<Policy> policies = (ArrayList<Policy>)request.getSession().getAttribute("policies");
-				System.out.println("WTF" + request.getParameter("policy") + " po: " + policies.size() );
 				request.getSession().setAttribute("policy", policies.get(Integer.parseInt(request.getParameter("policy"))));
 				response.sendRedirect("view/customerViewPolicy.jsp");
 				break;
@@ -60,7 +94,8 @@ public class MainServlet extends HttpServlet {
 				
 				HttpSession hses = request.getSession();
 				String custid = String.valueOf(hses.getAttribute("cust"));
-				String policyid = String.valueOf(hses.getAttribute("policy"));
+				Policy pol = (Policy) hses.getAttribute("policy");
+				String policyid = ""+pol.getPolicyId();
 				
 				PolicyMapDao info = new PolicyMapDao();
 				
@@ -85,7 +120,7 @@ public class MainServlet extends HttpServlet {
 					nom.setRelationshipToCustomer(relationship);
 					nom.setPurposeOfChanged(purpose);
 					
-					Policy temp = (Policy) hses.getAttribute("policyobj");
+					Policy temp = (Policy) hses.getAttribute("policy");
 					temp.addNomineeToList(nom);
 					hses.setAttribute("policyobj", temp);
 					
@@ -186,7 +221,12 @@ public class MainServlet extends HttpServlet {
 			   	
 			   	double maxSum = Double.parseDouble(request.getParameter("max"));
 			   	ses.setAttribute("max", maxSum);
-			   	
+		
+			   	if(minSum>maxSum) {  //swap min with max if min is larger then max
+			   	 double temp = minSum;
+			        minSum = maxSum;
+			        maxSum = temp;
+			   	}
 			   	String preReq = request.getParameter("pre-req");
 			   	ses.setAttribute("pre-req", preReq);
 			   	
@@ -395,6 +435,12 @@ public class MainServlet extends HttpServlet {
 			   	
 			   	double maxSum111 = Double.parseDouble(request.getParameter("max"));
 			   	ses11.setAttribute("max", maxSum111);
+			   	
+			   	if(minSum111>maxSum111) {
+				   	 double temp = minSum111;
+				   	minSum111 = maxSum111;
+				   	maxSum111 = temp;
+				   	}
 			   	
 			   	preReq11 = request.getParameter("pre-req");
 			   	ses11.setAttribute("pre-req", preReq11);

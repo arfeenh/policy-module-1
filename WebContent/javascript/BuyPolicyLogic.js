@@ -7,14 +7,14 @@ var nomineeForm = `
 	<!--  Name  -->
 	 	<div class="form-group">
 		    <label for="name">Enter nominee name</label>
-		    <input type="text" class="form-control" id="name" >
+		    <input type="text" required="required" class="form-control" id="name" name="nomineeName" >
 	 	</div>
 	</div>
 	<div class="col card-body">
 	 	<!-- Relationship -->
 	 	<div class="form-group">
 		   <label for="relationship">Select relationship</label>
-		   <select class="form-control" id="relationship" name="relationship">
+		   <select class="form-control" required="required" id="relationship" name="relationship">
 			    <option>Parent</option>
 			    <option>Spouse</option>
 		      	<option>Child</option>
@@ -24,19 +24,8 @@ var nomineeForm = `
 		 <!--  Purpose  -->
 	 	<div class="form-group">
 		    <label for="purpose">Purpose</label>
-			<textarea id="purpose" name="purpose" class="form-control" rows="2" id="comment"></textarea>  	
+			<textarea id="purpose" name="purpose" required="required" class="form-control" rows="2" id="comment"></textarea>  	
 	   </div>
-	   
-	   <!--  Name  -->
-	 	<div class="form-group">
-		    <label for="percentage">Enter a percentage between 1 and 100</label>
-		    <input type="text" class="form-control" id="percentage" name="percentage" >
-	 	</div>
-	 	
-	 	<div class="form-group">
-		    <label for="identification">Upload identification</label>
-		    <input type="file" class="form-control-file" id="identification" name="identification">
-		</div>
 	</div>
 	</div>`;
 
@@ -46,13 +35,12 @@ var nomineeForm = `
 
 	function addNominee(){
 		numberOfNominees++;
-		if(numberOfNominees > maxNumberOfNominees){
-			numberOfNominees = maxNumberOfNominees;
+		if(numberOfNominees > maxNominee){
+			numberOfNominees = maxNominee;
 			return;
 		}
 		
 		var updatedNomineeForm = '<div class="col card m-1" id = "nominee' + numberOfNominees + '">' + nomineeForm; 
-		console.log(updatedNomineeForm);
 		var nominees = document.getElementById("nominees");
 		nominees.insertAdjacentHTML('beforeend', updatedNomineeForm);
 	}

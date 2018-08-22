@@ -11,6 +11,7 @@
 <!DOCTYPE html> 
 <html>
 <head>
+<link rel="stylesheet" href="../javascript/main.css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,12 +27,19 @@
   crossorigin="anonymous"></script>
 </head>
 <body>
+	<h1 align="center"> Delete Policy </h1>			
 <div class="container">
+    <div class="container-fluid" align="right"> 
+		<p>
+		Time: <span id="time"></span>
+		Date: <span id="date"></span>
+		</p>
+			<script> var dt = new Date(); document.getElementById("date").innerHTML = dt.toLocaleDateString(); </script>
+	</div>
   <div  id="form_style" >
   <form id="deleteDisplay" method= "post" action ="../MainServlet" >
   	<div class="form-group">
 		<table align="center" >
-			<h1 align="center"> Delete Policy </h1>			
 			<tr> 
 				<td> Policy Name </td>				
 				<td> <input type="text" readonly name="policy_name" required = "required" value= "<%= session.getAttribute("policyname")%>" pattern="([^\s][A-z0-9\s]+){2,100}" /> </td>
