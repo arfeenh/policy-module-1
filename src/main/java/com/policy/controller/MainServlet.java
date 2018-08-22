@@ -47,6 +47,85 @@ public class MainServlet extends HttpServlet {
 				request.getSession().setAttribute("policy", policies.get(Integer.parseInt(request.getParameter("policy"))));
 				response.sendRedirect("view/customerViewPolicy.jsp");
 				break;
+			case "AddNominee":
+				String nominee_name = request.getParameter("new-nominee-name");
+				String relationship = request.getParameter("new-nominee-relationship");
+				if (relationship.equals("other-new")) {
+					relationship = request.getParameter("other-relationship-new");
+				}
+				String purpose = request.getParameter("new-nominee-purpose");
+				
+				
+				HttpSession hses = request.getSession();
+				String custid = String.valueOf(hses.getAttribute("cust"));
+				String policyid = String.valueOf(hses.getAttribute("policy"));
+				
+				PolicyMapDao info = new PolicyMapDao();
+				
+				int policy_map_id;
+				int max_nominee_id;
+				int max_nominee_map_id;
+				
+				try {
+					policy_map_id = info.getPolicyMapIDFromIDs(custid, policyid);
+					
+					max_nominee_id = NomineeDao.maxNomineeID();
+					max_nominee_map_id = NomineeDao.maxNomineeMapID();
+					
+					NomineeDao.insertNominee(nominee_name, relationship, purpose, max_nominee_id);
+					NomineeDao.insertNomineeMap(max_nominee_map_id, policy_map_id, max_nominee_id);
+					
+					int nominee_id = max_nominee_id+1;
+					
+					Nominee nom = new Nominee();
+					nom.setNomineeId(nominee_id);
+					nom.setNomineeName(nominee_name);
+					nom.setRelationshipToCustomer(relationship);
+					nom.setPurposeOfChanged(purpose);
+					
+					Policy temp = (Policy) hses.getAttribute("policyobj");
+					temp.addNomineeToList(nom);
+					hses.setAttribute("policyobj", temp);
+					
+				} catch (ClassNotFoundException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				response.sendRedirect("view/updateNominee.jsp");
+			
+			break;
+			case "UpdateNominee":
+				System.out.println("wefwef");
+				String update_nominee_name = request.getParameter("update-nominee-name");
+				String update_relationship = request.getParameter("update-nominee-relationship");
+				if (update_relationship.equals("other-update")) {
+					update_relationship = request.getParameter("other-relationship-update");
+				}
+				String update_purpose = request.getParameter("update-nominee-purpose");
+				String nominee_id = request.getParameter("update-nominee-id");
+		
+
+				try {
+					NomineeDao.updateNomineeDetails(nominee_id, update_nominee_name, update_relationship, update_purpose);			
+				} catch (ClassNotFoundException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				HttpSession hses_update = request.getSession();
+				Policy temp = (Policy) hses_update.getAttribute("policyobj");
+				for (Nominee i:temp.getNominees()) {
+					if (i.getNomineeId()==Integer.parseInt(nominee_id)) {
+						i.setNomineeName(update_nominee_name);
+						i.setRelationshipToCustomer(update_relationship);
+						i.setPurposeOfChanged(update_purpose);
+					}
+				}
+				hses_update.setAttribute("policyobj", temp);
+		
+				response.sendRedirect("view/updateNominee.jsp");
+			
+			break;
 
 			   	
 			}
@@ -60,6 +139,7 @@ public class MainServlet extends HttpServlet {
 		String agentid = (String) hses.getAttribute("agentid");
 		String custid = (String) hses.getAttribute("cust");
 		String policyid = request.getParameter("policyid");
+		hses.setAttribute("policy",policyid);
 		
 		PolicyMapDao obj = new PolicyMapDao(agentid, custid, policyid);
 		Policy myPolicy;
@@ -68,13 +148,13 @@ public class MainServlet extends HttpServlet {
 		
 		try {
 			myPolicy = obj.getPolicyInfo();
-			policyMapId = obj.getPolicyMapIDFromPolicyID();
+			policyMapId = obj.getPolicyMapIDFromIDs(obj.getCustID(),obj.getPolicyID());
 			myNominees = NomineeDao.getNomineesFromMapID(policyMapId);
 			myPolicy.setNumberNominees(myNominees.size());
 			myPolicy.setNominees(myNominees);
 			
 			response.sendRedirect("view/customerViewPolicy.jsp");
-			hses.setAttribute("policy", myPolicy);
+			hses.setAttribute("policyobj", myPolicy);
 			
 		} catch (ClassNotFoundException | SQLException e1) {
 			e1.printStackTrace();
