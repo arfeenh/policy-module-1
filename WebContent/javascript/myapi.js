@@ -1,8 +1,12 @@
 function initAutocomplete() {
+	var cLat = 43.653439000;
+	var cLng = -79.388245600;
+	
 	var company = {
-		lat : 43.653439000,
-		lng : -79.388245600
+		lat : cLat,
+		lng : cLng
 	};
+	getWeather(cLat, cLng);
 	var zoomLevel = 13;
 	var mapType = 'roadmap';
 
@@ -31,15 +35,10 @@ function initAutocomplete() {
 	// Create the search box and link it to the UI element.
 	var input = document.getElementById('searchInput');
 	var searchBox = new google.maps.places.SearchBox(input);
-	map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
-	map.addListener('bounds_changed', function() {
-		searchBox.setBounds(map.getBounds());
-	});
 
 	var markers = [];
-	// Listen for the event fired when the user selects a prediction and retrieve
-	// more details for that place.
+	// Listen for the event fired when the user selects a prediction 
+	// and retrieve more details for that place.
 	searchBox.addListener('places_changed', function() {
 		var places = searchBox.getPlaces();
 
@@ -55,6 +54,8 @@ function initAutocomplete() {
 
 		// For each place, get the icon, name and location.
 		var bounds = new google.maps.LatLngBounds();
+		var placeName, placeAddr, placeUrl;
+		var lat, lng, weather;
 
 		places.forEach(function(place) {
 			if (!place.geometry) {
@@ -62,10 +63,24 @@ function initAutocomplete() {
 				return;
 			}
 
+			placeName = place.name.toUpperCase();
+			placeAddr = place.formatted_address.split(',');
+			placeUrl = place.url;
+			
+			lat = place.geometry.location.lat();
+			lng = place.geometry.location.lng();
+			
+			var formatedAddr = '';
+			
+			for(let i=0; i<placeAddr.length; i++) {
+				formatedAddr += placeAddr[i] + '<br/>';
+			}
+			 
+			
 			infowindow = new google.maps.InfoWindow({
-				content : '<h3>' + place.name.toUpperCase() + '</h3>' + 
-							'<p>' + place.formatted_address + '</p>' + 
-							'<a href="' + place.url + '">Go to Website'  + '</a>'
+				content : '<h3>' + placeName + '</h3>' + 
+							'<p>' + formatedAddr + '</p>' + 
+							'<a href="' + placeUrl + '" target="_blank">View on Google Maps</a>'
 			});
 
 			var myMarker = new google.maps.Marker({
@@ -77,6 +92,7 @@ function initAutocomplete() {
 
 			myMarker.addListener('click', function() {
 				infowindow.open(map, myMarker);
+				weather = getWeather(lat, lng);
 			});
 
 			// Create a marker for each place.
@@ -92,3 +108,28 @@ function initAutocomplete() {
 		map.fitBounds(bounds);
 	});
 }
+
+const weatherImg = document.querySelector('#weatherImg');
+const unsplashReq = 'https://source.unsplash.com/random?weather,';
+
+function getWeather(lat, lng) {
+	const appid = '47b174982f04ffa1ea5cb631aba10bb7';
+	const url = 'https://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+lng+'&appid='+appid;
+	
+	
+	fetch(url)
+		.then(function(response) {
+			return response.json();
+		})
+		.then(function(data) {
+		  
+		var weather = data.weather[0].main;
+		console.log(unsplashReq + weather);
+		weatherImg.src = unsplashReq + weather;
+	});
+}
+
+const backBtn = document.querySelector('#goBackFromApi');
+backBtn.addEventListener('click', function() {
+	window.location.href = "admin.jsp";
+});
