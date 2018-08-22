@@ -65,7 +65,6 @@ public class PolicyService {
 	
 	public ArrayList<String> getAllPoliciesNameAndID() {
 		try {
-			
 			return policyDao.selectAllPolicyNameAndPolicyID();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block

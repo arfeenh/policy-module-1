@@ -26,6 +26,8 @@
   crossorigin="anonymous"></script>
   
 </head>
+
+	<%! ArrayList<String> nameAndIdList;  %>
 <body>
 <div class="container">
   <div  id="form_style" >
@@ -36,7 +38,7 @@
 			<tr>
 				<td> please select policy you would like to delete </td>
 				<td>
-					<%! ArrayList<String> nameAndIdList = new PolicyService().getAllPoliciesNameAndID();  
+					<% nameAndIdList = new PolicyService().getAllPoliciesNameAndID();  
 					%>
 					 <div class="form-group">
 				    <select class="form-control" id="deletePolicy" name="selectPolicy" >

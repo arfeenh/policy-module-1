@@ -17,9 +17,18 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<div class="alert alert-success" role="alert">
-	  Policy is successfully registered!
-	</div>
+
+	<% if ((boolean)session.getAttribute("updated")) { %>
+		<div class="alert alert-success" role="alert">
+	  	Policy was successfully updated!
+	  	
+		</div>
+	<% } else { %>
+			<div class="alert alert-success" role="alert">
+				Policy was successfully registered!
+			</div>
+	<% } %>
+
 	<div class = "container">
 		<div class="jumbotron">
 		  
