@@ -21,13 +21,16 @@
 		<%
 			try {
 				List<Policy> k;
-				if (session.getAttribute("allPolicies") == null){
-					k = PolicyDao.getAllPolicies();
-					session.setAttribute("allPolicies", k);
-				}
-				else{
-					k = (List<Policy>)session.getAttribute("allPolicies");
-				}
+// 				if (session.getAttribute("allPolicies") == null){
+// 					k = PolicyDao.getAllPolicies();
+// 					session.setAttribute("allPolicies", k);
+// 				}
+// 				else{
+// 					k = (List<Policy>)session.getAttribute("allPolicies");
+// 				}
+				
+				k = PolicyDao.getAllPolicies();
+				session.setAttribute("allPolicies", k);
 				
 				for(int x = 0; x < k.size(); x++){
 					%><option value = "<%= k.get(x).getPolicyId() %>"><%=k.get(x).getPolicyName() %></option> <%
