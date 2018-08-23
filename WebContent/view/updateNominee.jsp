@@ -6,12 +6,20 @@
 	List<Nominee> policyNominees = myPolicy.getNominees();
 	HttpSession hses = request.getSession();
 	hses.setAttribute("NomineeList", policyNominees);
+	
 %>
 
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" href="../javascript/main.css">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
 <title>Update Nominees</title>
 <style>
 body {
@@ -84,8 +92,20 @@ li {
 </head>
 
 <body>
+
+		<h1>Policy Nominees</h1>
+
+<div class="container" >
+    <div class="container-fluid" align="right"> 
+	<p>
+	Time: <span id="time"></span>
+	Date: <span id="date"></span>
+	</p>
+		<script> var dt = new Date(); document.getElementById("date").innerHTML = dt.toLocaleDateString(); </script>
+	</div>
 	<fieldset>
-		<legend>Policy Nominees</legend>
+	
+		
 		<div id="show-current-nominees">
 			<table>
 				<tr>
@@ -108,12 +128,16 @@ li {
 						%>
 						<button id="btnUpdate<%= nomineeId %>" onclick="updateNomineeById(
 							<%= nomineeId %>, '<%= nomineeName %>' , '<%= relationship %>', '<%= purpose %>')">Update</button>
-						<button id="btnDelete<%= nomineeId %>" onclick="deleteNomineeById(<%= nomineeId %>)">Delete</button>
+						<form method="get" id="form-delete-nominee" enctype="multipart/form-data" action="../MainServlet">
+						<button id="btnDelete<%= nomineeId %>" onclick="return deleteNomineeById(<%= nomineeId %>)" name="action" value="DeleteNominee">Delete</button>
+						<%
+							}
+						%>
+						<input style="display: none" type="text" id="delete_id" name="delete_id" value= "">
+						</form>
 					</td>
 				</tr>
-				<%
-					}
-				%>
+				
 			</table>
 		</div>
 		<div id="section-btns">
@@ -227,6 +251,8 @@ li {
 		</fieldset>
 	</div>
 	<script src="../javascript/updateNomineeDOM.js"></script>
+	<script src = "../javascript/PolicyValidation.js"> </script>
 	
+	</div>
 </body>
 </html>

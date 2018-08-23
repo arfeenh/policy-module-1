@@ -236,8 +236,14 @@ function updateNomineeById(id, name, relationship, purpose, percentage) {
 	// Populate the info of the selected nominee
 	document.querySelector("#update-nominee-id").value = id;
 	document.querySelector("#update-nominee-name").value = name;
-	document.querySelector("#update-nominee-relationship").value = relationship
-			.toLowerCase();
+	if (relationship!=="child" && relationship!=="parent" && relationship!=="spouse"){
+		document.querySelector("#update-nominee-relationship").value = "other-update";
+		document.getElementById("other-relationship-update").style.display = '';
+		document.getElementById("other-relationship-update").value = relationship;
+	}else{
+		document.querySelector("#update-nominee-relationship").value = relationship
+		.toLowerCase();
+	}
 	document.querySelector("#update-nominee-purpose").value = purpose;
 	document.querySelector("#update-nominee-percentage").value = percentage;
 };
@@ -254,11 +260,13 @@ document.querySelector("#btn-cancel-update-nominee").addEventListener("click",
  */
 function deleteNomineeById(id) {
 	var choice;
+	
 	if (confirm("Do you confirm to delete the selected nominee?")) {
 		choice = true;
+		document.querySelector("#delete_id").value = id;
 	} else {
 		choice = false;
 	}
-
-	// Perform the delete action on selected nominee
+	
+	return choice;
 }

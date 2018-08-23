@@ -6,6 +6,7 @@
 <!DOCTYPE html >
 <html>
 <script type="text/javascript" src="../javascript/utilities.js"></script>
+<link rel="stylesheet" href="../javascript/main.css">
 
 <head>
 
@@ -37,7 +38,15 @@
 	<% Manager m = (Manager) session.getAttribute("user"); %>
 	<h1 align="center">Admin <%= m.getFullname() %> ID: <%= m.getManagerId() %></h1>
 <body>
+
 <div class="container">
+    <div class="container-fluid" align="right"> 
+		<p>
+		Time: <span id="time"></span>
+		Date: <span id="date"></span>
+		</p>
+			<script> var dt = new Date(); document.getElementById("date").innerHTML = dt.toLocaleDateString(); </script>
+	</div>
 	<table align="center">
 	<!-- 
 	Changed href from RegisterPolicy to CreatePolicy.
@@ -67,6 +76,7 @@
 	</tr>
 	</table>
 	</div>
+			<script src = "../javascript/PolicyValidation.js"> </script>
 </body>
 </html>
 

@@ -5,6 +5,7 @@
 
 <!DOCTYPE html >
 <html>
+<script src = "../javascript/PolicyValidation.js"> </script>
 <script type="text/javascript" src="../javascript/utilities.js"></script>
 
 <head>
@@ -25,6 +26,13 @@
 <body>
 <h1 align="center">Policy Management</h1> <br>
 <div class="container">
+    <div class="container-fluid" align="right"> 
+		<p>
+		Time: <span id="time"></span>
+		Date: <span id="date"></span>
+		</p>
+			<script> var dt = new Date(); document.getElementById("date").innerHTML = dt.toLocaleDateString(); </script>
+	</div>
 	<table align="center">
 	<!-- 
 	Changed href from RegisterPolicy to CreatePolicy.
@@ -55,6 +63,8 @@
 	</tr>
 	</table>
 	</div>
+	<script src = "../javascript/PolicyValidation.js"> </script>
+	
 </body>
 </html>
 

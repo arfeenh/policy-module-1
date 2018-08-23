@@ -65,5 +65,6 @@
 	
 </form>
 </div>
+		<script src = "../javascript/PolicyValidation.js"> </script>
 </body>
 </html>

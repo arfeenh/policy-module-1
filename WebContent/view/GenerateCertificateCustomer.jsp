@@ -13,9 +13,27 @@
 <%@ page import= "java.util.List" %>
 <%@ page import= "java.util.ArrayList" %>
 <%@ page import= "com.policy.data.Customer" %>
+
+<link rel="stylesheet" href="../javascript/main.css">
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
 </head>
 <body>
-
+<h1 align="center"> Generate Customer Customer</h1>
+<div class="container">
+            <div class="container-fluid" align="right"> 
+				<p>
+				Time: <span id="time"></span>
+				Date: <span id="date"></span>
+				</p>
+					<script> var dt = new Date(); document.getElementById("date").innerHTML = dt.toLocaleDateString(); </script>
+			</div>
 <form action = "../CertServlet" method = "get">
 	Select Policy : 
 	<select name = "policyID">
@@ -40,9 +58,11 @@
 		%>
 	</select><br>
 	<input type = "submit" value = "Generate Customer Certificate" name = "op">
-	<button type = "submit" value = "custGoBack" name = "op">Go Back</button>
+	<button type = "submit" value = "custGoBack" class="btn btn-primary btn-lg" name = "op">Go Back</button>
 	
 	
 </form>
+		<script src = "../javascript/PolicyValidation.js"> </script>
+		</div>
 </body>
 </html>
