@@ -172,5 +172,6 @@ if (request.getParameter("SearchPolicy")!=null && request.getParameter("SearchCu
 	
 </div>
 </div>
+		<script src = "../javascript/PolicyValidation.js"> </script>
 </body>
 </html>

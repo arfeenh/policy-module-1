@@ -29,14 +29,6 @@
 </script>
 </head>
 <body>
-<div class="container">
-	<div class="container-fluid" align="right"> 
-		<p>
-		Time: <span id="time"></span>
-		Date: <span id="date"></span>
-		</p>
-			<script> var dt = new Date(); document.getElementById("date").innerHTML = dt.toLocaleDateString(); </script>
-	</div>
 <% 
 	Customer u = (Customer) session.getAttribute("user"); 
 	//List<Policy> policies = PolicyDao.getAllCustomerPolicies(u.getCustomerId());
@@ -45,7 +37,17 @@
 	
 %>
 <h1 align="center">User: <%= u.getFirstname() %></h1>
-<table>
+
+<div class="container">
+	<div class="container-fluid" align="right"> 
+		<p>
+		Time: <span id="time"></span>
+		Date: <span id="date"></span>
+		</p>
+			<script> var dt = new Date(); document.getElementById("date").innerHTML = dt.toLocaleDateString(); </script>
+	</div>
+
+<table align="center">
 	<tr>
 		<th>Profile management</th>
 	</tr>
@@ -61,7 +63,7 @@
 		</form></td>
 	</tr>
 	<tr>
-		<td><button type="button" onclick="window.location.href = 'GenerateCertificateCustomer.jsp';" value="generateCert">Generate Certificate</button></td>
+		<td><button type="button" class="btn btn-primary btn-lg" onclick="window.location.href = 'GenerateCertificateCustomer.jsp';" value="generateCert">Generate Certificate</button></td>
 		
 	</tr>
 	<tr>
@@ -79,5 +81,7 @@
 	</tr>
 	</table>
 	</div>
+	<script src = "../javascript/PolicyValidation.js"> </script>
+	
 </body>
 </html>
