@@ -39,8 +39,8 @@
 	margin: 0 auto;
 }
 #weatherImg {
-	width: 450px;
-	height: 450px;
+	width: 350px;
+	height: 350px;
 	margin: 30px auto;
 }
 #goBackFromApi {

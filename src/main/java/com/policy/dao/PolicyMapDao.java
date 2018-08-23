@@ -68,7 +68,17 @@ public class PolicyMapDao {
 		OracleConnection.INSTANCE.disconnect();
 			
 		if(rowsAffected >= 1) {
+			
 			System.out.println("Policy successfully added");
+			//NomineeDao nomDao = new NomineeDao();
+			int maxNomineeID = NomineeDao.maxNomineeID();
+			int maxNomMapID = NomineeDao.maxNomineeMapID();
+			for(int i = 0; i<nomineeNames.length; i++) {
+				NomineeDao.insertNominee(nomineeNames[i], 
+						nomineeRelations[i], nomineePurpose[i], maxNomineeID);
+				NomineeDao.insertNomineeMap(maxNomMapID++,id+1, maxNomineeID++);
+			}
+			
 			return true;
 		}else {
 			System.out.println("Policy was not added");

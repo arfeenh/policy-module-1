@@ -1,5 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page import="com.policy.data.Policy" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import = "com.policy.data.Nominee" %>
+<%@ page import = "java.sql.Date" %>
+<%@ page import = "com.policy.data.Manager" %>
+<%! Policy pol; %>
+<%! List<Nominee> noms;%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -13,14 +20,7 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
-<%@page import="com.policy.data.Policy" %>
-<%@page import="java.util.List" %>
-<%@page import="java.util.ArrayList" %>
-<%@page import = "com.policy.data.Nominee" %>
-<%@page import = "java.sql.Date" %>
-<%@page import = "com.policy.data.Manager" %>
-<%! Policy pol; %>
-<%! List<Nominee> noms;%>
+
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <link rel="stylesheet" href="../javascript/main.css">
 </head>
@@ -35,23 +35,7 @@
 			</div>
 
 <% pol = (Policy)session.getAttribute("CertPolicy"); %>
-<%-- 	Policy ID : <%= pol.getPolicyId() %><br> --%>
-<%-- 	Policy Name : <%= pol.getPolicyName() %><br> --%>
-<%-- 	Policy Tenure : <%= pol.getTenure() %><br> --%>
-<%-- 	Premium : <%= (double)session.getAttribute("CertPremium") %><br> --%>
-<!-- 	Nominees: <br> -->
-	
-<%-- 	<% noms = (List<Nominee>)session.getAttribute("CertNominees"); %> --%>
-	
-<%-- 	<% --%>
-<%-- 		for (int x = 0; x < noms.size(); x++){ --%> 
-<%-- 			%><%= noms.get(x).getNomineeName() %><br><%  --%>
-<%-- // 		} --%>
-<%-- 	%> --%>
-<%-- 	Minimum sum assured: <%=pol.getMinSum() %><br> --%>
-<%-- 	Maximum sum assured: <%=pol.getMaxSum() %><br> --%>
-<%-- 	Policy expiry date: <%= session.getAttribute("CertEndDate").toString()  %> --%>
-	<table class="table table-striped">
+<table class="table table-striped">
   <thead>
     <tr>
     </tr>
@@ -100,11 +84,11 @@
 </table>
 <%
 	if (session.getAttribute("user") instanceof Manager){
-		%> <a class="btn btn-primary" href="view/GenerateCertificate.jsp" role="button">Back</a><%
+		%> <a class="btn btn-primary" href="view/GenerateCertificate.jsp" type="button">Back</a><%
 	}
 	
 	else{
-		%> <a class="btn btn-primary" href="view/GenerateCertificateCustomer.jsp" role="button">Back</a><%
+		%> <a class="btn btn-primary" href="view/GenerateCertificateCustomer.jsp" type="button">Back</a><%
 	}
 
 %>
