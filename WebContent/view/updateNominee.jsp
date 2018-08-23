@@ -6,6 +6,7 @@
 	List<Nominee> policyNominees = myPolicy.getNominees();
 	HttpSession hses = request.getSession();
 	hses.setAttribute("NomineeList", policyNominees);
+	
 %>
 
 <!DOCTYPE html>
@@ -127,12 +128,16 @@ li {
 						%>
 						<button id="btnUpdate<%= nomineeId %>" onclick="updateNomineeById(
 							<%= nomineeId %>, '<%= nomineeName %>' , '<%= relationship %>', '<%= purpose %>')">Update</button>
-						<button id="btnDelete<%= nomineeId %>" onclick="deleteNomineeById(<%= nomineeId %>)">Delete</button>
+						<form method="get" id="form-delete-nominee" enctype="multipart/form-data" action="../MainServlet">
+						<button id="btnDelete<%= nomineeId %>" onclick="return deleteNomineeById(<%= nomineeId %>)" name="action" value="DeleteNominee">Delete</button>
+						<%
+							}
+						%>
+						<input style="display: none" type="text" id="delete_id" name="delete_id" value= "">
+						</form>
 					</td>
 				</tr>
-				<%
-					}
-				%>
+				
 			</table>
 		</div>
 		<div id="section-btns">

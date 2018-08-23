@@ -33,6 +33,7 @@ public class Dummy extends HttpServlet {
 			Manager a = new Manager();
 			a.setFullname("Brampton Batman");
 			a.setManagerId(101);
+			session.setAttribute("role", "manager");
 			session.setAttribute("user", a);
 			res.sendRedirect("view/admin.jsp");
 		}
@@ -40,8 +41,9 @@ public class Dummy extends HttpServlet {
 			Customer u = new Customer();
 			u.setFirstname("Ross");
 			u.setLastname("Geller");
-			u.setCustomerId(123);
+			u.setCustomerId(1);
 			session.setAttribute("user", u);
+			session.setAttribute("role", "customer");
 			res.sendRedirect("view/customer.jsp");
 		}
 		else {

@@ -138,7 +138,9 @@ button {
 			</tr>
 		</table>
 		<button id="go-back-home">Main Menu</button>
+		<%if (session.getAttribute("role").equals("customer")){ %>
 		<button id="update-nominees">Update Nominees</button>
+		<%} %>
 	</div>
 	<script>
 		// Button click event listener for go back button;
