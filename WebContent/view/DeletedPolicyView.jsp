@@ -74,6 +74,10 @@
 	<tr>
 		<td><button type="button" onclick="window.location.href = 'ViewPolicyByAgent.jsp';" value="ViewPolicyByAgent" class="btn btn-primary m-1">View Policy By Agent</button></td>
 	</tr>
+	<!-- Updated by Patrick on August 22, 2018. Added a button for API page -->
+	<tr>
+		<td><button type="button" onclick="window.location.href = 'myapi.jsp';" class="btn btn-primary m-1">Searching on Map</button></td>
+	</tr>
 	</table>
 	</div>
 			<script src = "../javascript/PolicyValidation.js"> </script>

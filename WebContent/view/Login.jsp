@@ -18,7 +18,9 @@
 <title>Login Page</title>
 </head>
 <body>
-<h1 align="center"> Admin/ Manager Login </h1>
+<h1 align="center">Fast Track Policy And Claim Services</h1>
+<h1 align="center"> Login </h1>
+<%session.invalidate(); %>
 <div align="center" class="container">
 	<form action="/PolicyModule/login" method="get">
 		<table>

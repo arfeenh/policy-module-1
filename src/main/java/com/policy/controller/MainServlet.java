@@ -38,6 +38,8 @@ public class MainServlet extends HttpServlet {
 		 * Updated by Domenic Garreffa on Aug 16, 2018
 		 */
 		HttpSession general = request.getSession();
+		if(general.getAttribute("user") == null)
+			response.sendRedirect("view/error.jsp");
 		String action = request.getParameter("action");
 		System.out.println(action);
 		if(action != null) {
@@ -54,10 +56,13 @@ public class MainServlet extends HttpServlet {
 												request.getParameterValues("nomineeName"),
 												request.getParameterValues("relationship"),
 												request.getParameterValues("purpose"));
-					if(result)
-						response.getWriter().println("Successfull");
-					else
-						response.getWriter().println("Something went wrong");
+					if(result){
+						response.sendRedirect("view/customer.jsp");
+					}
+					else {
+						response.sendRedirect("view/error.jsp");
+					}
+						
 				} catch (Exception e3) {
 					// TODO Auto-generated catch block
 					e3.printStackTrace();

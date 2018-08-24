@@ -195,8 +195,12 @@ $(document).ready(function(){
 	  		-Domenic Garreffa 10:20 Aug 15, 2018
 	  	--> 
 	  	
-	<p>Policy Initiation Date:</p> <input type="date" name="initDate" required="required">
-	  
+	<p>Policy Initiation Date:</p> <input type="date" id="initDate" name="initDate" required="required">
+	  <script>
+	  var date = new Date();
+	  var dateString = date.getFullYear()+"-0"+(date.getMonth()+1)+"-"+date.getDate();
+	  console.log(dateString);
+	  document.getElementById("initDate").min = dateString;</script> 
 	<hr>
 	<p> Nominees <p>
 	<div class="form-group row">

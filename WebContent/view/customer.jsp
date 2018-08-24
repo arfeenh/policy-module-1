@@ -62,10 +62,7 @@
 			<button class="btn btn-primary btn-lg" type = "submit" name="action" value="buyPolicy"> Buy policy </button>
 		</form></td>
 	</tr>
-	<tr>
-		<td><button type="button" class="btn btn-primary btn-lg" onclick="window.location.href = 'GenerateCertificateCustomer.jsp';" value="generateCert">Generate Certificate</button></td>
-		
-	</tr>
+	
 	<tr>
 		<td>
   			<form  method = "get" action="../MainServlet" name = "polSelect" onsubmit = "return validate()">
@@ -78,6 +75,14 @@
 				<button class="btn btn-primary btn-lg" type = "submit" name="action" value="viewPolicy"> view </button>
 			</form>
 		</td>
+	</tr>
+	<tr>
+		<td><button type="button" class="btn btn-primary btn-lg" onclick="window.location.href = 'GenerateCertificateCustomer.jsp';" value="generateCert">Generate Certificate</button></td>
+		
+	</tr>
+	<tr>
+		<td><button type="button" class="btn btn-primary btn-lg" onclick="window.location.href = 'Login.jsp';" value="generateCert">Logout</button></td>
+		
 	</tr>
 	</table>
 	</div>

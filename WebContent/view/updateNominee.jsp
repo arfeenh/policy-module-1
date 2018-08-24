@@ -174,19 +174,6 @@ li {
 						<td class="tbl-data"><textarea name="new-nominee-purpose"
 								id="new-nominee-purpose" rows="3" cols="25"></textarea></td>
 					</tr>
-					<tr>
-						<td class="tbl-labels" colspan="2" style="text-align: center;">
-							<div class="uploadSection">
-								<label class="uploadLbl" for="new-upload-identification">Upload identification (PNG, JPG, JPEG, PDF)</label> 
-									<input type="file" id="new-upload-identification" name="new-upload-identification"
-										accept="image/png, image/jpeg, image/pjpeg, application/pdf" 
-										style="display: none;" onchange="updateFilesDisplayNew(this.files)" required>
-							</div>
-							<div id="new-upload-file-preview">
-								<p id="new-no-file-message">No files currently selected for uploading</p>
-							</div>
-						</td>
-					</tr>
 				</table>
 				<div>
 					<button type="submit" id="btn-confirm-add-nominee" name="action" value="AddNominee">Add Nominee</button>
@@ -228,7 +215,7 @@ li {
 						<td class="tbl-data"><textarea name="update-nominee-purpose"
 								id="update-nominee-purpose" rows="3" cols="25"></textarea></td>
 					</tr>
-					<tr>
+					<!-- <tr>
 						<td class="tbl-labels" colspan="2" style="text-align: center;">
 							<div class="uploadSection">
 								<label class="uploadLbl" for="update-upload-identification">Upload identification (PNG, JPG, JPEG, PDF)
@@ -241,7 +228,7 @@ li {
 								<p id="update-no-file-message">No files currently selected for uploading</p>
 							</div>
 						</td>
-					</tr>
+					</tr>-->
 				</table>
 				<div>
 					<button type="submit" id="btn-confirm-update-nominee" name="action" value="UpdateNominee">Update Nominee</button>

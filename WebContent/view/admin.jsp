@@ -20,7 +20,9 @@
 
 <title>Admin page</title>
 </head>
+
 <% Manager m = (Manager) session.getAttribute("user"); %>
+
 <h1 align="center">Admin <%= m.getFullname() %> ID: <%= m.getManagerId() %></h1>
 
 <body>
@@ -37,6 +39,7 @@
 	<!-- 
 	Changed href from RegisterPolicy to CreatePolicy.
 	Updated by Domenic Garreffa on Aug 16, 2018. -->
+	
 	<tr>
 		<td><button type="button" onclick="window.location.href = 'RegisterPolicy.jsp';" value="newPolicy" class="btn btn-primary m-1"  >Create Policy</button></td>
 	</tr>
@@ -60,6 +63,9 @@
 	<!-- Updated by Patrick on August 22, 2018. Added a button for API page -->
 	<tr>
 		<td><button type="button" onclick="window.location.href = 'myapi.jsp';" class="btn btn-primary m-1">Searching on Map</button></td>
+	</tr>
+	<tr>
+		<td><button type="button" class="btn btn-primary btn-lg" onclick="window.location.href = 'Login.jsp';" value="generateCert">Logout</button></td>
 	</tr>
 	</table>
 	</div>

@@ -32,7 +32,7 @@
 	<% session.invalidate(); %>
 	<div id="errorPage">
 		<p id="errorMessage">Sorry, an error has occured. The previous session is ended. 
-			<br />Please <a onclick="window.location.href = 'Login.jsp';" id="signInLink">SIGN IN</a> again.</p>
+			<br />Please <a onclick="window.location.href = '/PolicyModule/view/Login.jsp';" id="signInLink">SIGN IN</a> again.</p>
 	</div>
 </body>
 </html>

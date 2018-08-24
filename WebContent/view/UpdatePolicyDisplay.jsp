@@ -46,8 +46,7 @@
 				<td> </td>
 				<td> </td>
 				<td> </td>
-				<td> </td>
-				<td>   <button type="reset" value="Reset">Reset form</button> </td>				
+				<td> </td>			
 			</tr>		
 			<tr>
 				<td> Type of Insurance </td>
